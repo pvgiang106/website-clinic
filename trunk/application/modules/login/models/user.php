@@ -3,8 +3,8 @@
 Class User extends CI_Model {
 
     function login($email, $password) {
-        $this->db->select('userID,email, username, password, avatar, role');
-        $this->db->from('user');
+        $this->db->select('id_phongkham,email, name, password, role');
+        $this->db->from('user_phongkham');
         $this->db->where('email', $email);
         $this->db->where('password',  md5($password));
         $this->db->limit(1);
@@ -19,8 +19,8 @@ Class User extends CI_Model {
     }
     
     function checkemail($email) {
-        $this->db->select('email,userID');
-        $this->db->from('user');
+        $this->db->select('email,id_phongkham');
+        $this->db->from('user_phongkham');
         $this->db->where('email',$email);
         $this->db->limit(1);
         
@@ -36,7 +36,7 @@ Class User extends CI_Model {
     
     
     function inserttouser($data){
-        $this->db->insert('user',$data);
+        $this->db->insert('user_phongkham',$data);
     }
     // insert data into profile
     function inserttoprofile($dataprofile){
@@ -45,8 +45,8 @@ Class User extends CI_Model {
     
     // change pass for user
     function changepass($id,$pass){
-        $this->db->where('userID',$id);
-        $this->db->update('user',array('password'=>  md5($pass)));
+        $this->db->where('id_phongkham',$id);
+        $this->db->update('user_phongkham',array('password'=>  md5($pass)));
     }
     
     

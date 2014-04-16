@@ -52,7 +52,7 @@
     <body>
         <div class="row layout-header">
             <div class="col-lg-6 font-header">
-                <b>Du lich bui </b>
+                <b>Website Clinic </b>
             </div>
             <div class="col-lg-6"></div>
         </div>
@@ -63,14 +63,14 @@
             <div class="col-lg-5">
                 <div class="row">
                     <div class="title">
-                        <b>Connect with friends and the around you on Dulichbui.</b>
+                        <b>Text about sologan of service </b>
                     </div>
                     <div class="row my-left">
                         <div class="col-lg-4">
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/plan.jpg" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>My travel plan</b>  for yourself.
+                            <b>Quan ly benh nhan.</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -78,7 +78,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/update.jpg" alt="find" class="img-circle">
                         </div>                                  
                         <div class="col-lg-8 text">
-                            <b>See photos and updates</b>  from friends in News Feed.
+                            <b>Quan ly ho so kham benh.</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -86,7 +86,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/share.jpg" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>Share what's new</b> in your life on your Timeline.
+                            <b>Quan ly lich hen.</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -94,7 +94,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/find.png" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>Find more</b> famous tourist destination.
+                            <b>Tu van .</b>
                         </div>
                     </div>
                 </div>

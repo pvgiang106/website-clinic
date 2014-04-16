@@ -20,23 +20,23 @@ class Login extends MX_Controller {
             
     function index() {
         //$check = $this->session->userdata('logged_in');
-        if (isset($this->session->userdata['logged_in']['userID'])) {
+        if (isset($this->session->userdata['logged_in']['email'])) {
             $session_data = $this->session->userdata('logged_in');
             if ($session_data['role'] == 1) {
                 // redirect to admin page
                 redirect('/admin', 'refresh');
             } else {
                 // redirect to user page              
-                redirect('/home/index/' . $session_data['userID'], 'refresh');
+                redirect('http://www.google.com', 'refresh');
             }
         } else {
             $cookie_name = 'remember';
             if (isset($_COOKIE[$cookie_name])) {
                 parse_str($_COOKIE[$cookie_name]);
-                echo $userID;
+                echo $email;
                 echo $role;
                 $user_info = array(
-                    'userID' => $userID,
+                    'email' => $email,
                     'role' => $role
                 );
                 $this->session->set_userdata('logged_in', $user_info);
@@ -79,16 +79,6 @@ class Login extends MX_Controller {
         //delete_cookie();
         
         redirect('/login/index');
-    }
-    
-    function register(){
-        $this->load->helper(array('form'));
-        $data['error'] = '';
-        $data['module'] = 'login';
-        $data['view_file'] = 'register_view';
-        echo Modules::run('login/layout/render', $data);
-//        $this->load->helper('third_library');
-//        $this->load->view('login/register_view');
     }
     
     function resetpassword(){

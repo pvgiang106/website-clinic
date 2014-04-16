@@ -44,15 +44,15 @@ class VerifyLogin extends MX_Controller {
                     $cookie_time = 3600*24*30;
                     //$session_data = $this->session->userdata('logged_in');
                     $session_data = $this->session->userdata('logged_in');
-                    setcookie('ci-session', 'userID='."", time() - 3600);	// Unset cookie of user
-                    setcookie($cookie_name, 'userID='.$session_data['userID'].'&role='.$session_data['role'],time() + $cookie_time);
+                    setcookie('ci-session', 'email='."", time() - 3600);	// Unset cookie of user
+                    setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'],time() + $cookie_time);
                     echo 'remember';
                     //redirect('/login/index/'.$session_data['userID'], 'refresh');
                 }  else {
                     echo 'not remember ';
                     //redirect('/login/index/'.$session_data['userID'], 'refresh');
                 }             
-                redirect('/login/index', 'refresh');
+                redirect('http://www.google.com', 'refresh');
             } else {
                 //$this->form_validation->set_message('Invalid username or password');
                 $data['error'] = 'Invalid username or password';
@@ -80,7 +80,7 @@ class VerifyLogin extends MX_Controller {
             $sess_array = array();
             foreach ($result as $row) {
                 $sess_array = array(
-                    'userID' => $row->userID,
+                    'email' => $row->email,
                     'role' => $row->role
                 );
                 $this->session->set_userdata('logged_in', $sess_array);

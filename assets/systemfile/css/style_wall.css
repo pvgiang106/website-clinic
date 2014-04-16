@@ -1,0 +1,34 @@
+#profile, #list-friend-wall, #plan{
+	margin-left: 30px;
+	margin-right: 0px;
+	margin-bottom: 30px;
+	background-color: #FFFFFF;
+	padding: 5px;
+}
+
+#list-friend-image{
+	margin: 10px;
+}
+
+#list-friend-image img{
+	margin: 1px;
+}
+
+#profile p{
+	margin: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+#profile p span{
+	/*color: #4584F0;*/
+	font:italic bold 12px/30px Georgia,serif;
+}
+
+.album-image{
+	width: 90px;
+	height: 100px;
+}
+
+.album-caption{
+	display: none;
+}

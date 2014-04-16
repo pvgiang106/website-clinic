@@ -1,0 +1,23 @@
+body{
+	overflow-y: scroll;
+	padding-top: 70px;
+}
+
+.city-image{
+	width: 190px;
+	height: 140px;
+}
+.thumbnail{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#sidebar-left{
+	margin-left: 30px;	
+}
+#ul-city-selected{
+	border-right: 1px solid #ddd;
+}
+#ul-city-selected li{
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}

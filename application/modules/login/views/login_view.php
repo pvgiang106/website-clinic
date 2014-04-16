@@ -46,7 +46,6 @@ echo form_open('login/verifylogin', $attribute);
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <a href="<?php base_url(); ?>login/resetpassword">Forgot Password ?</a><br/>
-                <a href="<?php base_url(); ?>login/register">Register !</a>
             </div>
         </div>
     </fieldset>

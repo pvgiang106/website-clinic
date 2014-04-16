@@ -1,0 +1,117 @@
+/* 
+    Document   : manage_layout.css
+    Created on : Sep 22, 2013, 10:35:38 AM
+    Author     : DaiT
+    Description:
+        Use for renderring admin page laypout
+*/
+
+.admin-sidenav {
+  width: 80%;
+  float: left;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+     -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+          box-shadow: 0 1px 4px rgba(0,0,0,.065);
+}
+.admin-sidenav > li > a {
+  display: block;
+  width: 100%;
+  padding: 8px 14px;
+  border-top: 1px solid #e5e5e5;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+}
+.admin-sidenav > li:last-child > a {
+  border-bottom: 1px solid #e5e5e5;
+}
+.admin-sidenav > .active > a {
+  position: relative;
+  z-index: 2;
+  padding: 9px 15px;
+  border: 0;
+  background-color: #08c;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
+  -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+     -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+          box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+}
+
+.admin-sidenav > .active > a:hover {
+    background-color: #08c;
+}
+/* Chevrons */
+.admin-sidenav .glyphicon {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  opacity: .25;
+}
+.admin-sidenav > li > a:hover {
+  background-color: #f5f5f5;
+}
+.admin-sidenav a:hover .glyphicon {
+  opacity: .5;
+}
+.admin-sidenav .active .glyphicon,
+.admin-sidenav .active a:hover .glyphicon {
+  opacity: 1;
+}
+
+.container {
+  min-height: 40px;
+  min-width: 800px;
+}
+            
+.nav a {
+  display: inline-block !important;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.header {
+    margin-top: 60px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.main-section {
+    width: 100%;
+}
+
+.menu-sidebar {
+    width: 20%;
+    float: left;
+}
+
+.content, .header {
+    width: 80%;
+    margin-left: 17%;
+}
+
+.content {
+    height: 70%;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    margin-bottom: 40px;
+}
+
+footer {
+    position: fixed;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: bold;
+    border-top: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+
+body {
+    overflow-y: scroll;
+    height: 100%;
+}

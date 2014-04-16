@@ -1,0 +1,148 @@
+body {
+	background-color: #E5E5E5;
+}
+/*style search box */
+#search_box_body{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: silver;
+    border:solid 1px;
+}
+/* Style search hotel */
+#block-advertise{
+    background-color: #ff00ff;
+}
+#top-destination{
+    padding-left: 20px;
+    font-weight: bold;
+}
+#block-destination{
+    background-color: #FFFFFF;
+    padding-top: 20px;
+}
+
+#featured-hotel{
+    padding-left: 20px;
+    font-weight: bold;
+}
+#block-hotel{
+    background-color: #FFFFFF;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-bottom: 30px;
+}
+/* End of style search hotel */
+/* Style info hotel box */
+#info-hotel-box{
+    
+    background-color: #FFFFFF;
+    padding-left: 5px;
+}
+#info-hotel-box:hover{
+    background-color: #F5F5F5;
+    border: solid 0.5px;
+}
+#star-box{
+    border: solid 1px;
+    border-color: #E5E5E5;
+    background-color: #FFFFFF;    
+}
+#star-box p{
+    text-align: center;
+}
+#hotel-title{
+    padding-left: 20px;
+}
+#introdution-hotel{
+    padding-left: 20px;
+}
+#introdution-hotel p{
+    padding-right: 25px;
+    text-align: justify;
+}
+/* End of style hotel box */
+
+/* Style navatabs */
+#stylecontent{
+    background-color: #FFFFFF;
+    padding-top: 10px;
+}
+/*style Room infomation */
+#booking{
+    
+}
+#date-book-box {
+    
+}
+#book-button{
+    text-align: center;
+    padding-top: 20px;
+}
+#room-type{
+    background-color: silver;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: large;
+
+}
+#info-room{
+    padding-left: 35px;
+    padding-right: 35px;
+}
+#room-descreption{
+    text-align: justify;
+}
+#room-facilities{
+    padding-right: 530px;
+}
+#price{
+    text-align: right;
+    padding-bottom: 10px;
+    padding-right: 20px;
+}
+/* End style Room infomation */
+/* Style filter box */
+#filter-box{
+    border: solid 1px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: white;
+}
+#filter-box-title{
+    padding-top: 5px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    background-color: silver;
+}
+#filter-row{
+    padding-left: 20px;
+    height: 30px ;
+}
+/*end fo style filte*/
+/*style for restaurant diferrent*/
+.menurestaurant p{
+    text-align: right;
+}
+#restaurant-introduce{
+    padding-left: 50px;
+    padding-right: 30px;
+    text-align: justify;
+}
+/* end of stype restaurant different*/
+/*style for validate form */
+#main_content{
+    background-color: #FFFFFF;
+}
+/* end of style validate */
+#row-validate{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+/* style to test */
+#test {
+    border: solid 1px;
+}

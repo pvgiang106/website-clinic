@@ -1,0 +1,62 @@
+body {
+	background-color: #E5E5E5;
+}
+/* Style navatabs */
+#stylecontent{
+    background-color: #FFFFFF;
+    padding-top: 10px;
+}
+/*style search box */
+#search_box_body{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: silver;
+    border:solid 1px;
+}
+#title-request{
+    text-align: center;
+}
+#title-table{
+    padding: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: silver;
+    text-align: center;
+    border: solid 1px white;
+}
+#row-even{
+    padding: 0px;
+    text-align: center;
+    background-color: #A4DFEC;
+    border: solid 1px white;
+}
+#row-odd{
+    padding: 0px;
+    text-align: center;
+    background-color: #BCC5D3;
+    border: solid 1px white;
+}
+/*end of style search box */
+/*style for validate form */
+#main_content{
+    background-color: #FFFFFF;
+}
+/* end of style validate */
+#row-validate{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#title-transport-info{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #BCB9BF;
+}
+#detail-book-transport{
+    background-color: #EBEAEC;
+    text-align: center;
+    padding-top: 5px;
+    padding-left: 5px;
+}

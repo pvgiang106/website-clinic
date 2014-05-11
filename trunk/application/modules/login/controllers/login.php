@@ -27,7 +27,7 @@ class Login extends MX_Controller {
                 redirect('/admin', 'refresh');
             } else {
                 // redirect to user page              
-                redirect('http://www.google.com', 'refresh');
+                redirect('/clinic', 'refresh');
             }
         } else {
             $cookie_name = 'remember';

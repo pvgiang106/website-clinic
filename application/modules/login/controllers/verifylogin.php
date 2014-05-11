@@ -52,7 +52,7 @@ class VerifyLogin extends MX_Controller {
                     echo 'not remember ';
                     //redirect('/login/index/'.$session_data['userID'], 'refresh');
                 }             
-                redirect('http://www.google.com', 'refresh');
+                redirect('/login/index', 'refresh');
             } else {
                 //$this->form_validation->set_message('Invalid username or password');
                 $data['error'] = 'Invalid username or password';

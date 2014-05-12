@@ -15,7 +15,7 @@ $attribute = array(
     'id' => 'register',
     'name' => 'register'
 );
-echo form_open('admin/adminhotel/verifyUpdateHotel/' . $hotelID, $attribute);
+echo form_open('admin/adminclinic/verifyUpdateHotel/' . $hotelID, $attribute);
 ?>
 <fieldset>
     <div class="row">
@@ -108,7 +108,7 @@ echo form_open('admin/adminhotel/verifyUpdateHotel/' . $hotelID, $attribute);
                 <div class="col-sm-2 control-label"></div>
                 <div class="col-sm-10">
                     <button type="submit" name="submitinsert" id="submitinsert" value="insert" class="btn btn-primary">Update</button>
-                    <a type="button" href="<?php echo base_url(); ?>index.php/admin/adminhotel" name="cancel" id="cancel" value="cancel" class="btn btn-info">Cancel</a>
+                    <a type="button" href="<?php echo base_url(); ?>index.php/admin/adminclinic" name="cancel" id="cancel" value="cancel" class="btn btn-info">Cancel</a>
                 </div>
             </div>
         </div>

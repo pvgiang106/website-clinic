@@ -16,7 +16,7 @@ class Admin extends MX_Controller {
 
     function index() {
         // get all user in database
-        $result = $this->user->listuser();
+        $result = $this->mduser->listuser();
         $this->session->set_userdata('tab', 0);
         
         $data['result'] = $result;

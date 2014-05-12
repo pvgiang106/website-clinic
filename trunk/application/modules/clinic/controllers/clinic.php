@@ -16,12 +16,12 @@ class Clinic extends MX_Controller {
 
     function index() {
         // get all user in database
-        $result = $this->mdclinic->listuser();
-        $this->session->set_userdata('tab', 0);
+        //$result = $this->mdclinic->listuser();
+        //$this->session->set_userdata('tab', 0);
         
-        $data['result'] = $result;
+        //$data['result'] = $result;
         $data['module'] = 'clinic';
-        $data['view_file'] = 'view_manager_user';
+        $data['view_file'] = 'view_calendar_php';
         echo Modules::run('admin/layout/render',$data);
     }
 }

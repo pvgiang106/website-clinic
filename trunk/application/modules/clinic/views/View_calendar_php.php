@@ -1,8 +1,4 @@
-﻿<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-   <style></style>
-</head>
-<?php
+﻿<?php
 $kieu = CAL_GREGORIAN;
 
 // chọn kiểu hiển thị lịch
@@ -17,7 +13,7 @@ if(!$_GET['nam']) $nam = date('Y'); // nam 4 so mặc định năm hiện tại
 
 $hom_nay = date('Y/n/d');// ngày tháng năm hiện tại
 
-$dem_ngay = cal_days_in_month(CAL_GREGORIAN, $thang, $nam);
+$dem_ngay = cal_days_in_month($kieu, $thang, $nam);
 
 // đếm có bao nhiêu ngày trong tháng rất tốt cho việc theo dõi chu kỳ bán hàng :) trong tháng bán được hàng .
 

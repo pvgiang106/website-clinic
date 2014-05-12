@@ -1,0 +1,71 @@
+body{
+		padding:0;
+		margin:0;
+	}
+	#khung_lich{
+		width:100%;
+	}
+	#lich{
+		width:100%;
+	}
+	.tieu_de{
+		text-align:center;
+		margin:auto;
+		border:1px solid #444;
+		background:#CEE6FF;
+	}
+	.truoc{
+		width:20%;
+		float:left;
+	}
+	.thang_hien_tai{
+		width:60%;
+		float:left;
+	}
+	.sau{
+		width:20%;
+		float:left;
+	}
+	.lich_thu,
+	.lich_ngay{
+		width:14%;
+		float:left;
+		text-align:center;
+		margin:5px 0 5px;
+	}
+	.ngay_thang_truoc{
+		width:14%;
+		float:left;
+		text-align:center;
+		margin:5px 0 5px;
+	}
+	.ten_ngay{
+		display:none;
+	}
+	a:link,
+	a:visited{
+		color:#f39;
+	}
+	.hom_nay{
+		background:#444;
+		color:#f39;
+	}
+	/* phone */
+	@media screen and (max-width: 480px) {
+		.ngay_thang_truoc{
+			display:none;
+		}
+		.ten_ngay{
+			display:block;
+			width:50%;
+			float:left;
+			text-align:center;
+		}
+		.lich_thu{
+			display:none;
+		}
+		.lich_ngay{
+			width:100%;
+			float:none;
+		}
+	}

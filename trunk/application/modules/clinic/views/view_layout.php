@@ -27,30 +27,16 @@
     <body class="container">
         <div class="row">
             <ul class="nav nav-pills">
-                <li <?php if($tab == 0) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>admin">Manager User</a></li>
-                <li <?php if($tab == 1) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>index.php/admin/adminclinic">Manager Clinic</a></li>
+                <li <?php if($tab == 0) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>clinic">Appoitment</a></li>
+                <li <?php if($tab == 1) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>index.php/clinic/medicalprofile">Medical Profile</a></li>
+                <li <?php if($tab == 2) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>index.php/clinic/setuptime">Setup Time</a></li>
+                <li <?php if($tab == 3) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>index.php/clinic/waitingappoitment">Waitingappoitment</a></li>
             </ul>
         </div>
         <div class="row">
             <?php
             $this->load->view($module . '/' . $view_file);
             ?>
-            
-            <div class="pager">
-            <form>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
-              <input type="text" class="pagedisplay"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
-              <select class="pagesize">
-                <option selected="selected"  value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option  value="40">40</option>
-              </select>
-            </form>
-          </div>
         </div>
         <script type="text/javascript">
             $(document).ready(function() {

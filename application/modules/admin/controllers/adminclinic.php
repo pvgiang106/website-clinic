@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Adminhotel extends MX_Controller {
+class Adminclinic extends MX_Controller {
     /*
      * contructor
      */
@@ -17,20 +17,20 @@ class Adminhotel extends MX_Controller {
     }
 
     function index() {
-        $result = $this->mdclinic->listhotel();
+        $result = $this->mdclinic->listclinic();
         $this->session->set_userdata('tab', 1);
         $data['result'] = $result;
         $data['module'] = 'admin';
-        $data['view_file'] = 'view_manager_hotel';
+        $data['view_file'] = 'view_manager_clinic';
         echo Modules::run('admin/layout/render', $data);
     }
 
-    function deletehotel($hotelID) {
-        $this->mdclinic->deletehotel($hotelID);
-        redirect('admin/adminhotel');
+    function expireclinic($id_phongkham) {
+        $this->mdclinic->expireclinic($id_phongkham);
+        redirect('admin/Adminclinic');
     }
 
-    function inserthotel() {
+    function insertclinic() {
         $data['hotelID'] = '';
         $data['hotelName'] = '';
         $data['address'] = '';
@@ -42,7 +42,7 @@ class Adminhotel extends MX_Controller {
         echo Modules::run('admin/layout/render', $data);
     }
 
-    function verifyInsertHotel() {
+    function verifyinsertclinic() {
         $this->form_validation->set_rules('hotelName', 'Name', 'trim|required');
         $this->form_validation->set_rules('address', 'Address', 'trim|required');
 
@@ -67,7 +67,7 @@ class Adminhotel extends MX_Controller {
             $data['description'] = $this->input->post('des');
             $data['hotelStar'] = $this->input->post('hotelStar');  
             
-            $this->mdclinic->inserthotel($data);
+            $this->mdclinic->insertclinic($data);
             
             foreach ($this->mdclinic->gethotelID($this->input->post('hotelName')) as $tmp) {
                 $hotelID = $tmp->hotelID;
@@ -80,7 +80,7 @@ class Adminhotel extends MX_Controller {
                 }
             }
             
-            redirect('admin/adminhotel');
+            redirect('admin/Adminclinic');
         }
     }
 
@@ -139,7 +139,7 @@ class Adminhotel extends MX_Controller {
             }
             
             $this->mdclinic->updatehotel($hotelID,$data);
-            redirect('admin/adminhotel');
+            redirect('admin/Adminclinic');
         }
     }
 }

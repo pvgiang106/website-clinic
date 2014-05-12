@@ -1,15 +1,13 @@
 <?php
 
-Class Mdlhotel extends CI_Model {
+Class Mdclinic extends CI_Model {
     
     public function record_count() {
         return $this->db->count_all("hotel");
     }
     
-    function listhotel(){
-        $this->db->select('hotelID,hotelName,hotelStar,address,cityID');
-        $this->db->from('hotel');
-        $query = $this->db->get();        
+    function listclinic(){
+        $query = $this->db->get('phongkham');        
         return $query->result();             
     }    
     
@@ -29,9 +27,9 @@ Class Mdlhotel extends CI_Model {
         return $query->result();
     }
             
-    function deletehotel($hotelID) {
-        $this->db->where('hotelID',$hotelID);
-        $this->db->delete('hotel');
+    function expireclinic($id_phongkham,$data) {
+        $this->db->where('id_phongkham',$id_phongkham);
+        $this->db->update('phongkham');
     }
     
     function updatehotel($hotelID,$data) {
@@ -39,7 +37,7 @@ Class Mdlhotel extends CI_Model {
         $this->db->update('hotel',$data);
     }
     
-    function inserthotel($data){
+    function insertclinic($data){
         $this->db->insert('hotel',$data);
     }
     

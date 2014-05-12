@@ -45,7 +45,7 @@ class VerifyLogin extends MX_Controller {
                     //$session_data = $this->session->userdata('logged_in');
                     $session_data = $this->session->userdata('logged_in');
                     setcookie('ci-session', 'email='."", time() - 3600);	// Unset cookie of user
-                    setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'],time() + $cookie_time);
+                    setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'].'&id_phongkham='.$session_data['id_phongkham'],time() + $cookie_time);
                     echo 'remember';
                     //redirect('/login/index/'.$session_data['userID'], 'refresh');
                 }  else {
@@ -81,7 +81,8 @@ class VerifyLogin extends MX_Controller {
             foreach ($result as $row) {
                 $sess_array = array(
                     'email' => $row->email,
-                    'role' => $row->role
+                    'role' => $row->role,
+                    'id_phongkham' => $row->id_phongkham,
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
             }

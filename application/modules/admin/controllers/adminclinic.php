@@ -38,7 +38,7 @@ class Adminclinic extends MX_Controller {
         $data['cityID'] = 31;
         $data['hotelStar'] = '';
         $data['module'] = 'admin';
-        $data['view_file'] = 'view_insert_hotel';
+        $data['view_file'] = 'view_insert_clinic';
         echo Modules::run('admin/layout/render', $data);
     }
 

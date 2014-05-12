@@ -42,10 +42,6 @@ body{
 	.ten_ngay{
 		display:none;
 	}
-	a:link,
-	a:visited{
-		color:#f39;
-	}
 	.hom_nay{
 		background:#444;
 		color:#f39;

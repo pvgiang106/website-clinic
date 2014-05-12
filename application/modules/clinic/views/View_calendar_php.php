@@ -3,13 +3,8 @@ $kieu = CAL_GREGORIAN;
 
 // chọn kiểu hiển thị lịch
 
-$thang = $_GET['thang'];
-$nam = $_GET['nam'];
-
-// truyền tham số tháng năm
-
-if(!$_GET['thang']) $thang = date('n'); // thang 1-12 mặc định tháng hiện tại
-if(!$_GET['nam']) $nam = date('Y'); // nam 4 so mặc định năm hiện tại
+if(!isset($_GET['thang'])) $thang = date('n'); else $thang = $_GET['thang']; // thang 1-12 mặc định tháng hiện tại
+if(!isset($_GET['nam'])) $nam = date('Y'); else $nam = $_GET['nam']; // nam 4 so mặc định năm hiện tại
 
 $hom_nay = date('Y/n/d');// ngày tháng năm hiện tại
 
@@ -56,9 +51,9 @@ endif;
 
 echo "<div class='tieu_de'>";
     
-echo "<a href='calendar_php.php?thang=". $doi_thang ."&nam=". $doi_nam ."'><div class='truoc'><<</div></a>";
+echo "<a href='?thang=". $doi_thang ."&nam=". $doi_nam ."'><div class='truoc'><<</div></a>";
 echo "<h2 class='thang_hien_tai'>" . date('F',  mktime(0,0,0,$thang,1)) . "&nbsp;" . $nam . "</h2>";
-echo "<a href='calendar_php.php?thang=". $doi_thang_sau ."&nam=". $doi_nam_sau ."'><div class='sau'>>></div></a>";
+echo "<a href='?thang=". $doi_thang_sau ."&nam=". $doi_nam_sau ."'><div class='sau'>>></div></a>";
     
     
 echo "</div>";
@@ -82,7 +77,7 @@ echo "<br style='clear:both'/>";
     switch($ten_ngay_dau_thang_rg)
     {
         /* chú ý phần này phụ thuộc vào kiểu hiển thị thứ trong tuần bên trên nhé */
-
+        case 'Mon' : $so_ngay_thang_truoc = 0; break ;
         case 'Tue' : $so_ngay_thang_truoc = 1; break ;
         case 'Wed' : $so_ngay_thang_truoc = 2; break ;
         case 'Thu' : $so_ngay_thang_truoc = 3; break ;

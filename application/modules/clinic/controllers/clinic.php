@@ -15,14 +15,16 @@ class Clinic extends MX_Controller {
     }
 
     function index() {
-        // get all user in database
-        //$result = $this->mdclinic->listuser();
-        //$this->session->set_userdata('tab', 0);
+        $this->session->set_userdata('tab', 0);
+        $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
+        // get all appoitment in database
+        $lichkham = $this->mdclinic->getlichkham($data['id_phongkham']);
+       
         
-        //$data['result'] = $result;
+        $data['lichkham'] = $lichkham;
         $data['module'] = 'clinic';
         $data['view_file'] = 'view_calendar_php';
-        echo Modules::run('admin/layout/render',$data);
+        echo Modules::run('clinic/layout/render',$data);
     }
 }
 

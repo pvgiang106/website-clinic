@@ -6,16 +6,16 @@ Class Mdclinic extends CI_Model {
         return $this->db->count_all("hotel");
     }
     
-    function listhotel(){
-        $this->db->select('hotelID,hotelName,hotelStar,address,cityID');
-        $this->db->from('hotel');
+    function getlichkham($id_phongkham){
+        $this->db->from('lich_kham');
+        $this->db->where('id_phongkham',$id_phongkham);
         $query = $this->db->get();        
         return $query->result();             
     }    
     
     function gethotel($hotelID){
         $this->db->select('hotelID,hotelName,hotelStar,address,cityID,description');
-        $this->db->from('hotel');
+        $this->db->from('lich_phongkham');
         $this->db->where('hotelID',$hotelID);
         $query = $this->db->get();        
         return $query->result();             

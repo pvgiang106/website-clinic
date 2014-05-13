@@ -26,6 +26,36 @@ class Waitingappointment extends MX_Controller {
         $data['view_file'] = 'view_waiting_appointment';
         echo Modules::run('clinic/layout/render',$data);
     }
+	function deleteappointment($id_lichkham){
+		//Reject appointment
+		$this->mdclinic->deleteAppointment($id_lichkham);
+		
+		$this->session->set_userdata('tab', 3);
+        $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
+        // get all waitingappoitment in database
+        $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
+       
+        
+        $data['waitingappoitment'] = $waitingappoitment;
+        $data['module'] = 'clinic';
+        $data['view_file'] = 'view_waiting_appointment';
+		 echo Modules::run('clinic/layout/render',$data);		
+	}
+	function acceptappointment($id_lichkham){
+		//Reject appointment
+		$this->mdclinic->acceptAppointment($id_lichkham);
+		
+		$this->session->set_userdata('tab', 3);
+        $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
+        // get all waitingappoitment in database
+        $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
+       
+        
+        $data['waitingappoitment'] = $waitingappoitment;
+        $data['module'] = 'clinic';
+        $data['view_file'] = 'view_waiting_appointment';
+		 echo Modules::run('clinic/layout/render',$data);		
+	}
 }
 
 ?>

@@ -18,7 +18,7 @@ class Clinic extends MX_Controller {
         $this->session->set_userdata('tab', 0);
         $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
         // get all appointment in database
-		$this->mdclinic->acceptAppointment(2);
+		//$this->mdclinic->acceptAppointment(2);
         $lichkham = $this->mdclinic->getlichkham($data['id_phongkham'],1);
        
         
@@ -27,6 +27,7 @@ class Clinic extends MX_Controller {
         $data['view_file'] = 'view_appointment';
         echo Modules::run('clinic/layout/render',$data);
     }
+
 }
 
 ?>

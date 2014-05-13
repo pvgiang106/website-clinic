@@ -10,18 +10,8 @@
         <!-- bootstrap widget theme -->
         <link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/theme.bootstrap.css'); ?>" />
 		<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/style_calendar.css'); ?>" />
-		<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.js'); ?>" ></script>
-		<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.css'); ?>" />
         <!--<link rel="stylesheet" href="<?php //echo base_url('/assets/systemfile/css/jquery.tablesorter.pager.css'); ?>" />-->
-		<style>
-			body{
-				margin:0px;
-        padding:0px;
-        height:100%;
-        overflow:hidden;
-				background: #EBF3EC;
-			}
-		</style>
+		
         <?php
         echo loadBootstrap3_js();
         ?>

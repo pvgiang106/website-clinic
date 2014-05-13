@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Clinic extends MX_Controller {
+class Waitingappointment extends MX_Controller {
     /*
      * contructor
      */
@@ -15,16 +15,15 @@ class Clinic extends MX_Controller {
     }
 
     function index() {
-        $this->session->set_userdata('tab', 0);
+        $this->session->set_userdata('tab', 3);
         $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
-        // get all appointment in database
-		$this->mdclinic->acceptAppointment(2);
-        $lichkham = $this->mdclinic->getlichkham($data['id_phongkham'],1);
+        // get all appoitment in database
+        $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
        
         
-        $data['lichkham'] = $lichkham;
+        $data['waitingappoitment'] = $waitingappoitment;
         $data['module'] = 'clinic';
-        $data['view_file'] = 'view_appointment';
+        $data['view_file'] = 'view_waiting_appointment';
         echo Modules::run('clinic/layout/render',$data);
     }
 }

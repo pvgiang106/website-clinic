@@ -1,6 +1,6 @@
 ﻿<?php
 $kieu = CAL_GREGORIAN;
-
+var_dump($lichkham);
 // chọn kiểu hiển thị lịch
 
 if(!isset($_GET['thang'])) $thang = date('n'); else $thang = $_GET['thang']; // thang 1-12 mặc định tháng hiện tại

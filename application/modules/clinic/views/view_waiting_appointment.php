@@ -2,7 +2,7 @@
 	function init() {
 		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		scheduler.config.first_hour = 6;
+		scheduler.config.first_hour = 7;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
 		scheduler.config.dblclick_create = false;

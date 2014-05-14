@@ -1,121 +1,63 @@
-<?php
-$kieu = CAL_GREGORIAN;
-var_dump($lichkham);
-// ch?n ki?u hi?n th? l?ch
+<script type="text/javascript" charset="utf-8">	
+	function init() {
+		
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		scheduler.config.first_hour = 7;
+		scheduler.config.details_on_dblclick=true;
+		scheduler.config.details_on_create=true;
+		scheduler.config.dblclick_create = true;
+		scheduler.config.drag_resize = 0;
+		scheduler.config.drag_move = 0;
+		scheduler.config.drag_create = 0;
+		//Customer lightbox section lable
+		scheduler.locale.labels.section_reason = 'Reason';
+		scheduler.locale.labels.section_symptoms = 'Symptoms';
+		scheduler.locale.labels.section_temperature = 'Temperature';
+		scheduler.locale.labels.section_bloodpressure = 'Blood pressure';
+		scheduler.locale.labels.section_pulse= 'Pulse';
+		scheduler.locale.labels.section_diagnosis = 'Diagnosis';
+		scheduler.locale.labels.section_advice = 'Advice';
+		scheduler.locale.labels.section_costs = 'Cost';
 
-if(!isset($_GET['thang'])) $thang = date('n'); else $thang = $_GET['thang']; // thang 1-12 m?c d?nh tháng hi?n t?i
-if(!isset($_GET['nam'])) $nam = date('Y'); else $nam = $_GET['nam']; // nam 4 so m?c d?nh nam hi?n t?i
+		//Save attachEvent
+		scheduler.attachEvent("onEventSave",function(id,event){
+			if (!event.reason) {
+				alert("Reason must not by empty");
+				return false;
+			}
+			else{
+				//window.location.href ="clinic/updateData?id_lichkham="+id+"&lidokham="+event.reason;
+			}
+			return true;
+		});
+		//end save action
+		//Delete attachEvent
+		scheduler.attachEvent("onEventDeleted",function(id,event){			
+				//window.location.href ="clinic/deleteAppointment?id_lichkham="+id;
+			return true;
+		});
+		//end delete action
+		scheduler.templates.lightbox_header = function(start, end, event){
+			return "Details "+event.email+" time = "+event.id;
+		}
+		var restricted_lightbox = [
+				{ name: "time", height: 50, map_to: "auto", type: "time", focus: true},
+				{ name: "reason", height: 50, map_to: "reason", type: "textarea", focus: true},
+				{ name: "symptoms", height: 100, map_to: "trieu_chung", type: "textarea", focus: true},
+				{ name: "temperature", height: 30, map_to: "nhiet_do", type: "textarea", focus: true},
+				{ name: "bloodpressure", height: 30, map_to: "huyet_ap", type: "textarea", focus: true},
+				{ name: "pulse", height: 30, map_to: "mach", type: "textarea", focus: true},
+				{ name: "diagnosis", height: 100, map_to: "text", type: "textarea", focus: true},
+				{ name: "advice", height: 100, map_to: "loi_khuyen", type: "textarea", focus: true},
+				{ name: "costs", height: 30, map_to: "trieu_chung", type: "textarea", focus: true}
+			];
 
-$hom_nay = date('Y/n/d');// ngày tháng nam hi?n t?i
+		scheduler.config.lightbox.sections = restricted_lightbox
+		scheduler.init('scheduler_here',new Date(),"week");
+		//var events = <?php //echo $jsoncode ; ?>;
+		//scheduler.parse(events,"json");
+		}
+</script>	
 
-$dem_ngay = cal_days_in_month($kieu, $thang, $nam);
 
-// d?m có bao nhiêu ngày trong tháng r?t t?t cho vi?c theo dõi chu k? bán hàng :) trong tháng bán du?c hàng .
 
-echo "<div id='khung_lich'>";
-echo "<div id='lich'>";
-
-// ph?n này là ph?n ch?nh cho l?ch d?p d? chút
-    
-$thang_truoc = $thang - 1;
-$thang_sau = $thang + 1;
-
-// l?y tháng tru?c , tháng sau
-
-$nam_truoc = $nam - 1;
-$nam_sau = $nam + 1;
-
-// l?y nam tru?c nam sau
-
-if($thang == 12):
-    $doi_nam = $nam;
-    $doi_thang  = $thang_truoc;
-elseif($thang == 1):
-    $doi_nam = $nam_truoc;
-    $doi_thang  = '12';
-else:
-    $doi_nam = $nam;
-    $doi_thang  = $thang_truoc;
-endif;
-    
-if($thang == 1):
-    $doi_nam_sau = $nam;
-    $doi_thang_sau = $thang_sau;
-elseif($thang == 12):
-    $doi_nam_sau = $nam_sau;
-    $doi_thang_sau  = '1';
-else:
-    $doi_nam_sau = $nam;
-    $doi_thang_sau  = $thang_sau;
-endif;
-
-echo "<div class='tieu_de'>";
-    
-echo "<a href='?thang=". $doi_thang ."&nam=". $doi_nam ."'><div class='truoc'><<</div></a>";
-echo "<h2 class='thang_hien_tai'>" . date('F',  mktime(0,0,0,$thang,1)) . "&nbsp;" . $nam . "</h2>";
-echo "<a href='?thang=". $doi_thang_sau ."&nam=". $doi_nam_sau ."'><div class='sau'>>></div></a>";
-    
-    
-echo "</div>";
-echo "<br style='clear:both'/>";
-
-    echo "<div class='tieu_de' >";
-        echo "<div class='lich_thu' >Mon</div>";
-        echo "<div class='lich_thu' >Tue</div>";
-        echo "<div class='lich_thu' >Web</div>";
-        echo "<div class='lich_thu' >Thu</div>";
-        echo "<div class='lich_thu' >Fri</div>";
-        echo "<div class='lich_thu' >Sat</div>";
-        echo "<div class='lich_thu' >Sun</div>";
-    echo "</div>";
-    echo "<br style='clear:both'/>";
-
-    /* Tháng Tru?c */
-    $ngay_dau_thang = $nam.'/'.$thang.'/'.'1';
-    $ten_ngay_dau_thang = date('l', strtotime($ngay_dau_thang));
-    $ten_ngay_dau_thang_rg = substr($ten_ngay_dau_thang, 0, 3); // rut gon
-    switch($ten_ngay_dau_thang_rg)
-    {
-        /* chú ý ph?n này ph? thu?c vào ki?u hi?n th? th? trong tu?n bên trên nhé */
-        case 'Mon' : $so_ngay_thang_truoc = 0; break ;
-        case 'Tue' : $so_ngay_thang_truoc = 1; break ;
-        case 'Wed' : $so_ngay_thang_truoc = 2; break ;
-        case 'Thu' : $so_ngay_thang_truoc = 3; break ;
-        case 'Fri' : $so_ngay_thang_truoc = 4; break ;
-        case 'Sat' : $so_ngay_thang_truoc = 5; break ;
-        case 'Sun' : $so_ngay_thang_truoc = 6; break ;
-    }
-    for($i=1;$i<=$so_ngay_thang_truoc;$i++)
-    {
-        echo "<div class='ngay_thang_truoc'>";
-           /* Tùy b?n mu?n làm gì v?i ph?n này */
-        echo "</div>";
-    }
-
-    /* Tháng Hi?n T?i */
-    for($i=1; $i<= $dem_ngay; $i++):
-
-        $ngay = $nam.'/'.$thang.'/'.$i;
-        
-        $ten = date('l', strtotime($ngay));
-        $ten_ngay = substr($ten, 0, 3); // c?t l?y 3 ký t? d?u
-            
-        echo "<div class='lich_ngay'>";
-            
-            echo "<div class='ten_ngay'>" . $ten_ngay . "</div>";
-                    
-            if($hom_nay == $ngay):
-
-                // n?u ngày vòng l?p trùng v?i s? ngày hôm nay thì tô d?m .v.v....
-                echo "<div class='so_ngay hom_nay' ><a href='#' onclick='alert(".'"Hôm nay có h?n v?i mèo !"'.")' >".'click '. $i . ' me' ."</a></div>";
-            else:
-                echo "<div class='so_ngay'>" . $i . "</div>";
-            endif;    
-            
-        echo "</div>";
-        
-    endfor;
-        
-    echo "</div>";
-    echo "</div>";
-?>

@@ -9,6 +9,12 @@ Class Mdclinic extends CI_Model {
         $query = $this->db->get();        
         return $query->result();             
     }
+	function getInfoAppointment($id_lichkham){
+		$this->db->from('lich_kham');
+		$this->db->where('id_lichkham',$id_lichkham);
+		$query = $this->db->get();
+		return $query->result();
+	}
 	function acceptAppointment($id_lichkham){
 		$data = array(
 					'status' => true
@@ -20,6 +26,13 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_lichkham',$id_lichkham);
 		$this->db->delete('lich_kham');
 	}
+	function updataAppointment($id_lichkham,$li_do_kham){
+		$data = array(
+			"li_do_kham" => $li_do_kham
+		);
+		$this->db->where('id_lichkham',$id_lichkham);
+		$this->db->update('lich_kham',$data);
+	}
     //Medical Profile menu
     function getprofile($email,$id_phongkham){
         $this->db->from('chi_tiet_kham');
@@ -30,13 +43,12 @@ Class Mdclinic extends CI_Model {
 		$result = array();
 		foreach($listcchitietkham as $row){
 			//get thoi gian kham cua moi chi tiet kham
-			$this->db->select('li_do_kham,ngay_kham,thoigian_batdau,thoigian_ketthuc');
+			$this->db->select('li_do_kham,thoigian_batdau,thoigian_ketthuc');
 			$this->db->from('lich_kham');
 			$this->db->where('id_lichkham',$row->id_lichkham);
 			$query = $this->db->get();
 			$lichkham = $query->result();
 			$row->li_do_kham = $lichkham[0]->li_do_kham;
-			$row->ngay_kham = $lichkham[0]->ngay_kham;
 			$row->thoigian_batdau = $lichkham[0]->thoigian_batdau;
 			$row->thoigian_ketthuc = $lichkham[0]->thoigian_ketthuc;
 			

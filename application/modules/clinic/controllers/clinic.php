@@ -10,6 +10,9 @@ class Clinic extends MX_Controller {
 
     function __construct() {
         parent::__construct();
+		if(!isset($this->session->userdata['logged_in']['email'])){
+			redirect('/login', 'refresh');
+		}
         $this->load->model('mdclinic', '', TRUE);
         $this->load->library("pagination");
     }
@@ -20,14 +23,43 @@ class Clinic extends MX_Controller {
         // get all appointment in database
 		//$this->mdclinic->acceptAppointment(2);
         $lichkham = $this->mdclinic->getlichkham($data['id_phongkham'],1);
-       
+
+		$response = array();
+		foreach($lichkham as $row) {
+			$temp = array();
+			$temp['id'] = $row->id_lichkham;
+			$temp['start_date'] = $row->thoigian_batdau;
+			$temp['end_date'] = $row->thoigian_ketthuc; 
+			$temp['reason'] = $row->li_do_kham; 
+			$temp['text'] = $row->email;
+		 array_push($response,$temp);
+		}
+	   $data['jsoncode'] = json_encode($response);   
         
         $data['lichkham'] = $lichkham;
         $data['module'] = 'clinic';
         $data['view_file'] = 'view_appointment';
         echo Modules::run('clinic/layout/render',$data);
     }
-
+	function updateData(){
+		$this->mdclinic->updataAppointment($_GET['id_lichkham'],$_GET['lidokham']);
+		redirect('/clinic','refresh');
+	}
+	function deleteAppointment(){
+		$id_lichkham = $_GET['id_lichkham'];
+		 $today = date("Y-m-d");
+		 $appoitment = $this->mdclinic->getInfoAppointment($id_lichkham);
+		 $appointment_day = $appoitment[0]->thoigian_ketthuc;
+		 if(strtotime($today)>strtotime($appointment_day)){
+			echo "<script>alert('Cuoc hen da duoc thuc hien, khong the xoa');</script>";
+			redirect('/clinic','refresh');
+		 }else{
+			$this->mdclinic->deleteAppointment($id_lichkham);
+			redirect('/clinic','refresh');
+		 }
+		
+		
+	}
 }
 
 ?>

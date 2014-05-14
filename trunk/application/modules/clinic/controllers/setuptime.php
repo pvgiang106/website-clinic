@@ -10,6 +10,9 @@ class Setuptime extends MX_Controller {
 
     function __construct() {
         parent::__construct();
+		if(!isset($this->session->userdata['logged_in']['email'])){
+			redirect('/login', 'refresh');
+		}
         $this->load->model('mdclinic', '', TRUE);
         $this->load->library("pagination");
     }
@@ -23,7 +26,7 @@ class Setuptime extends MX_Controller {
         
         $data['lichkham'] = $lichkham;
         $data['module'] = 'clinic';
-        $data['view_file'] = 'view_calendar_php';
+        $data['view_file'] = 'view_set_available_time';
         echo Modules::run('clinic/layout/render',$data);
     }
 }

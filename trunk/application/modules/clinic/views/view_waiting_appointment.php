@@ -1,38 +1,45 @@
-<?php
-//var_dump($waitingappoitment);
-?>
-<div class="container">
-    <h3>Waiting Appointment</h3>
-   
-    <table id="myTable" class="tablesorter">
-        <thead>
-            <tr class="bootstrap-header">
-                <td>Email</td>
-                <td>Reason</td>
-                <td>Day</td>
-                <td>Time start</td>
-                <td>Time end</td>                           
-            </tr>    
-        </thead>
-        <tbody>
-            <?php
-            $number = 0;
-            foreach ($waitingappoitment as $row) {
-                ?>
-                <tr >
-                    <td><?php echo $row->email ?></td>
-                    <td><?php echo $row->li_do_kham ?></td>
-                    <td><?php echo $row->ngay_kham ?></td>
-                    <td><?php echo $row->thoigian_batdau; ?></td>
-                    <td><?php echo $row->thoigian_ketthuc; ?></td>                                         
-                    <td><a href="<?php echo base_url(); ?>index.php/clinic/waitingappointment/acceptappointment/<?php echo $row->id_lichkham;?>" class="btn btn-success btn-edit">Accept</a></td>
-					<td><a href="<?php echo base_url(); ?>index.php/clinic/waitingappointment/deleteappointment/<?php echo $row->id_lichkham;?>" class="btn btn-success btn-delete">Reject</a></td>
-                    </td>
-                </tr>  
-                <?php
-                $number += 1;
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
+<script type="text/javascript" charset="utf-8">	
+	function init() {
+		
+		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		scheduler.config.first_hour = 6;
+		scheduler.config.details_on_dblclick=true;
+		scheduler.config.details_on_create=true;
+		scheduler.config.dblclick_create = false;
+		scheduler.config.drag_resize = 0;
+		scheduler.config.drag_move = 0;
+		scheduler.config.drag_create = 0;
+		scheduler.locale.labels.section_reason = 'Reason'
+
+		//Save attachEvent
+		scheduler.attachEvent("onEventSave",function(id,event){
+			if (!event.reason) {
+				alert("Reason must not by empty");
+				return false;
+			}
+			else{
+				window.location.href ="waitingappointment/acceptAppointment?id_lichkham="+id;
+			}
+			return true;
+		});
+		//end save action
+		//Delete attachEvent
+		scheduler.attachEvent("onEventDeleted",function(id,event){			
+				window.location.href ="waitingappointment/rejectAppointment?id_lichkham="+id;
+			return true;
+		});
+		//end delete action
+		scheduler.templates.lightbox_header = function(start, end, event){
+			return "Appoitment with : "+event.text;
+		}
+		var restricted_lightbox = [
+				{ name: "reason", height: 200, map_to: "reason", type: "textarea", focus: true}
+			];
+
+		scheduler.config.lightbox.sections = restricted_lightbox
+		scheduler.init('scheduler_here',new Date(),"week");
+		var events = <?php echo $jsoncode ; ?>;
+		scheduler.parse(events,"json");
+		}
+	</script>	
+

@@ -10,6 +10,9 @@ class Admin extends MX_Controller {
 
     function __construct() {
         parent::__construct();
+		if(!isset($this->session->userdata['logged_in']['email'])){
+			redirect('/login', 'refresh');
+		}
         $this->load->model('mduser', '', TRUE);
         $this->load->library("pagination");
     }

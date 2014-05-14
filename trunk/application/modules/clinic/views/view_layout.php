@@ -1,3 +1,9 @@
+<?php
+	$tab0 = base_url().'clinic';
+	$tab1 = base_url().'clinic/medicalprofile';
+	$tab2 = base_url().'clinic/setuptime';
+	$tab3 = base_url().'clinic/waitingappointment';
+?>
 <!DOCTYPE html>
 <html >
 <head>
@@ -6,12 +12,14 @@
     <meta name="description" content="Access the desktop camera and video using HTML, JavaScript, and Canvas.  The camera may be controlled using HTML5 and getUserMedia." />
 	<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.js'); ?>" ></script>
 	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.css'); ?>" />
+	
+	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/style_menuclinic.css'); ?>" />
 
 	<style>
 		body{
-			height:1000px;
 			width:1170px;
 			margin:auto;
+			background: #EBF3EC;
 		}
 	</style>
 <?php
@@ -19,8 +27,21 @@
 ?>
 </head>
     <body onload="init();" >
+	<!-- Menu 2 -->
+<section>
+	<input type="radio" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
+	<input type="radio" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
+	<input type="radio" id="posts" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />
+	<input type="radio" id="books" value="4" name="tractor"  <?php if($tab == 3) echo "checked='checked'"; ?> />
 	
-	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+	<nav>   
+		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'></label>
+		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'></label>
+		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'></label>
+		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'></label>
+	</nav>
+	
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:90%;'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>
@@ -33,6 +54,9 @@
 		<div class="dhx_cal_header"></div>
 		<div class="dhx_cal_data"></div>       
 	</div>
+</section>
+
+	
 		
 	</body>
 </html>

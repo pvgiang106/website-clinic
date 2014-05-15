@@ -34,6 +34,16 @@ Class Mdclinic extends CI_Model {
 		$this->db->update('lich_kham',$data);
 	}
     //Medical Profile menu
+	//get all email have detail of clinic
+	function getallemailinprofile($id_phongkham){
+		$this->db->select('email');
+		$this->db->distinct();
+		$this->db->from('chi_tiet_kham');
+		$this->db->where('id_phongkham',$id_phongkham);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	//get profile of one email
     function getprofile($email,$id_phongkham){
         $this->db->from('chi_tiet_kham');
         $this->db->where('email',$email);
@@ -56,6 +66,34 @@ Class Mdclinic extends CI_Model {
 		}
         return $result;             
     }
+	function getallIdLichkham(){
+		$this->db->select('id_lichkham');
+		$this->db->from('lich_kham');
+		//$this->db->where('email',$email);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	function checkmedicalprofile($id_chitiet){
+		$this->db->from('chi_tiet_kham');
+		$this->db->where('id_chitiet',$id_chitiet);
+		$query = $this->db->get();
+		if($query){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function updateMedicalprofile($data){
+		$this->db->where('id_chitiet',$data['id_chitiet']);
+		$this->db->update('chi_tiet_kham',$data);
+	}
+	function insertMedicalprofile($data){
+		$this->db->insert('chi_tiet_kham',$data);
+	}
+	function deleteMedicalprofile($id_chitiet){
+		$this->db->where('id_chitiet',$id_chitiet);
+		$this->db->delete('chi_tiet_kham');
+	}
     //Setuptime menu
     function insertAvailableTime($data) {
         $this->db->insert('lich_phongkham',$data);

@@ -22,6 +22,12 @@
 			background: #EBF3EC;
 		}
 	</style>
+	<script>
+		function change_mp_email(){
+			var email = document.getElementById('mp_email').value;
+			window.location.href="medicalprofile?email="+email;
+		}
+	</script>
 <?php
     $this->load->view($module . '/' . $view_file);
 ?>
@@ -40,6 +46,28 @@
 		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'></label>
 		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'></label>
 	</nav>
+	<!-- Appoitment tab -->
+	<?php if($tab == 0) {?>
+	
+	<?php } ?>
+	<!-- Medical Profile tab -->
+	<?php if($tab == 1){ ?>
+		<lable> Email: 
+		<select name="mp_email" id="mp_email" onchange="change_mp_email();">
+		<?php foreach($allemail as $row) { ?>
+			<option value="<?php echo $row->email ;?>" <?php if(isset($_GET['email']) && $row->email == $_GET['email']) {echo 'selected="selected"';}?>><?php echo $row->email ;?></option>
+		<?php } ?>
+		</select>
+	</lable>
+	<?php } ?>
+	<!-- Setuptime tab -->
+	<?php if($tab == 2) { ?>
+	
+	<?php } ?>
+	<!-- Waiting appointment tab -->
+	<?php if($tab == 3) { ?>
+	
+	<?php } ?>
 	
 	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:90%;'>
 		<div class="dhx_cal_navline">

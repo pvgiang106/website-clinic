@@ -52,10 +52,10 @@
 			return true;
 		});
 		//end save action
+		
 		//Delete attachEvent
-		scheduler.attachEvent("onEventDeleted",function(id,event){			
-				window.location.href ="medicalprofile/deleteData?id_chitiet="+id+"&email="+event.email;
-			return true;
+		scheduler.attachEvent("onEventDeleted",function(id,event){
+			window.location.href ="medicalprofile/deleteData?id_chitiet="+id+"&email="+event.email;
 		});
 		//end delete action
 		scheduler.templates.lightbox_header = function(start, end, event){

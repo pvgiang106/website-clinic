@@ -1,3 +1,7 @@
+<?php
+	//var_dump($jsoncode);
+?>
+
 <script type="text/javascript" charset="utf-8">	
 	function init() {
 		

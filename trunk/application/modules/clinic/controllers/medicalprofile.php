@@ -46,8 +46,11 @@ class Medicalprofile extends MX_Controller {
 				$temp['mach'] = $row->mach;
 				$temp['text'] = $row->chuan_doan;
 				$temp['loi_khuyen'] = $row->loi_khuyen;
-				$temp['start_date'] = $row->thoigian_batdau;
-				$temp['end_date'] = $row->thoigian_ketthuc;								
+				$day = $row->ngay_kham;
+				$start_time = $row->thoigian_batdau;
+				$end_time = $row->thoigian_ketthuc;
+				$temp['start_date'] = $day.' '.$start_time;
+				$temp['end_date'] = $day.' '.$end_time;								
 				$temp['chi_phi'] = $row->chi_phi;
 				
 			 array_push($response,$temp);
@@ -74,7 +77,7 @@ class Medicalprofile extends MX_Controller {
 					"mach" => $_GET['mach'],
 					"chi_phi" => $_GET['chi_phi']
 				);
-		if($this->mdclinic->checkmedicalprofile($_GET['id_chitiet']) == false){
+		if($this->mdclinic->checkmedicalprofile($_GET['id_chitiet']) == true){
 			$this->mdclinic->updateMedicalprofile($data);
 			redirect('/clinic/medicalprofile?email='.$_GET['email'],'refresh');
 		}else{
@@ -83,10 +86,15 @@ class Medicalprofile extends MX_Controller {
 			redirect('/clinic/medicalprofile?email='.$_GET['email'],'refresh');
 		}
 	}
-	function deleteData(){
-		$id_chitiet = $_GET['id_chitiet'];
-		$this->mdclinic->deleteMedicalprofile($id_chitiet);
-		redirect('/clinic/medicalprofile?email='.$_GET['email'],'refresh');
+	function deleteData(){		
+		if($_GET['email'] != 'undefined'){
+			$id_chitiet = $_GET['id_chitiet'];
+			$this->mdclinic->deleteMedicalprofile($id_chitiet);
+			redirect('/clinic/medicalprofile?email='.$_GET['email'],'refresh');
+		}
+		else{
+			redirect('/clinic/medicalprofile','refresh');
+		}
 	}
 	
 }

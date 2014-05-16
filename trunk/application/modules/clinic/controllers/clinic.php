@@ -28,8 +28,11 @@ class Clinic extends MX_Controller {
 		foreach($lichkham as $row) {
 			$temp = array();
 			$temp['id'] = $row->id_lichkham;
-			$temp['start_date'] = $row->thoigian_batdau;
-			$temp['end_date'] = $row->thoigian_ketthuc; 
+			$day = $row->ngay_kham;
+			$start_time = $row->thoigian_batdau;
+			$temp['start_date'] = $day.' '.$start_time;
+			$end_time = $row->thoigian_ketthuc; 
+			$temp['end_date'] = $day.' '.$end_time; 
 			$temp['reason'] = $row->li_do_kham; 
 			$temp['text'] = $row->email;
 		 array_push($response,$temp);

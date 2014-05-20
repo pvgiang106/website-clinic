@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 	$tab0 = base_url().'clinic';
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/setuptime';
-	$tab3 = base_url().'clinic/waitingappointment';
+	$tab3 = base_url().'clinic/faqs';
 ?>
 <!DOCTYPE html>
 <html >
@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Access the desktop camera and video using HTML, JavaScript, and Canvas.  The camera may be controlled using HTML5 and getUserMedia." />
 	<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.js'); ?>" ></script>
+	<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/ext/dhtmlxscheduler_limit.js'); ?>" ></script>
 	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.css'); ?>" />
 	
 	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/style_menuclinic.css'); ?>" />
@@ -20,6 +21,24 @@
 			width:1170px;
 			margin:auto;
 			background: #EBF3EC;
+		}
+		/*style for timeavailable in view */
+		.green_section {
+			background-color: #12be00;
+			opacity: 0.25;
+			filter:alpha(opacity=25);
+			border-bottom:solid 1px #000000;
+		}
+		/*style for appointment in view */
+		.my_event {
+			background-color: #add8e6;
+			border: 1px solid #778899;
+			height:20px !important;
+			overflow: hidden;
+		}
+		.my_event .event_date {
+			font-weight: bold;
+			padding-right: 5px;
 		}
 	</style>
 	<script>
@@ -41,14 +60,16 @@
 	<input type="radio" id="books" value="4" name="tractor"  <?php if($tab == 3) echo "checked='checked'"; ?> />
 	
 	<nav>   
-		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'></label>
-		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'></label>
-		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'></label>
-		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'></label>
+		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>DANH SÁCH CUỘC HẸN</label>
+		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>LỊCH SỬ KHÁM BỆNH</label>
+		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'>CÀI ĐẶT THỜI GIAN</label>
+		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'>HỞI-ĐÁP</label>
 	</nav>
 	<!-- Appoitment tab -->
 	<?php if($tab == 0) {?>
-	
+		<button onclick="window.location.href='?task=appointment';">Danh sách cuộc hẹn</button>
+		<button onclick="window.location.href='?task=medicalprofile';">Chi tiết khám</button>
+		<button onclick="window.location.href='?task=setup_time';">Cài đặt thời gian</button>
 	<?php } ?>
 	<!-- Medical Profile tab -->
 	<?php if($tab == 1){ ?>

@@ -1,10 +1,24 @@
-<?php
+﻿<?php
 	//var_dump($jsoncode);
 ?>
 <script type="text/javascript" charset="utf-8">	
 	function init() {
 		
+		var step = 60;
+		var format = scheduler.date.date_to_str("%H:%i");
+		
+		scheduler.config.hour_size_px=(60/step)*88;
+		scheduler.templates.hour_scale = function(date){
+			html="";
+			for (var i=0; i<60/step; i++){
+				html+="<div style='height:10px;line-height:10px;'>"+format(date)+"</div>";
+				date = scheduler.date.add(date,step,"minute");
+			}
+			return html;
+		}
+		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
+		scheduler.config.time_step  = 60;
 		scheduler.config.first_hour = 7;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
@@ -13,7 +27,8 @@
 		scheduler.config.drag_move = 0;
 		//scheduler.config.readonly = true;
 		//Customer lightbox section lable
-		scheduler.locale.labels.section_quantity = 'Quantity';
+		scheduler.locale.labels.section_socakham = 'Số ca khám';
+		scheduler.locale.labels.section_soluongkham = 'Số lượng khám';
 
 
 		//Save attachEvent
@@ -23,7 +38,7 @@
 				return false;
 			}
 			else{
-				window.location.href ="setuptime/updateData?ngay_kham="+id+"&start_date="+event.start_date+"&end_date="+event.end_date+"&so_luong_kham="+event.text;
+				window.location.href ="setuptime/insertData?ngay_kham="+id+"&start_date="+event.start_date+"&end_date="+event.end_date+"&so_luong_kham="+event.text;
 			}
 			return true;
 		});
@@ -35,14 +50,15 @@
 		});
 		//end delete action
 		scheduler.templates.lightbox_header = function(start, end, event){
-			return "Create new availabletime";
+			return "Cài đặt lịch khám mới";
 		}
 		scheduler.attachEvent("onEventCreated", function(id){
-			scheduler.getEvent(id).text = "5";
+			scheduler.getEvent(id).text = "1";
 		});
 		var restricted_lightbox = [
 				{ name: "time", height: 50, map_to: "auto", type: "time"},
-				{ name: "quantity", height: 50, map_to: "text", type: "textarea", focus:true},
+				{ name: "socakham", height: 50, map_to: "text", type: "textarea", focus:true},
+				{ name: "soluongkham",height: 50, map_to: "soluongkham",type: "textarea"}
 			];
 
 		scheduler.config.lightbox.sections = restricted_lightbox

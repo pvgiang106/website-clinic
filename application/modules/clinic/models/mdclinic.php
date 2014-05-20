@@ -23,8 +23,11 @@ Class Mdclinic extends CI_Model {
 		$this->db->update('lich_kham',$data);
 	}
 	function deleteAppointment($id_lichkham){
+		$data = array(
+					'status' => 0
+				);
 		$this->db->where('id_lichkham',$id_lichkham);
-		$this->db->delete('lich_kham');
+		$this->db->update('lich_kham',$data);
 	}
 	function updataAppointment($id_lichkham,$li_do_kham){
 		$data = array(
@@ -106,12 +109,12 @@ Class Mdclinic extends CI_Model {
     function insertAvailableTime($data) {
         $this->db->insert('lich_phongkham',$data);
     }
-	function updateAvailableTime($id_phongkham,$ngay_kham,$thoigian_batdau,$thoigian_ketthuc,$data) {
+	function deleteAvailableTime($id_phongkham,$ngay_kham,$thoigian_batdau,$thoigian_ketthuc) {
         $this->db->where('id_phongkham',$id_phongkham);
 		$this->db->where('ngay_kham',$ngay_kham);
 		$this->db->where('thoigian_batdau',$thoigian_batdau);
 		$this->db->where('thoigian_ketthuc',$thoigian_ketthuc);
-        $this->db->update('lich_phongkham',$data);
+        $this->db->delete('lich_phongkham');
     }      
     
 }

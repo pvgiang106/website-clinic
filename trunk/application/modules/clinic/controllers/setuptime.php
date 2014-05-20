@@ -43,7 +43,7 @@ class Setuptime extends MX_Controller {
         $data['view_file'] = 'view_set_available_time';
         echo Modules::run('clinic/layout/render',$data);
     }
-	function updateData(){
+	function insertData(){
 		
 		$availabletime = $this->mdclinic->getAvailableTime($this->session->userdata['logged_in']['id_phongkham']);
 		
@@ -53,17 +53,24 @@ class Setuptime extends MX_Controller {
 		$start_date_int = strtotime($day_start_string);
 		$end_date_int = strtotime($day_end_string);
 		
+		$socakham = $_GET['socakham'];
+		$thoigiancakham = ($end_date_int - $start_date_int)/$socakham;
+		
 		$start_time = date('H:i',$start_date_int);
 		$end_time = date('H:i',$end_date_int);
 		$ngay_kham = date("Y-m-d",$start_date_int);
 		
-		$data = array(
-			"id_phongkham" => $this->session->userdata['logged_in']['id_phongkham'],
-			"ngay_kham" => $ngay_kham,
-			"thoigian_batdau" => $start_time,
-			"thoigian_ketthuc" => $end_time,
-			"so_luong_kham" => $_GET['so_luong_kham'],
-		);
+		$data = array();
+		
+		for($i = 0;$i<$socakham;$i++){
+			$data[$i] = array(
+				"id_phongkham" => $this->session->userdata['logged_in']['id_phongkham'],
+				"ngay_kham" => $ngay_kham,
+				"thoigian_batdau" => date('H:i',strtotime($start_time)+$i*$thoigiancakham),
+				"thoigian_ketthuc" => date('H:i',strtotime($start_time)+($i+1)*$thoigiancakham),
+				"so_luong_kham" => $_GET['soluongkham']
+			);
+		}
 		$flag = true;
 		foreach($availabletime as $row){
 			if($ngay_kham == $row->ngay_kham){
@@ -79,15 +86,17 @@ class Setuptime extends MX_Controller {
 				}
 			}
 		}
-		$today = date('today');
+		var_dump($flag);
+		$today = date('Y-m-d');
+		var_dump($ngay_kham);
 		if($ngay_kham < $today){
 			$flag = false;
 		}
+		
 		if($flag == true){
-			$this->mdclinic->insertAvailableTime($data);
-			redirect('/clinic/setuptime','refresh');
-		}else{
-			echo "<script> alert('This time has setup before or this time is past'); </script>";
+			for($i=0;$i<$socakham;$i++){
+				$this->mdclinic->insertAvailableTime($data[$i]);
+			}
 			redirect('/clinic/setuptime','refresh');
 		}
 		

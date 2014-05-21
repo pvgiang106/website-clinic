@@ -17,7 +17,17 @@ class Layout extends MX_Controller {
         // render view
         $data['tab'] = ($this->session->userdata('tab') == null) ? 0 : $this->session->userdata('tab');
         $this->load->helper('third_library');
-		$this->load->view('clinic/view_layout', $data);
+		switch($data['view_file']){
+			case 'view_medical_user':
+				$this->load->view('clinic/view_medical_user',$data);
+				break;
+			case 'view_medical_profile':
+				$this->load->view('clinic/view_medical_profile',$data);
+				break;
+			default:
+				$this->load->view('clinic/view_layout', $data);
+
+		}
     }
 }
 

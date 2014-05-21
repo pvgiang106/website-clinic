@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -43,6 +43,9 @@ class Clinic extends MX_Controller {
 		//end appointment
 		//get and send available time
         $availabletime = $this->mdclinic->getAvailableTime($data['id_phongkham']);
+		
+		$first_hour = 24;// chia lich
+		$last_hour = 0;
 		$response = array();
 		$i = 0;
 		foreach($availabletime as $row) {
@@ -54,9 +57,13 @@ class Clinic extends MX_Controller {
 			$temp['start_date'] = $day.' '.$start_time;
 			$temp['end_date'] = $day.' '.$end_time;
 			$temp['text'] = $row->so_luong_kham;
+			if($first_hour > $start_time){$first_hour = $start_time;}
+			if($last_hour < $end_time){$last_hour = $end_time;}
 			$i++;
 		 array_push($response,$temp);
 		}
+		$data['first_hour'] = $first_hour;
+		$data['last_hour'] = $last_hour;
 		$data['json_availabletime'] = json_encode($response);
 		$data['availabletime'] = $availabletime;
         //end available tiem
@@ -70,14 +77,18 @@ class Clinic extends MX_Controller {
 	}
 	function deleteData(){
 		$id_lichkham = $_GET['id_lichkham'];
-		$today = date("Y-m-d");
+		$today = date("Y-m-d H:i");
+		var_dump($today);
 		$appoitment = $this->mdclinic->getInfoAppointment($id_lichkham);
-		$appointment_day = $appoitment[0]->ngay_kham;
-		if(strtotime($today)>strtotime($appointment_day)){
+		$temp_day = $appoitment[0]->ngay_kham;
+		$temp_endtime = $appoitment[0]->thoigian_ketthuc;
+		$appointment_day = $temp_day.' '.$temp_endtime;
+		var_dump($appointment_day);
+		if($today>$appointment_day){
 			echo "<script>alert('Cuoc hen da duoc thuc hien, khong the xoa');</script>";
 			redirect('/clinic','refresh');
 		}else{
-			$this->mdclinic->deleteAppointment($id_lichkham);
+			//$this->mdclinic->deleteAppointment($id_lichkham);
 			redirect('/clinic','refresh');
 		}
 	}

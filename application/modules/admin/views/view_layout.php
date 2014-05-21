@@ -1,3 +1,7 @@
+﻿<?php
+	$tab0 = base_url().'admin';
+	$tab1 = base_url().'index.php/admin/adminclinic';
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,18 +23,21 @@
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.js');?>"></script>
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.widgets.js');?>"></script>
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.custom.js');?>"></script>
-
+<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/style_menuclinic.css'); ?>" />
 <!-- add on pager plugin tablesorter -->
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.pager.js');?>"></script>
     </head>
-    <body class="container">
-        <div class="row">
-            <ul class="nav nav-pills">
-                <li <?php if($tab == 0) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>admin">Manager User</a></li>
-                <li <?php if($tab == 1) echo "class='active'"; ?>><a href="<?php echo base_url(); ?>index.php/admin/adminclinic">Manager Clinic</a></li>
-            </ul>
-        </div>
-        <div class="row">
+    <body >
+        <section>		
+            <input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
+			<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
+
+			
+			<nav>   
+				<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>QUẢN LÍ NGƯỜI DÙNG</label>
+				<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>QUẢN LÍ PHÒNG KHÁM</label>
+
+			</nav>
             <?php
             $this->load->view($module . '/' . $view_file);
             ?>
@@ -50,7 +57,7 @@
               </select>
             </form>
           </div>
-        </div>
+        </section>
         <script type="text/javascript">
             $(document).ready(function() {
                  $("table").tablesorter().tablesorterPager({container: $(".pager")});    

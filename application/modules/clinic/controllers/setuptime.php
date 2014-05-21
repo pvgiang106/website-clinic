@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -22,7 +22,10 @@ class Setuptime extends MX_Controller {
         $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
         // get all appoitment in database
         $availabletime = $this->mdclinic->getAvailableTime($data['id_phongkham']);
+		
 		$response = array();
+		$first_hour = 24;// chia lich
+		$last_hour = 0;
 		$i = 0;
 		foreach($availabletime as $row) {
 			$temp = array();
@@ -33,10 +36,14 @@ class Setuptime extends MX_Controller {
 			$temp['start_date'] = $day.' '.$start_time;
 			$temp['end_date'] = $day.' '.$end_time;
 			$temp['text'] = $row->so_luong_kham;
+			if($first_hour > $start_time){$first_hour = $start_time;}
+			if($last_hour < $end_time){$last_hour = $end_time;}
 			$i++;
 		 array_push($response,$temp);
 		}
-		$data['jsoncode'] = json_encode($response);
+		$data['first_hour'] = $first_hour;
+		$data['last_hour'] = $last_hour;
+		$data['json_timeavailable'] = json_encode($response);
         
         $data['availabletime'] = $availabletime;
         $data['module'] = 'clinic';
@@ -86,7 +93,6 @@ class Setuptime extends MX_Controller {
 				}
 			}
 		}
-		var_dump($flag);
 		$today = date('Y-m-d');
 		var_dump($ngay_kham);
 		if($ngay_kham < $today){
@@ -99,7 +105,32 @@ class Setuptime extends MX_Controller {
 			}
 			redirect('/clinic/setuptime','refresh');
 		}
+		else{
+			echo "<script> alert('Thời gian đã qua hoặc đã được cài đặt trước đó');</script>";
+			redirect('/clinic/setuptime','refresh');
+		}
 		
+	}
+	function deleteData(){
+		$id_phongkham = $this->session->userdata['logged_in']['id_phongkham'];
+		
+		$day_start_string = substr( $_GET['start_date'], 4, 17 );
+		$day_end_string = substr( $_GET['end_date'], 4, 17 );
+
+		$start_date_int = strtotime($day_start_string);
+		$end_date_int = strtotime($day_end_string);
+		
+		$start_time = date('H:i',$start_date_int);
+		$end_time = date('H:i',$end_date_int);
+		$ngay_kham = date("Y-m-d",$start_date_int);
+		$today = date('Y-m-d');
+		if($ngay_kham < $today){
+			echo "<script> alert('Thời gian đã qua, không thể hủy');</script>";
+			redirect('/clinic/setuptime','refresh');
+		}else{
+			$this->mdclinic->deleteAvailableTime($id_phongkham,$ngay_kham,$start_time,$end_time);
+			redirect('/clinic/setuptime','refresh');
+		}
 	}
 }
 

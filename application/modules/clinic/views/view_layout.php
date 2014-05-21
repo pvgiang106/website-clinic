@@ -3,6 +3,7 @@
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/setuptime';
 	$tab3 = base_url().'clinic/faqs';
+
 ?>
 <!DOCTYPE html>
 <html >
@@ -15,12 +16,15 @@
 	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/plugin/dhtmlxscheduler/dhtmlxscheduler.css'); ?>" />
 	
 	<link rel="stylesheet" href="<?php echo base_url('/assets/systemfile/css/style_menuclinic.css'); ?>" />
-
+	<?php
+        //echo loadBootstrap3_css();
+    ?>
 	<style>
 		body{
 			width:1170px;
 			margin:auto;
 			background: #EBF3EC;
+			font-size:14px;
 		}
 		/*style for timeavailable in view */
 		.green_section {
@@ -40,6 +44,7 @@
 			font-weight: bold;
 			padding-right: 5px;
 		}
+
 	</style>
 	<script>
 		function change_mp_email(){
@@ -51,25 +56,21 @@
     $this->load->view($module . '/' . $view_file);
 ?>
 </head>
-    <body onload="init();" >
-	<!-- Menu 2 -->
+    <body onload="init();" ><!-- Menu 2 -->
 <section>
-	<input type="radio" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
-	<input type="radio" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
-	<input type="radio" id="posts" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />
-	<input type="radio" id="books" value="4" name="tractor"  <?php if($tab == 3) echo "checked='checked'"; ?> />
+	<input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
+	<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
+	<input type="radio" style="display:none;" id="posts" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />
+	<input type="radio" style="display:none;" id="books" value="4" name="tractor"  <?php if($tab == 3) echo "checked='checked'"; ?> />
 	
 	<nav>   
 		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>DANH SÁCH CUỘC HẸN</label>
 		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>LỊCH SỬ KHÁM BỆNH</label>
 		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'>CÀI ĐẶT THỜI GIAN</label>
-		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'>HỞI-ĐÁP</label>
+		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'>HỎI - ĐÁP</label>
 	</nav>
 	<!-- Appoitment tab -->
 	<?php if($tab == 0) {?>
-		<button onclick="window.location.href='?task=appointment';">Danh sách cuộc hẹn</button>
-		<button onclick="window.location.href='?task=medicalprofile';">Chi tiết khám</button>
-		<button onclick="window.location.href='?task=setup_time';">Cài đặt thời gian</button>
 	<?php } ?>
 	<!-- Medical Profile tab -->
 	<?php if($tab == 1){ ?>

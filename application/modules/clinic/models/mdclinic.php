@@ -46,6 +46,19 @@ Class Mdclinic extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+	//get infomation of user had detail medical
+	function getInfoUser($id_phongkham){
+		$email_arr = $this->getallemailinprofile($id_phongkham);
+		$result = array();
+		foreach($email_arr as $row){
+			$this->db->from('user_customer');
+			$this->db->where('email',$row->email);
+			$query = $this->db->get();
+			$temp = $query->result();
+			array_push($result,$temp[0]);
+		}
+		return $result;
+	}
 	//get profile of one email
     function getprofile($email,$id_phongkham){
         $this->db->from('chi_tiet_kham');

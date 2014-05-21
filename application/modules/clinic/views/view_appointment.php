@@ -2,9 +2,14 @@
 	//var_dump($json_appointment);
 	//var_dump($json_availabletime);
 	//var_dump($availabletime);
-	if(isset($_GET['task'])) {$task = $_GET['task'];} else { $task = 'appointment'; };
+	if(isset($_GET['task'])) {$task = $_GET['task'];} else { $task = 'appointment'; }
+	
+	$temp_fh = substr($first_hour,0,2);
+	$temp_lh = substr($last_hour,0,2);
+	$temp_li = substr($last_hour,3,2);
+	if($temp_li != '00'){$temp_lh++;}
+	
 ?>
-
 <script type="text/javascript" charset="utf-8">	
 	function init() {
 		var json_availabletime = <?php echo $json_availabletime;?>;
@@ -22,8 +27,12 @@
 			return html;
 		}
 		//end scale hours
+		var first_hour = <?php echo '\''.$temp_fh.'\''; ?>;
+		var last_hour = <?php echo '\''.$temp_lh.'\'' ;?>;
+		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		scheduler.config.first_hour = 7;
+		scheduler.config.first_hour = first_hour;
+		scheduler.config.last_hour = last_hour;
 		scheduler.config.time_step  = 15;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
@@ -62,7 +71,7 @@
 			return true; // required, true - we've created custom form; false - display default one instead
 			};
 	//end test code	
-		scheduler.locale.labels.section_reason = 'Reason';
+		scheduler.locale.labels.section_reason = 'Lí do khám';
 		
 		var size_availabletime = <?php echo sizeof($availabletime);?>;
 		for(i=0;i<size_availabletime;i++){

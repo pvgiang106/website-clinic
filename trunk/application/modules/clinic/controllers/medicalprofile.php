@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -18,50 +18,29 @@ class Medicalprofile extends MX_Controller {
     }
 
     function index() {
-        $this->session->set_userdata('tab', 1);
+		$this->session->set_userdata('tab', 1);
+        $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
+		
+		$data['info_user'] = $this->mdclinic->getInfoUser($data['id_phongkham']);
+		$data['module'] = 'clinic';
+		$data['view_file'] = 'view_medical_user';
+		echo Modules::run('clinic/layout/render',$data);
+    }
+	//chi tiet kham benh nhan
+	function medicaluserprofile(){
 		$data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
 		//get all id_lichkham
 		$data['allid_lichkham'] = $this->mdclinic->getallIdLichkham();
-		//Get allemail customer
-		$data['allemail'] = $this->mdclinic->getallemailinprofile($data['id_phongkham']);
-		if(isset($_GET['email'])){
-			$email = $_GET['email'];
-		}else{
-			$email = $data['allemail'][0]->email;
-		}
-			// get all appoitment in database
-			$chitietkham = $this->mdclinic->getprofile($email,$data['id_phongkham']);
-			
-			$response = array();
-			foreach($chitietkham as $row) {
-				$temp = array();
-				$temp['id'] = $row->id_chitiet;
-				$temp['email'] = $row->email;
-				$temp['id_phongkham'] = $row->id_phongkham;
-				$temp['id_lichkham'] = $row->id_lichkham;
-				$temp['reason'] = $row->li_do_kham;
-				$temp['trieu_chung'] = $row->trieu_chung;
-				$temp['nhiet_do'] = $row->nhiet_do;
-				$temp['huyet_ap'] = $row->huyet_ap; 
-				$temp['mach'] = $row->mach;
-				$temp['text'] = $row->chuan_doan;
-				$temp['loi_khuyen'] = $row->loi_khuyen;
-				$day = $row->ngay_kham;
-				$start_time = $row->thoigian_batdau;
-				$end_time = $row->thoigian_ketthuc;
-				$temp['start_date'] = $day.' '.$start_time;
-				$temp['end_date'] = $day.' '.$end_time;								
-				$temp['chi_phi'] = $row->chi_phi;
-				
-			 array_push($response,$temp);
-			}
-		    $data['jsoncode'] = json_encode($response);		
-			$data['chitietkham'] = $chitietkham;
-			
-			$data['module'] = 'clinic';
-			$data['view_file'] = 'view_medical_profile';
-			echo Modules::run('clinic/layout/render',$data);
-    }
+		//get email
+		$email = $_GET['email'];
+		// get all appoitment in database
+		$chitietkham = $this->mdclinic->getprofile($email,$data['id_phongkham']);		
+		$data['detailprofile'] = $chitietkham;
+		
+		$data['module'] = 'clinic';
+		$data['view_file'] = 'view_medical_profile';
+		echo Modules::run('clinic/layout/render',$data);
+	}
 	//Update medical profile
 	function updateData(){
 		$data = array(

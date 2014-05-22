@@ -72,7 +72,7 @@
 										<td><?php echo $row->phone ?></td>
 										<td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice ?></td> 
 										<td><?php echo $row->sex ?></td>
-										<td><a href="medicalprofile/medicaluserprofile?email=<?php echo $row->email ?>&name=<?php echo $row->mid_name; echo ' '; echo $row->name; ?>" >Lịch sử</a></td>
+										<td ><a href="medicalprofile/medicaluserprofile?email=<?php echo $row->email ?>&name=<?php echo $row->mid_name; echo ' '; echo $row->name; ?>" >Xem</a></td>
 									</tr>  
 									<?php
 									$number += 1;

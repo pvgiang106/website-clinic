@@ -38,17 +38,17 @@ Class Mdclinic extends CI_Model {
 	}
     //Medical Profile menu
 	//get all email have detail of clinic
-	function getallemailinprofile($id_phongkham){
+	function getallemailinlichkham($id_phongkham){
 		$this->db->select('email');
 		$this->db->distinct();
-		$this->db->from('chi_tiet_kham');
+		$this->db->from('lich_kham');
 		$this->db->where('id_phongkham',$id_phongkham);
 		$query = $this->db->get();
 		return $query->result();
 	}
 	//get infomation of user had detail medical
 	function getInfoUser($id_phongkham){
-		$email_arr = $this->getallemailinprofile($id_phongkham);
+		$email_arr = $this->getallemailinlichkham($id_phongkham);
 		$result = array();
 		foreach($email_arr as $row){
 			$this->db->from('user_customer');
@@ -83,10 +83,11 @@ Class Mdclinic extends CI_Model {
 		}
         return $result;             
     }
-	function getallIdLichkham(){
-		$this->db->select('id_lichkham');
+	function getallIdLichkham($id_phongkham,$email){
 		$this->db->from('lich_kham');
-		//$this->db->where('email',$email);
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('email',$email);
+		$this->db->where('status',1);
 		$query = $this->db->get();
 		return $query->result();
 	}

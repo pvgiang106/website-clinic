@@ -9,7 +9,7 @@
 		var step = 60;
 		var format = scheduler.date.date_to_str("%H:%i");
 
-		scheduler.config.hour_size_px=(60/step)*88;
+		scheduler.config.hour_size_px=(60/step)*176;
 		scheduler.templates.hour_scale = function(date){
 			html="";
 			for (var i=0; i<60/step; i++){
@@ -21,7 +21,7 @@
 		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
 		scheduler.config.time_step  = 60;
-
+		scheduler.config.first_hour = 5;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
 		scheduler.config.dblclick_create = true;
@@ -40,14 +40,14 @@
 				return false;
 			}
 			else{
-				window.location.href ="setuptime/insertData?start_date="+event.start_date+"&end_date="+event.end_date+"&socakham="+event.socakham+"&soluongkham="+event.text;
+				window.location.href ="clinic/insertAvailableTime?start_date="+event.start_date+"&end_date="+event.end_date+"&socakham="+event.socakham+"&soluongkham="+event.text;
 			}
 			return true;
 		});
 		//end save action
 		//Delete attachEvent
 		scheduler.attachEvent("onEventDeleted",function(id,event){			
-				window.location.href ="setuptime/deleteData?start_date="+event.start_date+"&end_date="+event.end_date;
+				window.location.href ="clinic/deleteAvailableTime?start_date="+event.start_date+"&end_date="+event.end_date;
 			return true;
 		});
 		//end delete action
@@ -65,7 +65,7 @@
 
 		scheduler.config.lightbox.sections = restricted_lightbox
 		scheduler.init('scheduler_here',new Date(),"week");
-		var events = <?php echo $json_timeavailable ; ?>;
+		var events = <?php echo $json_availabletime ; ?>;
 		scheduler.parse(events,"json");
 		}
 </script>	

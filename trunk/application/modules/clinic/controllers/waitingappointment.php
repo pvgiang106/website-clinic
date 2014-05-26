@@ -22,7 +22,7 @@ class Waitingappointment extends MX_Controller {
         $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
         // get all appoitment in database
         $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
-       $response = array();
+		$response = array();
 		foreach($waitingappoitment as $row) {
 			$temp = array();
 			$temp['id'] = $row->id_lichkham;

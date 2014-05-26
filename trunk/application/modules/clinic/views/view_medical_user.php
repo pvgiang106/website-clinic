@@ -23,7 +23,14 @@
 		<?php
         echo loadBootstrap3_js();
         ?>
-
+		<style>
+				*{
+				  -webkit-box-sizing: border-box;
+					 -moz-box-sizing: border-box;
+						  box-sizing: border-box;
+					
+				}
+		</style>
 		<!-- plugin tablesorter -->
 		<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.js');?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.widgets.js');?>"></script>
@@ -42,7 +49,7 @@
 				
 				<nav>   
 					<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>DANH SÁCH CUỘC HẸN</label>
-					<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>LỊCH SỬ KHÁM BỆNH</label>
+					<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>QUẢN LÝ BỆNH NHÂN</label>
 					<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'>CÀI ĐẶT THỜI GIAN</label>
 					<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'>HỎI - ĐÁP</label>
 				</nav>

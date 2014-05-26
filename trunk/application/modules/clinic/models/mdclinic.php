@@ -29,12 +29,18 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_lichkham',$id_lichkham);
 		$this->db->update('lich_kham',$data);
 	}
-	function updataAppointment($id_lichkham,$li_do_kham){
-		$data = array(
-			"li_do_kham" => $li_do_kham
-		);
+	function insertAppointment($data){		
+		$this->db->insert('lich_kham',$data);
+	}
+	function checkAppointment($id_lichkham){
+		$this->db->from('lich_kham');
 		$this->db->where('id_lichkham',$id_lichkham);
-		$this->db->update('lich_kham',$data);
+		$query = $this->db->get();
+		if($query->num_rows() != 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
     //Medical Profile menu
 	//get all email have detail of clinic

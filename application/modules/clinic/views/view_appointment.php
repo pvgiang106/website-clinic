@@ -8,8 +8,9 @@
 	$temp_lh = substr($last_hour,0,2);
 	$temp_li = substr($last_hour,3,2);
 	if($temp_li != '00'){$temp_lh++;}
-	
+	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
 ?>
+
 <script type="text/javascript" charset="utf-8">	
 	function init() {
 		var json_availabletime = <?php echo $json_availabletime;?>;
@@ -17,7 +18,7 @@
 		var step = 60;
 		var format = scheduler.date.date_to_str("%H:%i");
 		
-		scheduler.config.hour_size_px=(60/step)*88;
+		scheduler.config.hour_size_px=(60/step)*176;
 		scheduler.templates.hour_scale = function(date){
 			html="";
 			for (var i=0; i<60/step; i++){
@@ -27,8 +28,10 @@
 			return html;
 		}
 		//end scale hours
+		//get value form php varible
 		var first_hour = <?php echo '\''.$temp_fh.'\''; ?>;
 		var last_hour = <?php echo '\''.$temp_lh.'\'' ;?>;
+		var task = <?php echo '\''.$view.'\'' ;?>;
 		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
 		scheduler.config.first_hour = first_hour;
@@ -54,7 +57,7 @@
 			html+= "<div class='my_event_body'>";
 				html += "<span class='event_date'>";
 				// two options here: show only start date for short events or start+end for long
-				if ((ev.end_date - ev.start_date) / 60000 > 60) { // if event is longer than 40 minutes
+				if ((ev.end_date - ev.start_date) / 60000 > 14) { // if event is longer than 40 minutes
 					html += scheduler.templates.event_header(ev.start_date, ev.end_date, ev);
 					html += "</span><br/>";
 				} else {
@@ -72,6 +75,7 @@
 			};
 	//end test code	
 		scheduler.locale.labels.section_reason = 'Lí do khám';
+		scheduler.locale.labels.section_email = 'Email';
 		
 		var size_availabletime = <?php echo sizeof($availabletime);?>;
 		for(i=0;i<size_availabletime;i++){
@@ -82,14 +86,17 @@
 			});
 		}
 		scheduler.templates.lightbox_header = function(start, end, event){
-			return "Appoitment with : "+event.text;
+			return "Tạo lịch tái khám của : "+event.text;
 		}
 		var restricted_lightbox = [
-				{ name: "reason", height: 200, map_to: "reason", type: "textarea", focus: true}
+				{ name: "time", height: 50, map_to: "auto", type: "time" },
+				{ name: "email", height: 25, map_to: "text", type: "textarea", focus: true},
+				{ name: "reason", height: 100, map_to: "reason", type: "textarea", focus: true}
+				
 			];
 
 		scheduler.config.lightbox.sections = restricted_lightbox
-		scheduler.init('scheduler_here',new Date(),"week");
+		scheduler.init('scheduler_here',new Date(),"day");
 		
 		var events = <?php echo $json_appointment ; ?>;
 				scheduler.parse(events,"json");
@@ -102,7 +109,7 @@
 				return false;
 			}
 			else{
-				window.location.href ="clinic/updateData?id_lichkham="+id+"&lidokham="+event.reason;
+				window.location.href ="clinic/insertData?id_lichkham="+id+"&lidokham="+event.reason+"&start_date="+event.start_date+"&end_date="+event.end_date+"&email="+event.text;
 			}
 		});
 		//end save action
@@ -111,7 +118,18 @@
 			window.location.href = "clinic/deleteData?id_lichkham="+id;
 		});
 		//end delete action
-		
+		//Click event
+		scheduler.attachEvent("onClick", function (id, event){
+			if(view = 'appointment'){
+				$("#div_detail").show();
+				;
+			}
+			return true;
+		});
+		scheduler.attachEvent("onBeforeLightbox", function (id){
+			$("#div_detail").hide();
+			return true;
+		});
 		}
 </script>	
 

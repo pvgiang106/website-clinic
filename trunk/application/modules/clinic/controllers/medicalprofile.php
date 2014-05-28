@@ -21,7 +21,7 @@ class Medicalprofile extends MX_Controller {
 		$this->session->set_userdata('tab', 1);
         $data['id_phongkham'] = $this->session->userdata['logged_in']['id_phongkham'];
 		
-		$data['info_user'] = $this->mdclinic->getInfoUser($data['id_phongkham']);
+		$data['info_user'] = $this->mdclinic->getInfoAllUser($data['id_phongkham']);
 		$data['module'] = 'clinic';
 		$data['view_file'] = 'view_medical_user';
 		echo Modules::run('clinic/layout/render',$data);
@@ -58,7 +58,7 @@ class Medicalprofile extends MX_Controller {
 				);
 			$this->mdclinic->insertMedicalprofile($data);
 			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name'],'refresh');
-		}
+	}
 	function updateData(){
 		$data = array(
 					"id_chitiet" => $_POST['edit_id_chitiet'],

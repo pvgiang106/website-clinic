@@ -13,7 +13,7 @@
 	$email = $_GET['email'];
 	$name = $_GET['name'];
 	$json_alllichkham = json_encode($all_lichkham);
-//var_dump($detailprofile);
+//var_dump($json_alllichkham);
 ?>
 <!DOCTYPE html>
 <html>
@@ -98,15 +98,16 @@
 					}else{
 						return true;
 					}
-				})
+				});
 			});
 			function openedit(){
 				$("fieldset").removeAttr("disabled");
 				$("#submitform").show();
 			}
 			function canceledit(){
-				$("fieldset").attr("disabled","disabled");
-				$("#submitform").hide();
+				// $("fieldset").attr("disabled","disabled");
+				// $("#submitform").hide();
+				location.reload();
 			}
 		</script>
     </head>
@@ -251,7 +252,7 @@
 								<input type="hidden" name="email" value="<?php echo $email;?>" />
 								<input type="hidden" name="name" value="<?php echo $name;?>" />
 								<button type="submit" class="btn btn-primary">Lưu</button>
-								<button type="button" class="btn btn-warning" onclick="canceledit();">Hủy</button>												
+								<button type="button" class="btn btn-danger" onclick="canceledit();">Hủy</button>												
 							</div>
 						</form>
 						<?php } ?>
@@ -331,7 +332,7 @@
 												<input type="hidden" name="email" value="<?php echo $email;?>" />
 												<input type="hidden" name="name" value="<?php echo $name;?>" />
 												<button type="submit" class="btn btn-primary">Lưu</button>
-												<button type="button" class="btn btn-warning" data-dismiss="modal">Hủy</button>												
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>												
 											</div>
 										</form>
 									</div>

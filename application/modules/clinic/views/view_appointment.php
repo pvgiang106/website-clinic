@@ -2,6 +2,7 @@
 	//var_dump($json_appointment);
 	//var_dump($json_availabletime);
 	//var_dump($availabletime);
+	//var_dump($allCustomer);
 	if(isset($_GET['task'])) {$task = $_GET['task'];} else { $task = 'appointment'; }
 	
 	$temp_fh = substr($first_hour,0,2);
@@ -9,6 +10,7 @@
 	$temp_li = substr($last_hour,3,2);
 	if($temp_li != '00'){$temp_lh++;}
 	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
+
 ?>
 
 <script type="text/javascript" charset="utf-8">	
@@ -40,9 +42,10 @@
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
 		scheduler.config.dblclick_create = false;
-		scheduler.config.drag_resize = 0;
-		scheduler.config.drag_move = 0;
-		scheduler.config.drag_create = 0;
+		//scheduler.config.drag_resize = 0;
+		//scheduler.config.drag_move = 0;
+		//scheduler.config.drag_create = 0;
+		scheduler.config.readonly = true;
 	//test code section	
 		scheduler.templates.event_class = function(start, end, event) {
 				return "my_event";
@@ -75,7 +78,7 @@
 			};
 	//end test code	
 		scheduler.locale.labels.section_reason = 'Lí do khám';
-		scheduler.locale.labels.section_email = 'Email';
+		scheduler.locale.labels.section_name = 'Bệnh nhân';
 		
 		var size_availabletime = <?php echo sizeof($availabletime);?>;
 		for(i=0;i<size_availabletime;i++){
@@ -90,7 +93,7 @@
 		}
 		var restricted_lightbox = [
 				{ name: "time", height: 50, map_to: "auto", type: "time" },
-				{ name: "email", height: 25, map_to: "text", type: "textarea", focus: true},
+				{ name: "name", height: 25, map_to: "text", type: "textarea", focus: true},
 				{ name: "reason", height: 100, map_to: "reason", type: "textarea", focus: true}
 				
 			];
@@ -109,7 +112,7 @@
 				return false;
 			}
 			else{
-				window.location.href ="clinic/insertData?id_lichkham="+id+"&lidokham="+event.reason+"&start_date="+event.start_date+"&end_date="+event.end_date+"&email="+event.text;
+				window.location.href ="clinic/insertData?id_lichkham="+id+"&lidokham="+event.reason+"&start_date="+event.start_date+"&end_date="+event.end_date+"&email="+event.email;
 			}
 		});
 		//end save action
@@ -119,18 +122,138 @@
 		});
 		//end delete action
 		//Click event
-		scheduler.attachEvent("onClick", function (id, event){
+		scheduler.attachEvent("onClick", function (id, e){
 			if(view = 'appointment'){
 				$("#div_detail").show();
-				;
+				$('#div_create').hide();
+				var start_date = scheduler.getEventStartDate(id);
+				var end_date = scheduler.getEventEndDate(id);
+				var dateEvent = start_date.getDate();
+				var monthEvent = start_date.getMonth()+1;
+				var yearEvent = start_date.getFullYear();
+				var start_hours = start_date.getHours();
+				var end_hours = end_date.getHours();
+				var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}
+				var end_time = end_date.getMinutes(); if(end_time == 0){end_time = '00';}
+				var lido = scheduler.getEvent(id).reason;
+				var email = scheduler.getEvent(id).email
+				var benhnhan = scheduler.getEvent(id).text
+				
+				//frm chi tietkham
+				document.getElementById("ngay_kham").value = yearEvent+'-'+monthEvent+'-'+dateEvent;
+				document.getElementById("thoigian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
+				document.getElementById("lidokham").value = lido;
+				document.getElementById("id_lichkham").value = id;				
+				document.getElementById("email").value = email;
+				//frm chi tiet cuoc hen
+				document.getElementById("benhnhan").value = benhnhan;
+				document.getElementById("ct_id_lichkham").value = id;
+				document.getElementById("ct_ngay_kham").value = yearEvent+'-'+monthEvent+'-'+dateEvent;
+				document.getElementById("ct_thoi_gian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
+				document.getElementById("ct_ngaykham").value = yearEvent+'-'+monthEvent+'-'+dateEvent;
+				document.getElementById("ct_thoigian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
+				document.getElementById("ct_lido").value = lido;
+				//frm hen lich tai kham
+				document.getElementById("tk_id_lichkham").value = id;
+				document.getElementById("tk_email").value = email;
+				//alert(lido);
+
 			}
 			return true;
 		});
-		scheduler.attachEvent("onBeforeLightbox", function (id){
+		scheduler.attachEvent("onEmptyClick", function (date, e){
+			//any custom logic here
 			$("#div_detail").hide();
-			return true;
+			$('#div_create').hide();
 		});
-		}
+		//check submit deleteappointment
+		$("#ct_appointment" ).submit(function(event) {
+			var lidohuy = document.getElementById("ct_lidohuy").value;
+			if(lidohuy == ""){
+				alert("Cần phải điền lí do hủy");
+				event.preventDefault();
+			}else{
+				return true;
+			}
+		});
+		//check change date in create tai kham
+		$( "#tk_ngaykham" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var size = <?php echo sizeof($availabletime); ?>;
+			var ngay_kham = parseDate(document.getElementById("tk_ngaykham").value);
+			var all_lichkham = json_availabletime ;
+			var i = 0;
+			var html = "<option value='null'>Chọn thời gian khám</option>";
+			for(i;i<size;i++){			
+				if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+					continue;
+				}else{
+					var start_date = new Date(all_lichkham[i].start_date);
+					var end_date = new Date(all_lichkham[i].end_date);
+					var temp_date = start_date.getDate();
+					var monthEvent = start_date.getMonth()+1;
+					var yearEvent = start_date.getFullYear();
+					var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date
+					var start_hours = start_date.getHours();
+					var end_hours = end_date.getHours();
+					var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}
+					var end_time = end_date.getMinutes(); if(end_time == 0){end_time = '00';}
+					var compate_date = parseDate(dateEvent);
+					if(compate_date.getTime() == ngay_kham.getTime()){
+						html+="<option value='"+start_hours+":"+start_time+"-"+end_hours+":"+end_time+"'>"+start_hours+":"+start_time+" - "+end_hours+":"+end_time+"</option>";
+					}
+				}
+			}
+			if(html=="<option value='null'>Chọn thời gian khám</option>"){
+				html = "<option value='null'>Không có ca khám nào</option>"
+			}
+			document.getElementById('tk_thoigian').innerHTML=html;
+		});
+		function parseDate(str) {
+			var mdy = str.split('-');
+			return new Date(mdy[2], mdy[1], mdy[0]);
+		};
+		//check chagen name and email in create appointment
+		$( "#tao_benhnhan" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var email_benhnhan = document.getElementById("tao_benhnhan").value
+			document.getElementById("tao_email").value = email_benhnhan;
+		});
+		$( "#tao_email" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var email_benhnhan = document.getElementById("tao_email").value
+			document.getElementById("tao_benhnhan").value = email_benhnhan;
+		});
+		$( "#tao_ngaykham" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var size = <?php echo sizeof($availabletime); ?>;
+			var ngay_kham = parseDate(document.getElementById("tao_ngaykham").value);
+			var all_lichkham = json_availabletime ;
+			var i = 0;
+			var html = "<option value='null'>Chọn thời gian khám</option>";
+			for(i;i<size;i++){
+			if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+					continue;
+				}else{
+					var start_date = new Date(all_lichkham[i].start_date);
+					var end_date = new Date(all_lichkham[i].end_date);
+					var temp_date = start_date.getDate();
+					var monthEvent = start_date.getMonth()+1;
+					var yearEvent = start_date.getFullYear();
+					var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date
+					var start_hours = start_date.getHours();
+					var end_hours = end_date.getHours();
+					var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}
+					var end_time = end_date.getMinutes(); if(end_time == 0){end_time = '00';}
+					var compate_date = parseDate(dateEvent);
+					if(compate_date.getTime() == ngay_kham.getTime()){
+						html+="<option value='"+start_hours+":"+start_time+"-"+end_hours+":"+end_time+"'>"+start_hours+":"+start_time+" - "+end_hours+":"+end_time+"</option>";
+					}
+				}
+			}
+			if(html=="<option value='null'>Chọn thời gian khám</option>"){
+				html = "<option value='null'>Không có ca khám nào</option>"
+			}
+			document.getElementById('tao_thoigian').innerHTML=html;
+		});
+		};
+
 </script>	
 
 

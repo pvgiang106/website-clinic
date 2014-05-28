@@ -33,9 +33,11 @@ class Clinic extends MX_Controller {
 			$start_time = $row->thoigian_batdau;
 			$temp['start_date'] = $day.' '.$start_time;
 			$end_time = $row->thoigian_ketthuc; 
-			$temp['end_date'] = $day.' '.$end_time; 
+			$temp['end_date'] = $day.' '.$end_time;
+			$infouser = $this->mdclinic->getInfoUser($row->email);
 			$temp['reason'] = $row->li_do_kham; 
-			$temp['text'] = $row->email;
+			$temp['text'] = $infouser[0]->mid_name.' '.$infouser[0]->name;
+			$temp['email'] = $row->email;
 		 array_push($response,$temp);
 		}		
 	    $data['json_appointment'] = json_encode($response);
@@ -57,6 +59,7 @@ class Clinic extends MX_Controller {
 			$temp['start_date'] = $day.' '.$start_time;
 			$temp['end_date'] = $day.' '.$end_time;
 			$temp['text'] = $row->so_luong_kham;
+			$temp['cur_regis']= $row->current_register;
 			if($first_hour > $start_time){$first_hour = $start_time;}
 			if($last_hour < $end_time){$last_hour = $end_time;}
 			$i++;
@@ -73,24 +76,24 @@ class Clinic extends MX_Controller {
 		/*-- End task setuptime --*/
 		
 		/*-- Task confirm appointment --*/
-		$waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
-		$response = array();
-		foreach($waitingappoitment as $row) {
-			$temp = array();
-			$temp['id'] = $row->id_lichkham;
-			$ngay_kham = $row->ngay_kham;
-			$start_time = $row->thoigian_batdau;
-			$end_time= $row->thoigian_ketthuc;
-			$temp['start_date'] = $ngay_kham.' '.$start_time;
-			$temp['end_date'] = $ngay_kham.' '.$end_time;			
-			$temp['reason'] = $row->li_do_kham; 
-			$temp['text'] = $row->email;
-		 array_push($response,$temp);
-		}
-	    $data['json_wait_appointment'] = json_encode($response);        
-        $data['waitingappoitment'] = $waitingappoitment;
+		// $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
+		// $response = array();
+		// foreach($waitingappoitment as $row) {
+			// $temp = array();
+			// $temp['id'] = $row->id_lichkham;
+			// $ngay_kham = $row->ngay_kham;
+			// $start_time = $row->thoigian_batdau;
+			// $end_time= $row->thoigian_ketthuc;
+			// $temp['start_date'] = $ngay_kham.' '.$start_time;
+			// $temp['end_date'] = $ngay_kham.' '.$end_time;			
+			// $temp['reason'] = $row->li_do_kham; 
+			// $temp['text'] = $row->email;
+		 // array_push($response,$temp);
+		// }
+	    // $data['json_wait_appointment'] = json_encode($response);        
+        // $data['waitingappoitment'] = $waitingappoitment;
 		/*-- End task confirm appoinment --*/
-		
+		$data['allCustomer'] = $this->mdclinic->getInfoCustomer();
         $data['module'] = 'clinic';
         $data['view_file'] = 'view_appointment';
         echo Modules::run('clinic/layout/render',$data);
@@ -134,19 +137,27 @@ class Clinic extends MX_Controller {
 		}
 	}
 	function deleteData(){
-		$id_lichkham = $_GET['id_lichkham'];
+		$id_lichkham = $_POST['ct_id_lichkham'];
+		$lidohuy = $_POST['ct_lidohuy'];
+		$ngay_kham = $_POST['ct_ngaykham'];
+		$thoigian = $_POST['ct_thoigian'];
+		
 		$today = date("Y-m-d H:i:s");
 		$appoitment = $this->mdclinic->getInfoAppointment($id_lichkham);
 		$temp_day = $appoitment[0]->ngay_kham;
 		$temp_startime = $appoitment[0]->thoigian_batdau;
 		$appointment_day = $temp_day.' '.$temp_startime;
+		var_dump($_POST);
 		//var_dump(strtotime($appointment_day));
 		//var_dump(strtotime($today));
 		if($today>$appointment_day){
 			echo "<script>alert('Cuoc hen da duoc thuc hien, khong the xoa');</script>";
 			redirect('/clinic','refresh');
 		}else{
-			$this->mdclinic->deleteAppointment($id_lichkham);
+			$tmp_tg = explode("-",$thoigian);
+			$cakham = $this->mdclinic->findcakham($this->session->userdata['logged_in']['id_phongkham'],$ngay_kham,$tmp_tg[0]);
+			$this->mdclinic->updatelich_phongkham($cakham[0]->id_phongkham,$cakham[0]->ngay_kham,$cakham[0]->thoigian_batdau,$cakham[0]->thoigian_ketthuc,$cakham[0]->current_register-1);
+			$this->mdclinic->deleteAppointment($id_lichkham,$lidohuy);
 			redirect('/clinic','refresh');
 		}
 	}
@@ -243,6 +254,103 @@ class Clinic extends MX_Controller {
 		$this->mdclinic->acceptAppointment($id_lichkham);
 		
 		redirect('/clinic?option=confirm','refresh');	
+	}
+	function createDetail(){
+		$data = array(
+					"id_lichkham" => $_POST['id_lichkham'],
+					"id_phongkham" => $this->session->userdata['logged_in']['id_phongkham'],
+					"email" => $_POST['email'],
+					"loi_khuyen" => $_POST['loi_khuyen'],
+					"chuan_doan" => $_POST['chuan_doan'],
+					"nhiet_do" => $_POST['nhiet_do'],
+					"trieu_chung" => $_POST['trieu_chung'],
+					"huyet_ap" => $_POST['huyet_ap'],
+					"mach" => $_POST['mach'],
+					"chi_phi" => $_POST['chi_phi']
+				);
+			if($this->mdclinic->checkmedicalprofilrByIdlichkham($_POST['id_lichkham'])){
+				$this->mdclinic->updateMedicalprofilebyIdlichkham($_POST['id_lichkham'],$data);
+			}else{
+				$this->mdclinic->insertMedicalprofile($data);
+			}
+			redirect('/clinic?option=appointment','refresh');
+	}
+	function hentaikham(){
+		$id_phongkham = $this->session->userdata['logged_in']['id_phongkham'];
+		$ngay_kham = $_POST['tk_ngay'];
+		$strtime = $_POST['tk_thoigian'];
+		$lidokham = $_POST['tk_lido'];
+		$email = $_POST['tk_email'];
+		$id_lichkham = $_POST['tk_id_lichkham'];
+		$temp = explode('-',$strtime);
+		$tmp_start_time = $temp[0];
+		$tmp_end_time = $temp[1];
+		$lich_phongkham = $this->mdclinic->findlich_phongkham($id_phongkham,$ngay_kham,$tmp_start_time,$tmp_end_time);
+		//chi thoi gian kham cua nguoi dang ki
+		$current_register = $lich_phongkham[0]->current_register;
+		$max_register = $lich_phongkham[0]->so_luong_kham;
+		$str_startdate = $ngay_kham.' '.$tmp_start_time;
+		$str_enddate = $ngay_kham.' '.$tmp_end_time;
+		$int_startdate = strtotime($str_startdate);
+		$int_enddate = strtotime($str_enddate);
+		$time_cakham = ($int_enddate-$int_startdate)/$max_register;
+		$int_start_time = $int_startdate+$time_cakham*$current_register;
+		$int_end_time = $int_start_time+$time_cakham;
+		$start_time = date("H:i",$int_start_time);
+		$end_time = date("H:i",$int_end_time);
+		//var_dump($start_time);
+		$newregister = $current_register + 1;
+		$this->mdclinic->updatelich_phongkham($id_phongkham,$ngay_kham,$tmp_start_time,$tmp_end_time,$newregister);
+		$data = array(
+					"email" => $email,
+					"id_phongkham" => $id_phongkham,
+					"li_do_kham" => $lidokham,
+					"ngay_kham" => $ngay_kham,
+					"thoigian_batdau" => $start_time,
+					"thoigian_ketthuc" => $end_time,
+					"tai_kham" => $id_lichkham,
+					"status" => 1,
+					"li_do_huy" => ''
+				);
+		$this->mdclinic->insertAppointment($data);;
+		redirect('/clinic','refresh');
+	}
+	function taocuochen(){
+		$id_phongkham = $this->session->userdata['logged_in']['id_phongkham'];
+		$email = $_POST['tao_email'];
+		$ngay_kham = $_POST['tao_ngaykham'];
+		$lidokham = $_POST['tao_lido'];
+		//update lich_phongkham
+		$temp = explode('-',$_POST['tao_thoigian']);
+		$tmp_start_time = $temp[0];
+		$tmp_end_time = $temp[1];
+		$lich_phongkham = $this->mdclinic->findlich_phongkham($id_phongkham,$ngay_kham,$tmp_start_time,$tmp_end_time);
+		$current_register = $lich_phongkham[0]->current_register;
+		$max_register = $lich_phongkham[0]->so_luong_kham;
+		$str_startdate = $ngay_kham.' '.$tmp_start_time;
+		$str_enddate = $ngay_kham.' '.$tmp_end_time;
+		$int_startdate = strtotime($str_startdate);
+		$int_enddate = strtotime($str_enddate);
+		$time_cakham = ($int_enddate-$int_startdate)/$max_register;
+		$int_start_time = $int_startdate+$time_cakham*$current_register;
+		$int_end_time = $int_start_time+$time_cakham;
+		$start_time = date("H:i",$int_start_time);
+		$end_time = date("H:i",$int_end_time);
+		$newregister = $current_register + 1;
+		$this->mdclinic->updatelich_phongkham($id_phongkham,$ngay_kham,$tmp_start_time,$tmp_end_time,$newregister);
+		$data = array(
+					"email" => $email,
+					"id_phongkham" => $id_phongkham,
+					"li_do_kham" => $lidokham,
+					"ngay_kham" => $ngay_kham,
+					"thoigian_batdau" => $start_time,
+					"thoigian_ketthuc" => $end_time,
+					"tai_kham" => '0',
+					"status" => 1,
+					"li_do_huy" => ''
+				);
+		$this->mdclinic->insertAppointment($data);;
+		redirect('/clinic','refresh');
 	}
 }
 

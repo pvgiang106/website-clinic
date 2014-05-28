@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 Class Mdclinic extends CI_Model {
     //appointment menu
@@ -15,16 +15,10 @@ Class Mdclinic extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
-	function acceptAppointment($id_lichkham){
+	function deleteAppointment($id_lichkham,$lidohuy){
 		$data = array(
-					'status' => true
-				);
-		$this->db->where('id_lichkham',$id_lichkham);
-		$this->db->update('lich_kham',$data);
-	}
-	function deleteAppointment($id_lichkham){
-		$data = array(
-					'status' => 0
+					'status' => 0,
+					'li_do_huy' =>$lidohuy
 				);
 		$this->db->where('id_lichkham',$id_lichkham);
 		$this->db->update('lich_kham',$data);
@@ -42,6 +36,28 @@ Class Mdclinic extends CI_Model {
 			return false;
 		}
 	}
+	//find lich_phongkham
+	function findlich_phongkham($id_phongkham,$ngay_kham,$thoigian_batdau,$thoigian_ketthuc){
+		$this->db->from('lich_phongkham');
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('ngay_kham',$ngay_kham);
+		$this->db->where('thoigian_batdau',$thoigian_batdau);
+		$this->db->where('thoigian_ketthuc',$thoigian_ketthuc);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	// update lich_phongkham
+	function updatelich_phongkham($id_phongkham,$ngay_kham,$thoigian_batdau,$thoigian_ketthuc,$newregister){
+		$data = array(
+					"current_register" => $newregister
+				);
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('ngay_kham',$ngay_kham);
+		$this->db->where('thoigian_batdau',$thoigian_batdau);
+		$this->db->where('thoigian_ketthuc',$thoigian_ketthuc);
+		
+		$this->db->update('lich_phongkham',$data);
+	}
     //Medical Profile menu
 	//get all email have detail of clinic
 	function getallemailinlichkham($id_phongkham){
@@ -53,7 +69,7 @@ Class Mdclinic extends CI_Model {
 		return $query->result();
 	}
 	//get infomation of user had detail medical
-	function getInfoUser($id_phongkham){
+	function getInfoAllUser($id_phongkham){
 		$email_arr = $this->getallemailinlichkham($id_phongkham);
 		$result = array();
 		foreach($email_arr as $row){
@@ -64,6 +80,27 @@ Class Mdclinic extends CI_Model {
 			array_push($result,$temp[0]);
 		}
 		return $result;
+	}
+	//get info user by email
+	function getInfouser($email){
+		$this->db->from('user_customer');
+		$this->db->where('email',$email);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	function getInfoCustomer(){
+		$query = $this->db->get('user_customer');
+		return $query->result();
+	}
+	//find thoi gian thuoc ca kham nao
+	function findcakham($id_phongkham,$ngay_kham,$thoigian){
+		$this->db->from('lich_phongkham');
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('ngay_kham',$ngay_kham);
+		$this->db->where('thoigian_batdau <=',$thoigian);
+		$this->db->where('thoigian_ketthuc >',$thoigian);
+		$query = $this->db->get();
+		return $query->result();
 	}
 	//get profile of one email
     function getprofile($email,$id_phongkham){
@@ -111,6 +148,20 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_chitiet',$data['id_chitiet']);
 		$this->db->update('chi_tiet_kham',$data);
 	}
+	function checkmedicalprofilrByIdlichkham($id_lichkham){
+		$this->db->from('chi_tiet_kham');
+		$this->db->where('id_lichkham',$id_lichkham);
+		$query = $this->db->get();
+		if($query->num_rows() != 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function updateMedicalprofilebyIdlichkham($id_lichkham,$data){
+		$this->db->where('id_lichkham',$id_lichkham);
+		$this->db->update('chi_tiet_kham',$data);
+	}
 	function insertMedicalprofile($data){
 		$this->db->insert('chi_tiet_kham',$data);
 	}
@@ -123,6 +174,7 @@ Class Mdclinic extends CI_Model {
 		$this->db->from('lich_phongkham');
 		$this->db->where('id_phongkham',$id_phongkham);
 		$query = $this->db->get();
+		$size = $query->num_rows();
 		return $query->result();
 	}
 

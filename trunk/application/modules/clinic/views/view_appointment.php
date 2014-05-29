@@ -153,10 +153,19 @@
 				document.getElementById("ct_ngaykham").value = yearEvent+'-'+monthEvent+'-'+dateEvent;
 				document.getElementById("ct_thoigian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
 				document.getElementById("ct_lido").value = lido;
+				document.getElementById("ct_email").value = email;
 				//frm hen lich tai kham
 				document.getElementById("tk_id_lichkham").value = id;
 				document.getElementById("tk_email").value = email;
 				//alert(lido);
+				var strDayEvent = yearEvent+'-'+monthEvent+'-'+dateEvent;
+				var today = new Date();
+				var intMonth = today.getMonth()+1
+				var strToday = today.getFullYear()+'-'+intMonth+'-'+today.getDate();
+				if(strDayEvent < strToday){
+					$('#del_appointment').hide();
+					$('#frm_gr_huy').hide();
+				}
 
 			}
 			return true;
@@ -181,18 +190,23 @@
 			var size = <?php echo sizeof($availabletime); ?>;
 			var ngay_kham = parseDate(document.getElementById("tk_ngaykham").value);
 			var all_lichkham = json_availabletime ;
+			var today = new Date();
+			var intMonth = today.getMonth()+1
+			var strToday = today.getFullYear()+'-'+intMonth+'-'+today.getDate();
 			var i = 0;
 			var html = "<option value='null'>Chọn thời gian khám</option>";
-			for(i;i<size;i++){			
-				if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+			for(i;i<size;i++){	
+				var start_date = new Date(all_lichkham[i].start_date);
+				var monthEvent = start_date.getMonth()+1;
+				var yearEvent = start_date.getFullYear();
+				var temp_date = start_date.getDate();
+				var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date;
+				if(dateEvent<strToday){
+					continue;
+				}else if(all_lichkham[i].text == all_lichkham[i].cur_regis){
 					continue;
 				}else{
-					var start_date = new Date(all_lichkham[i].start_date);
-					var end_date = new Date(all_lichkham[i].end_date);
-					var temp_date = start_date.getDate();
-					var monthEvent = start_date.getMonth()+1;
-					var yearEvent = start_date.getFullYear();
-					var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date
+					var end_date = new Date(all_lichkham[i].end_date);										
 					var start_hours = start_date.getHours();
 					var end_hours = end_date.getHours();
 					var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}
@@ -225,18 +239,24 @@
 			var size = <?php echo sizeof($availabletime); ?>;
 			var ngay_kham = parseDate(document.getElementById("tao_ngaykham").value);
 			var all_lichkham = json_availabletime ;
+			var today = new Date();
+			var intMonth = today.getMonth()+1
+			var strToday = today.getFullYear()+'-'+intMonth+'-'+today.getDate();
 			var i = 0;
 			var html = "<option value='null'>Chọn thời gian khám</option>";
 			for(i;i<size;i++){
-			if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+				var start_date = new Date(all_lichkham[i].start_date);
+				var temp_date = start_date.getDate();
+				var monthEvent = start_date.getMonth()+1;
+				var yearEvent = start_date.getFullYear();
+				var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date;
+				if(dateEvent<strToday){
+					continue;
+				}else if(all_lichkham[i].text == all_lichkham[i].cur_regis){
 					continue;
 				}else{
 					var start_date = new Date(all_lichkham[i].start_date);
-					var end_date = new Date(all_lichkham[i].end_date);
-					var temp_date = start_date.getDate();
-					var monthEvent = start_date.getMonth()+1;
-					var yearEvent = start_date.getFullYear();
-					var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date
+					var end_date = new Date(all_lichkham[i].end_date);					
 					var start_hours = start_date.getHours();
 					var end_hours = end_date.getHours();
 					var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}

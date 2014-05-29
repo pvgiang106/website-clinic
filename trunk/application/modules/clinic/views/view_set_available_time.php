@@ -67,6 +67,50 @@
 		scheduler.init('scheduler_here',new Date(),"week");
 		var events = <?php echo $json_availabletime ; ?>;
 		scheduler.parse(events,"json");
+		//check chagen name and email in create appointment
+		$( "#tao_benhnhan" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var email_benhnhan = document.getElementById("tao_benhnhan").value
+			document.getElementById("tao_email").value = email_benhnhan;
+		});
+		$( "#tao_email" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var email_benhnhan = document.getElementById("tao_email").value
+			document.getElementById("tao_benhnhan").value = email_benhnhan;
+		});
+		$( "#tao_ngaykham" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
+			var size = <?php echo sizeof($availabletime); ?>;
+			var ngay_kham = parseDate(document.getElementById("tao_ngaykham").value);
+			var all_lichkham = <?php echo $json_availabletime ; ?> ;
+			var i = 0;
+			var html = "<option value='null'>Chọn thời gian khám</option>";
+			for(i;i<size;i++){
+			if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+					continue;
+				}else{
+					var start_date = new Date(all_lichkham[i].start_date);
+					var end_date = new Date(all_lichkham[i].end_date);
+					var temp_date = start_date.getDate();
+					var monthEvent = start_date.getMonth()+1;
+					var yearEvent = start_date.getFullYear();
+					var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date
+					var start_hours = start_date.getHours();
+					var end_hours = end_date.getHours();
+					var start_time = start_date.getMinutes(); if(start_time == 0){start_time = '00';}
+					var end_time = end_date.getMinutes(); if(end_time == 0){end_time = '00';}
+					var compate_date = parseDate(dateEvent);
+					if(compate_date.getTime() == ngay_kham.getTime()){
+						html+="<option value='"+start_hours+":"+start_time+"-"+end_hours+":"+end_time+"'>"+start_hours+":"+start_time+" - "+end_hours+":"+end_time+"</option>";
+					}
+				}
+			}
+			if(html=="<option value='null'>Chọn thời gian khám</option>"){
+				html = "<option value='null'>Không có ca khám nào</option>"
+			}
+			document.getElementById('tao_thoigian').innerHTML=html;
+		});
+		function parseDate(str) {
+			var mdy = str.split('-');
+			return new Date(mdy[2], mdy[1], mdy[0]);
+		};
 		}
 </script>	
 

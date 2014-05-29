@@ -189,6 +189,15 @@ Class Mdclinic extends CI_Model {
         $this->db->delete('lich_phongkham');
     }      
     
+	//update data in thong_bao table
+	function insertThongbao($email,$noidung){
+		$data=array(
+				"email" => $email,
+				"noi_dung" => $noidung,
+				"status" => 0
+			);
+		$this->db->insert('thong_bao',$data);
+	}
 }
 
 ?>

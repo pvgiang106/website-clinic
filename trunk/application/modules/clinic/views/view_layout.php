@@ -1,8 +1,7 @@
 ﻿<?php
 	$tab0 = base_url().'clinic';
 	$tab1 = base_url().'clinic/medicalprofile';
-	$tab2 = base_url().'clinic/setuptime';
-	$tab3 = base_url().'clinic/faqs';
+	$tab2 = base_url().'clinic/faqs';
 	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
 	//var_dump($allCustomer);
 ?>
@@ -77,17 +76,15 @@
 <section>
 	<input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
 	<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
-	<input type="radio" style="display:none;" id="posts" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />
-	<input type="radio" style="display:none;" id="books" value="4" name="tractor"  <?php if($tab == 3) echo "checked='checked'"; ?> />
+	<input type="radio" style="display:none;" id="books" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />
 	
 	<nav>   
-		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>DANH SÁCH CUỘC HẸN</label>
+		<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-calendar'>QUẢN LÝ CUỘC HẸN</label>
 		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>QUẢN LÝ BỆNH NHÂN</label>
-		<label for="posts" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-calendar'>CÀI ĐẶT THỜI GIAN</label>
-		<label for="books" onclick="window.location.href=<?php echo '\''.$tab3.'\''; ?>" class='fontawesome-list-alt'>HỎI - ĐÁP</label>
+		<label for="books" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-list-alt'>HỎI - ĐÁP</label>
 	</nav>
 
-	<div>
+	<div style="padding-top:20px;padding-left:20px;">
 		<button type="button" class="btn btn-default<?php if($view=='appointment') echo ' active'?>" onclick="window.location.href='?option=appointment'" >Danh sách cuộc hẹn</button>
 		<button type="button" class="btn btn-default<?php if($view=='setuptime') echo ' active'?>" onclick="window.location.href='?option=setuptime'" >Cài đặt thời gian</button>
 		<button type="button" class="btn btn-default" onclick="show_div_create();" >Tạo cuộc hẹn</button>
@@ -220,7 +217,7 @@
 							<input type="text" class="form-control" id="ct_lido" name="ct_lido" value="<?php ?>" disabled/>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" id="frm_gr_huy">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Lí do hủy</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="ct_lidohuy" name="ct_lidohuy" value=""/>
@@ -230,7 +227,8 @@
 						<input type="hidden" name="ct_id_lichkham" id="ct_id_lichkham" value="" />
 						<input type="hidden" name="ct_ngaykham" id="ct_ngaykham" value="" />
 						<input type="hidden" name="ct_thoigian" id="ct_thoigian" value="" />
-						<button type="submit" class="btn btn-danger">Hủy</button>
+						<input type="hidden" name="ct_email" id="ct_email" value="" />
+						<button type="submit" class="btn btn-danger" id="del_appointment">Hủy</button>
 					</div>
 				</form>
 				<h3>Hẹn lịch tái khám</h3>

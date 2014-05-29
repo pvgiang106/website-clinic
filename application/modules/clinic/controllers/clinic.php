@@ -137,17 +137,17 @@ class Clinic extends MX_Controller {
 		}
 	}
 	function deleteData(){
+		$email = $_POST['ct_email'];
 		$id_lichkham = $_POST['ct_id_lichkham'];
 		$lidohuy = $_POST['ct_lidohuy'];
 		$ngay_kham = $_POST['ct_ngaykham'];
 		$thoigian = $_POST['ct_thoigian'];
-		
+		$noidung = 'Cuộc hẹn ngày : '.$ngay_kham.' lúc '.$thoigian.' bị hủy vì lí do : '.$lidohuy;
 		$today = date("Y-m-d H:i:s");
 		$appoitment = $this->mdclinic->getInfoAppointment($id_lichkham);
 		$temp_day = $appoitment[0]->ngay_kham;
 		$temp_startime = $appoitment[0]->thoigian_batdau;
 		$appointment_day = $temp_day.' '.$temp_startime;
-		var_dump($_POST);
 		//var_dump(strtotime($appointment_day));
 		//var_dump(strtotime($today));
 		if($today>$appointment_day){
@@ -158,6 +158,7 @@ class Clinic extends MX_Controller {
 			$cakham = $this->mdclinic->findcakham($this->session->userdata['logged_in']['id_phongkham'],$ngay_kham,$tmp_tg[0]);
 			$this->mdclinic->updatelich_phongkham($cakham[0]->id_phongkham,$cakham[0]->ngay_kham,$cakham[0]->thoigian_batdau,$cakham[0]->thoigian_ketthuc,$cakham[0]->current_register-1);
 			$this->mdclinic->deleteAppointment($id_lichkham,$lidohuy);
+			$this->mdclinic->insertThongbao($email,$noidung);
 			redirect('/clinic','refresh');
 		}
 	}

@@ -83,14 +83,14 @@ nav {
 }
 nav:after {
   content:'';
-  width: 25%;
+  width: 33.3333333333%;
   height: 80px;
   background: #FFFFFF;
   position: absolute;
   transition: .5s;
 }
 label {
-  width: 25%;
+  width: 33.3333333333%;
   float: left;
   color: #FFFFFF;
   text-align: center;
@@ -120,14 +120,14 @@ label:before {
   left: 0;
 }
 #settings:checked ~ nav:after {
-  left:25%;
+  left:33.3333333333%;
   border-top: 0 none;
 }
 #posts:checked ~ nav:after {
   left: 50%;
 }
 #books:checked ~ nav:after {
-  left: 75%;
+  left: 66.6666666666%;
 }
 
 #profile:checked ~ .uno,

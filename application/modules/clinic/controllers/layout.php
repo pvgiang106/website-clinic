@@ -24,6 +24,9 @@ class Layout extends MX_Controller {
 			case 'view_medical_profile':
 				$this->load->view('clinic/view_medical_profile',$data);
 				break;
+			case 'view_faqs':
+				$this->load->view('clinic/view_faqs',$data);
+				break;
 			default:
 				$this->load->view('clinic/view_layout', $data);
 

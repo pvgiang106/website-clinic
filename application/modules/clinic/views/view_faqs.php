@@ -2,8 +2,10 @@
 	$tab0 = base_url().'clinic';
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/faqs';
-	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
-	//var_dump($allCustomer);
+	if(isset($_GET['option'])){ $view = $_GET['option'];$view_file = 'view_'.$_GET['option'];}else{$view = 'chuatraloi';$view_file = 'view_chuatraloi';};
+	//var_dump($datraloi);
+	//var_dump($chuatraloi);
+	$size = sizeof($datraloi);
 ?>
 <!DOCTYPE html>
 <html >
@@ -29,11 +31,22 @@
 			font-size:14px;
 		}
 	</style>
-
-<?php
-	//var_dump($view_file);
-	//$this->load->view($module . '/' . $view_file);
-?>
+	<script>
+		$(document).ready(function(){
+			var size = <?php echo $size; ?>;
+			for(i=0;i<size;i++){
+				$(".edit").hide();
+				$(".btn-default").click(function(){
+					$(".view").hide();
+					$(".edit").show();
+				});
+			}
+		});
+		function canceledit(){
+				$(".view").show();
+				$(".edit").hide();
+		};
+	</script>
 </head>
     <body ><!-- Menu 2 -->
 <section>
@@ -46,50 +59,15 @@
 		<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>QUẢN LÝ BỆNH NHÂN</label>
 		<label for="books" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-list-alt'>HỎI - ĐÁP</label>
 	</nav>
-	<div class="panel-group" id="accordion">
-		<div class="panel panel-default">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-			  Làm cách nào để trị bệnh hay chảy máu chân răng?
-			</a>
-		  </h4>
-		</div>
-		<div id="collapseOne" class="panel-collapse collapse in">
-		  <div class="panel-body">
-			Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-		  </div>
-		</div>
-		</div>
-		<div class="panel panel-default">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-			  Collapsible Group Item #2
-			</a>
-		  </h4>
-		</div>
-		<div id="collapseTwo" class="panel-collapse collapse">
-		  <div class="panel-body">
-			Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-		  </div>
-		</div>
-		</div>
-		<div class="panel panel-default">
-		<div class="panel-heading">
-		  <h4 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-			  Collapsible Group Item #3
-			</a>
-		  </h4>
-		</div>
-		<div id="collapseThree" class="panel-collapse collapse">
-		  <div class="panel-body">
-			Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-		  </div>
-		</div>
-		</div>
-		</div>
+	<div style="padding-top:20px;padding-left:20px;">
+		<button type="button" class="btn btn-default<?php if($view=='datraloi') echo ' active'?>" onclick="window.location.href='?option=datraloi'" >Câu hỏi đã trả lời</button>
+		<button type="button" class="btn btn-default<?php if($view=='chuatraloi') echo ' active'?>" onclick="window.location.href='?option=chuatraloi'" >Câu hỏi mới</button>
+	</div>
+<?php
+	//var_dump($view_file);
+	$this->load->view($module . '/' . $view_file);
+?>
+
 </section>
 
 	

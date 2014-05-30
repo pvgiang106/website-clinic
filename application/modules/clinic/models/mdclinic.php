@@ -198,6 +198,26 @@ Class Mdclinic extends CI_Model {
 			);
 		$this->db->insert('thong_bao',$data);
 	}
+	//faq page
+	function getFaqs($id_phongkham,$status){
+		if($status == 0){
+			$this->db->from('faq');
+			$this->db->where('id_phongkham',$id_phongkham);
+			$this->db->where('answer','');
+			$query = $this->db->get();
+			return $query->result();
+		}else{
+			$this->db->from('faq');
+			$this->db->where('id_phongkham',$id_phongkham);
+			$this->db->where('answer !=','');
+			$query = $this->db->get();
+			return $query->result();
+		}
+	}
+	function updateFaq($id_faq,$data){
+		$this->db->where('id_faq',$id_faq);
+		$this->db->update('faq',$data);
+	}
 }
 
 ?>

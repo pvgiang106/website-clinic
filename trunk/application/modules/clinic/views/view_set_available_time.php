@@ -83,7 +83,14 @@
 			var i = 0;
 			var html = "<option value='null'>Chọn thời gian khám</option>";
 			for(i;i<size;i++){
-			if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+				var start_date = new Date(all_lichkham[i].start_date);
+				var temp_date = start_date.getDate();
+				var monthEvent = start_date.getMonth()+1;
+				var yearEvent = start_date.getFullYear();
+				var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date;
+				if(dateEvent<strToday){
+					continue;
+				}else if(all_lichkham[i].text == all_lichkham[i].cur_regis){
 					continue;
 				}else{
 					var start_date = new Date(all_lichkham[i].start_date);

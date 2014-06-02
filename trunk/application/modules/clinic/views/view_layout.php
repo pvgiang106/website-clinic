@@ -90,7 +90,7 @@
 		<button type="button" class="btn btn-default" onclick="show_div_create();" >Tạo cuộc hẹn</button>
 	</div>
 	<div class="col-sm-7">
-	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:85%'>
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:84%'>
 		<div class="dhx_cal_navline">
 			<div class="dhx_cal_prev_button">&nbsp;</div>
 			<div class="dhx_cal_next_button">&nbsp;</div>

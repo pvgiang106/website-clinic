@@ -80,6 +80,9 @@
 			var size = <?php echo sizeof($availabletime); ?>;
 			var ngay_kham = parseDate(document.getElementById("tao_ngaykham").value);
 			var all_lichkham = <?php echo $json_availabletime ; ?> ;
+			var today = new Date();
+			var intMonth = today.getMonth()+1
+			var strToday = today.getFullYear()+'-'+intMonth+'-'+today.getDate();
 			var i = 0;
 			var html = "<option value='null'>Chọn thời gian khám</option>";
 			for(i;i<size;i++){

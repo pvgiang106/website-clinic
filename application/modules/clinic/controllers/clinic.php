@@ -333,10 +333,18 @@ class Clinic extends MX_Controller {
 		$int_startdate = strtotime($str_startdate);
 		$int_enddate = strtotime($str_enddate);
 		$time_cakham = ($int_enddate-$int_startdate)/$max_register;
-		$int_start_time = $int_startdate+$time_cakham*$current_register;
-		$int_end_time = $int_start_time+$time_cakham;
-		$start_time = date("H:i",$int_start_time);
-		$end_time = date("H:i",$int_end_time);
+		$i = 0;
+		for($i;$i<$max_register;$i++){
+		var_dump($i);
+			$int_start_time = $int_startdate+$i*$time_cakham;
+			$int_end_time = $int_start_time+$time_cakham;
+			$start_time = date("H:i",$int_start_time);
+			$end_time = date("H:i",$int_end_time);
+			var_dump($start_time.' '.$end_time);
+			if($this->mdclinic->checkEmptyTime($id_phongkham,$ngay_kham,$start_time,$end_time) == true){
+				break;
+			}
+		}
 		$newregister = $current_register + 1;
 		$this->mdclinic->updatelich_phongkham($id_phongkham,$ngay_kham,$tmp_start_time,$tmp_end_time,$newregister);
 		$data = array(

@@ -102,6 +102,21 @@ Class Mdclinic extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+	//check time available to create appointment
+	function checkEmptyTime($id_phongkham,$ngay_kham,$start_time,$end_time){
+		$this->db->from('lich_kham');
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('ngay_kham',$ngay_kham);
+		$this->db->where('status',1);
+		$this->db->where('thoigian_batdau',$start_time);
+		$this->db->where('thoigian_ketthuc',$end_time);
+		$query = $this->db->get();
+		if($query->num_rows() != 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	//get profile of one email
     function getprofile($email,$id_phongkham){
         $this->db->from('chi_tiet_kham');

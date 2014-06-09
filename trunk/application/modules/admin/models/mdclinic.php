@@ -34,8 +34,18 @@ Class Mdclinic extends CI_Model {
 	function getInfoUserClinic($id_phongkham){
 		$this->db->from('user_phongkham');
 		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('role',0);
 		$query = $this->db->get();
 		return $query->result();
+	}
+	function updateClinic($id_phongkham,$data){
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->update('phongkham',$data);
+	}
+	function updateUserClinic($id_phongkham,$data){
+		$this->db->where('id_phongkham',$id_phongkham);
+		$this->db->where('role',0);
+		$this->db->update('user_phongkham',$data);
 	}
     function expireclinic($id_phongkham,$data) {
         $this->db->where('id_phongkham',$id_phongkham);

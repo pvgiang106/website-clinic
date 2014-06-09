@@ -1,9 +1,9 @@
 <?php
 	$info = $info_phongkham[0];
 	$info_user = $info_user_phongkham[0];
-	
+	//var_dump($info);
 ?>
-<form class="form-horizontal" method="post" action="verifyInsertclinic">
+<form class="form-horizontal" method="post" action="verifyUpdateclinic">
 	<div class="col-sm-6">
 	<h3>Thông tin phòng khám </h3>
 			<fieldset style="padding-top:2em;">
@@ -63,13 +63,13 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label" style="color:#000000;">Email</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="email" name="email" value="" />					
+						<input type="text" class="form-control" id="email" name="email" value="<?php echo $info_user->email; ?>" />					
 					</div>					
 				</div>
 				<div class="form-group">
-					<label class="col-sm-3 control-label" style="color:#000000;">Mật khẩu</label>
+					<label class="col-sm-3 control-label" style="color:#000000;">Mật khẩu(md5)</label>
 					<div class="col-sm-8">
-						<input type="password" class="form-control" id="password" name="password" value="" />					
+						<p><?php echo $info_user->password; ?></p>					
 					</div>
 				</div>
 			</fieldset>
@@ -79,6 +79,7 @@
 		<input type="hidden" id="register_day" name="register_day" value="<?php echo date('Y-m-d'); ?>" >
 		<input type="hidden" id="toadoX" name="toadoX" value="<?php ?>" >
 		<input type="hidden" id="toadoY" name="toadoY" value="<?php ?>" >
+		<input type="hidden" id="id_phongkham" name="id_phongkham" value="<?php echo $info->id_phongkham; ?>" >
 		<button type="submit" class="btn btn-primary" >Lưu</button>
 		<button type="reset" class="btn btn-danger" >Hủy</button>
 	</div>

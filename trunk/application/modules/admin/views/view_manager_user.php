@@ -1,7 +1,7 @@
 <!-- start -->
 <?php $i = 0;?>
 <div class="container">
-    <h3>Manager User</h3>
+    <h3></h3>
     <table id="myTable" class="tablesorter">
 
         <thead>

@@ -34,71 +34,43 @@ class Adminclinic extends MX_Controller {
     }
 
     function insertclinic() {
-        $data['hotelID'] = '';
-        $data['hotelName'] = '';
-        $data['address'] = '';
-        $data['description'] = '';
-        $data['cityID'] = 31;
-        $data['hotelStar'] = '';
         $data['module'] = 'admin';
         $data['view_file'] = 'view_insert_clinic';
         echo Modules::run('admin/layout/render', $data);
     }
+	function verifyInsertclinic(){
+		$pk_data = array(
+					"name" => $_POST['name'],
+					"phone" => $_POST['phone'],
+					"address" => $_POST['street'],
+					"district" => $_POST['district'],
+					"provice" => $_POST['provice'],
+					"feature" => $_POST['feature'],
+					"website" => $_POST['website'],
+					"register_day" => $_POST['register_day'],
+					"expire_day" => $_POST['expire_day'],
+					"toadoX" => $_POST['toadoX'],
+					"toadoY" => $_POST['toadoY']
+				);
+		$this->mdclinic->insertclinic($pk_data);
+		$new_id = $this->mdclinic->getClinicId($pk_data['phone']);
+		$us_data = array(
+						"id_phongkham" => $new_id[0]->id_phongkham,
+						"email" => $_POST['email'],
+						"name" => $_POST['name'],
+						"password" => md5($_POST['password']),
+						"role" => 0
+					);	
+		$this->mdclinic->insertUserClinic($us_data);
+		redirect('admin/Adminclinic','refresh');
+	}
 
-    function verifyinsertclinic() {
-        $this->form_validation->set_rules('hotelName', 'Name', 'trim|required');
-        $this->form_validation->set_rules('address', 'Address', 'trim|required');
-
-        $result = $this->mdclinic->getCityID($this->input->post('city'));
-        foreach ($result as $row) {
-                $data['cityID'] = $row->cityID;
-            }
-        if ($this->form_validation->run() == FALSE) {
-                        
-            $data['hotelName'] = $this->input->post('hotelName');
-            $data['address'] = $this->input->post('address');
-            $data['description'] = $this->input->post('des');
-            $data['hotelStar'] = $this->input->post('hotelStar');            
-            
-            $data['module'] = 'admin';
-            $data['view_file'] = 'view_insert_hotel';
-            echo Modules::run('admin/layout/render', $data);
-        } else {      
-            
-            $data['hotelName'] = $this->input->post('hotelName');
-            $data['address'] = $this->input->post('address');
-            $data['description'] = $this->input->post('des');
-            $data['hotelStar'] = $this->input->post('hotelStar');  
-            
-            $this->mdclinic->insertclinic($data);
-            
-            foreach ($this->mdclinic->gethotelID($this->input->post('hotelName')) as $tmp) {
-                $hotelID = $tmp->hotelID;
-            }
-            if(!empty($_POST['facilities'])) {
-                foreach ($_POST['facilities'] as $facilitiesrow) {                    
-                    $datasubply['hotelID'] = $hotelID;
-                    $datasubply['facilityID'] = $facilitiesrow;                    
-                    $this->mdclinic->insertFacilitiesSubply($datasubply);
-                }
-            }
-            
-            redirect('admin/Adminclinic');
-        }
-    }
-
-    function updatehotel($hotelID) {
-        $result = $this->mdclinic->gethotel($hotelID);
-        foreach ($result as $row) {
-            $data['hotelID'] = $row->hotelID;
-            $data['hotelName'] = $row->hotelName;
-            $data['address'] = $row->address;
-            $data['description'] = $row->description;
-            $data['cityID'] = $row->cityID;
-            $data['hotelStar'] = $row->hotelStar;
-        }        
+    function updateClinic() {   
+		$id_phongkham = $_GET['id_phongkham'];
+		$data['info_phongkham'] = $this->mdclinic->getInfoClinic($id_phongkham);
+		$data['in_user_phongkham'] = $this->mdclinic->getInfoUserClinic($id_phongkham);
         $data['module'] = 'admin';
-        $data['view_file'] = 'view_update_hotel';
+        $data['view_file'] = 'view_update_clinic';
         echo Modules::run('admin/layout/render', $data);
     }
     

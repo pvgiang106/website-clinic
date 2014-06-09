@@ -1,7 +1,7 @@
 <!-- start -->
 <?php $i = 0; ?>
 <div class="container">
-    <h3>Manager Hotel</h3>
+    <h3></h3>
    
     <table id="myTable" class="tablesorter">
         <thead>
@@ -28,7 +28,7 @@
                     <td><?php echo $row->phone ?></td>
                     <td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice; ?></td>
                     <td><?php echo $row->expire_day ?></td>                                         
-                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updatehotel/<?php echo $row->id_phongkham;?>" class="btn btn-success btn-edit">Edit</a></td>
+                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updateClinic?id_phongkham=<?php echo $row->id_phongkham;?>" class="btn btn-success btn-edit">Edit</a></td>
                     </td>
                 </tr>  
                 <?php

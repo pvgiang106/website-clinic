@@ -1,6 +1,7 @@
 ﻿<?php
 	$tab0 = base_url().'admin';
 	$tab1 = base_url().'index.php/admin/adminclinic';
+	$tab2 = base_url().'index.php/admin/medicine';
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,18 +31,19 @@
     <body >
         <section>		
             <input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
-			<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
-
-			
+			<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />
+			<input type="radio" style="display:none;" id="books" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />			
 			<nav>   
 				<label for="profile"  onclick="window.location.href=<?php echo '\''.$tab0.'\''; ?>" class='fontawesome-camera-retro'>QUẢN LÍ NGƯỜI DÙNG</label>
 				<label for="settings" onclick="window.location.href=<?php echo '\''.$tab1.'\''; ?>" class='fontawesome-film'>QUẢN LÍ PHÒNG KHÁM</label>
+				<label for="books" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-list-alt'>QUẢN LÍ THUỐC</label>
 
 			</nav>
+			<div class="row">
             <?php
             $this->load->view($module . '/' . $view_file);
             ?>
-            
+            </div>
             <div class="pager">
             <form>
               <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>

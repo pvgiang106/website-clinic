@@ -38,7 +38,7 @@
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
 		scheduler.config.first_hour = first_hour;
 		scheduler.config.last_hour = last_hour;
-		scheduler.config.time_step  = 15;
+		scheduler.config.time_step  = 30;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
 		scheduler.config.dblclick_create = false;
@@ -147,6 +147,7 @@
 				document.getElementById("email").value = email;
 				//frm chi tiet cuoc hen
 				document.getElementById("benhnhan").value = benhnhan;
+				document.getElementById("ct_email").value = email;
 				document.getElementById("ct_id_lichkham").value = id;
 				document.getElementById("ct_ngay_kham").value = yearEvent+'-'+monthEvent+'-'+dateEvent;
 				document.getElementById("ct_thoi_gian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
@@ -173,7 +174,7 @@
 		scheduler.attachEvent("onEmptyClick", function (date, e){
 			//any custom logic here
 			$("#div_detail").hide();
-			$('#div_create').hide();
+			$('#div_create').show();
 		});
 		//check submit deleteappointment
 		$("#ct_appointment" ).submit(function(event) {

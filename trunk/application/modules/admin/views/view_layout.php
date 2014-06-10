@@ -1,7 +1,7 @@
 ﻿<?php
 	$tab0 = base_url().'admin';
 	$tab1 = base_url().'index.php/admin/adminclinic';
-	$tab2 = base_url().'index.php/admin/medicine';
+	$tab2 = base_url().'index.php/admin/adminmedicine';
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,20 @@
         <?php
         echo loadBootstrap3_js();
         ?>
-
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			$("#add_medicine").show()
+			$("#update_medicine").hide();
+		});
+		function addMedicine(){
+			$("#add_medicine").show();
+			$("#update_medicine").hide();
+		}
+		function updateMedicine(id_thuoc){
+			$("#add_medicine").hide();
+			$("#update_medicine").show();
+		}
+	</script>
 <!-- plugin tablesorter -->
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.js');?>"></script>
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.widgets.js');?>"></script>
@@ -44,21 +57,7 @@
             $this->load->view($module . '/' . $view_file);
             ?>
             </div>
-            <div class="pager">
-            <form>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
-              <input type="text" class="pagedisplay"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
-              <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
-              <select class="pagesize">
-                <option selected="selected"  value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option  value="40">40</option>
-              </select>
-            </form>
-          </div>
+            
         </section>
         <script type="text/javascript">
             $(document).ready(function() {

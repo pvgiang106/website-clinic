@@ -85,9 +85,9 @@
 	</nav>
 
 	<div style="padding-top:20px;padding-left:20px;">
-		<button type="button" class="btn btn-default<?php if($view=='appointment') echo ' active'?>" onclick="window.location.href='?option=appointment'" >Danh sách cuộc hẹn</button>
+		<button type="button" class="btn btn-default<?php if($view=='appointment') echo ' active'?>" onclick="window.location.href='?option=appointment'" >Quản lý cuộc hẹn</button>
 		<button type="button" class="btn btn-default<?php if($view=='setuptime') echo ' active'?>" onclick="window.location.href='?option=setuptime'" >Cài đặt thời gian</button>
-		<button type="button" class="btn btn-default" onclick="show_div_create();" >Tạo cuộc hẹn</button>
+		
 	</div>
 	<div class="col-sm-7">
 	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:84%'>
@@ -107,13 +107,14 @@
 	<div class="col-sm-4" id="div_detail" style="display:none";>
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs">
-		  <li class="active"><a href="#detail" data-toggle="tab">TẠO CHI TIẾT KHÁM</a></li>
-		  <li><a href="#taikham" data-toggle="tab">CHI TIẾT CUỘC HẸN</a></li>
+			<li class="active"><a href="#taikham" data-toggle="tab">CHI TIẾT CUỘC HẸN</a></li>
+			<li ><a href="#detail" data-toggle="tab">TẠO CHI TIẾT KHÁM</a></li>
+		 
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
-			<div class="tab-pane active" id="detail">
+			<div class="tab-pane" id="detail">
 				<h3>Chi tiết khám <?php  ?></h3>						
 				<form class="form-horizontal">
 					<div class="form-group">
@@ -190,13 +191,19 @@
 					</div>
 				</form>
 			</div>
-			<div class="tab-pane" id="taikham">
+			<div class="tab-pane active" id="taikham">
 				<h3>Chi tiết cuộc hẹn</h3>
 				<form class="form-horizontal" name="ct_appointment" id="ct_appointment" method="post" action="clinic/deleteData">
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Bệnh nhân</label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="benhnhan" name="benhnhan" value="<?php  ?>" disabled/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label  class="col-sm-3 control-label" style="color:#000000;">Email</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="ct_email" name="ct_email" value="<?php  ?>" disabled/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -228,6 +235,7 @@
 						<input type="hidden" name="ct_ngaykham" id="ct_ngaykham" value="" />
 						<input type="hidden" name="ct_thoigian" id="ct_thoigian" value="" />
 						<input type="hidden" name="ct_email" id="ct_email" value="" />
+						<button type="button" class="btn btn-primary" onclick="show_div_create();" >Tạo cuộc hẹn</button>
 						<button type="submit" class="btn btn-danger" id="del_appointment">Hủy</button>
 					</div>
 				</form>
@@ -262,7 +270,7 @@
 			</div>
 		</div>		
 	</div>
-	<div class="col-sm-4" id="div_create" style="display:none";>
+	<div class="col-sm-4" id="div_create" style="";>
 		<ul class="nav nav-tabs">
 		  <li class="active"><a href="#create" data-toggle="tab">TẠO CUỘC HẸN</a></li>
 		</ul>

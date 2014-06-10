@@ -20,8 +20,8 @@
 		}
 		
 		scheduler.config.xml_date="%Y-%m-%d %H:%i";
-		scheduler.config.time_step  = 60;
-		scheduler.config.first_hour = 5;
+		scheduler.config.time_step  = 30;
+		scheduler.config.first_hour = 0;
 		scheduler.config.details_on_dblclick=true;
 		scheduler.config.details_on_create=true;
 		scheduler.config.dblclick_create = true;
@@ -30,7 +30,8 @@
 		//scheduler.config.readonly = true;
 		//Customer lightbox section lable
 		scheduler.locale.labels.section_socakham = 'Số ca khám';
-		scheduler.locale.labels.section_soluongkham = 'Số lượng khám';
+		scheduler.locale.labels.section_soluongkham = 'Số lượng khám tối đa/ Ca khám';
+		scheduler.locale.labels.section_time = 'Chọn thời gian';
 
 
 		//Save attachEvent

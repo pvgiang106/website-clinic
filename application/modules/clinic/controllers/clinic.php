@@ -58,7 +58,7 @@ class Clinic extends MX_Controller {
 			$end_time = $row->thoigian_ketthuc;
 			$temp['start_date'] = $day.' '.$start_time;
 			$temp['end_date'] = $day.' '.$end_time;
-			$temp['text'] = $row->so_luong_kham;
+			$temp['text'] = 'Số lượng khám tối đa: '.$row->so_luong_kham;
 			$temp['cur_regis']= $row->current_register;
 			if($first_hour > $start_time){$first_hour = $start_time;}
 			if($last_hour < $end_time){$last_hour = $end_time;}
@@ -172,54 +172,57 @@ class Clinic extends MX_Controller {
 		$start_date_int = strtotime($day_start_string);
 		$end_date_int = strtotime($day_end_string);
 		
-		$socakham = $_GET['socakham'];
-		$thoigiancakham = ($end_date_int - $start_date_int)/$socakham;
-		
+		$socakham = $_GET['socakham'];		
 		$start_time = date('H:i:s',$start_date_int);
-		$end_time = date('H:i:s',$end_date_int);
-		$ngay_kham = date("Y-m-d",$start_date_int);
+		$end_time = date('H:i:s',$end_date_int);		
+		$int_start_time = strtotime($start_time);
+		$int_end_time = strtotime($end_time);
+		$thoigiancakham = ($int_end_time - $int_start_time)/$socakham;
+		$tmp = $start_date_int;
 		
 		$data = array();
-		
-		for($i = 0;$i<$socakham;$i++){
-			$data[$i] = array(
-				"id_phongkham" => $this->session->userdata['logged_in']['id_phongkham'],
-				"ngay_kham" => $ngay_kham,
-				"thoigian_batdau" => date('H:i',strtotime($start_time)+$i*$thoigiancakham),
-				"thoigian_ketthuc" => date('H:i',strtotime($start_time)+($i+1)*$thoigiancakham),
-				"so_luong_kham" => $_GET['soluongkham']
-			);
-		}
-		$flag = true;
-		foreach($availabletime as $row){
-			if($ngay_kham == $row->ngay_kham){
-				if($start_time < $row->thoigian_batdau && $end_time > $row->thoigian_batdau){
-				
-					$flag = false;
-					break;
-				}
-				if($start_time >= $row->thoigian_batdau && $start_time < $row->thoigian_ketthuc ){
-					$flag = false;
-					break;
+		while($tmp<=$end_date_int){
+			$ngay_kham = date('Y-m-d',$tmp);
+			$tmp += 86400;
+			for($i = 0;$i<$socakham;$i++){
+				$data[$i] = array(
+					"id_phongkham" => $this->session->userdata['logged_in']['id_phongkham'],
+					"ngay_kham" => $ngay_kham,
+					"thoigian_batdau" => date('H:i',strtotime($start_time)+$i*$thoigiancakham),
+					"thoigian_ketthuc" => date('H:i',strtotime($start_time)+($i+1)*$thoigiancakham),
+					"so_luong_kham" => $_GET['soluongkham']
+				);
+			}
+			$flag = true;
+			foreach($availabletime as $row){
+				if($ngay_kham == $row->ngay_kham){
+					if($start_time < $row->thoigian_batdau && $end_time > $row->thoigian_batdau){
+					
+						$flag = false;
+						break;
+					}
+					if($start_time >= $row->thoigian_batdau && $start_time < $row->thoigian_ketthuc ){
+						$flag = false;
+						break;
+					}
 				}
 			}
-		}
-		$today = date('Y-m-d');
-		if($ngay_kham < $today){
-			$flag = false;
-		}
-		
-		if($flag == true){
-			for($i=0;$i<$socakham;$i++){
-				$this->mdclinic->insertAvailableTime($data[$i]);
+			$today = date('Y-m-d');
+			if($ngay_kham < $today){
+				$flag = false;
 			}
-			redirect('/clinic?option=setuptime','refresh');
+			
+			if($flag == true){
+				for($i=0;$i<$socakham;$i++){
+					$this->mdclinic->insertAvailableTime($data[$i]);
+				}				
+			}
+			else{
+				echo "<script> alert('Thời gian đã qua hoặc đã được cài đặt trước đó');</script>";
+				redirect('/clinic?option=setuptime','refresh');
+			}
 		}
-		else{
-			echo "<script> alert('Thời gian đã qua hoặc đã được cài đặt trước đó');</script>";
-			redirect('/clinic?option=setuptime','refresh');
-		}
-		
+		redirect('/clinic?option=setuptime','refresh');
 	}
 	function deleteAvailableTime(){
 		$id_phongkham = $this->session->userdata['logged_in']['id_phongkham'];

@@ -28,10 +28,30 @@
 			$("#add_medicine").show();
 			$("#update_medicine").hide();
 		}
-		function updateMedicine(id_thuoc){
+		function updateMedicine(id_thuoc,ten_thuoc,sang,trua,toi,donvidung){
 			$("#add_medicine").hide();
 			$("#update_medicine").show();
-		}
+
+			document.getElementById("capnhat_tenthuoc").value = ten_thuoc;
+			if(sang==1){
+				document.getElementById("capnhat_sang").checked = true;
+			}else{
+				document.getElementById("capnhat_sang").checked = false;
+			}
+			
+			if(trua==1){			
+				document.getElementById("capnhat_trua").checked = true;
+			}else{
+				document.getElementById("capnhat_trua").checked = false;
+			}
+			if(toi==1){
+				document.getElementById("capnhat_toi").checked = true;
+			}else{
+				document.getElementById("capnhat_toi").checked = false;
+			}
+			document.getElementById("capnhat_don_vi_dung").value = donvidung;
+			document.getElementById("id_thuoc").value = id_thuoc;
+		};
 	</script>
 <!-- plugin tablesorter -->
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.js');?>"></script>

@@ -28,25 +28,29 @@ class Adminmedicine extends MX_Controller {
         echo Modules::run('admin/layout/render', $data);
     }
     
-    function verifyUpdateclinic() {
-		$pk_data = array(
-					"name" => $_POST['name'],
-					"phone" => $_POST['phone'],
-					"address" => $_POST['street'],
-					"district" => $_POST['district'],
-					"provice" => $_POST['provice'],
-					"feature" => $_POST['feature'],
-					"website" => $_POST['website'],
-					"expire_day" => $_POST['expire_day'],
-					"toadoX" => $_POST['toadoX'],
-					"toadoY" => $_POST['toadoY']
+    function verifyInsertMedicine() {
+		$add_data = array(
+					"ten_thuoc" => $_POST['tao_tenthuoc'],
+					"don_vi_dung" => $_POST['tao_don_vi_dung']
 				);
-		$this->mdclinic->updateClinic($_POST['id_phongkham'],$pk_data);
-		$us_data = array(
-						"email" => $_POST['email']
-					);
-		$this->mdclinic->updateUserClinic($_POST['id_phongkham'],$us_data);
-        redirect('admin/Adminclinic');
+		if(isset($_POST['tao_sang'])){ $add_data['sang'] = 1;}
+		if(isset($_POST['tao_trua'])){ $add_data['trua'] = 1;}
+		if(isset($_POST['trao_toi'])){ $add_data['toi'] = 1;}
+		var_dump($add_data);
+		$this->mdmedicine->insertMedicine($add_data);
+		redirect('admin/adminmedicine','refresh');
+    }
+	function verifyUpdateMedicine() {
+		$up_data = array(
+					"ten_thuoc" => $_POST['capnhat_tenthuoc'],
+					"don_vi_dung" => $_POST['capnhat_don_vi_dung']
+				);
+		if(isset($_POST['capnhat_sang'])){ $up_data['sang'] = 1;}
+		if(isset($_POST['capnhat_trua'])){ $up_data['trua'] = 1;}
+		if(isset($_POST['capnhat_toi'])){ $up_data['toi'] = 1;}
+		var_dump($up_data);
+		// $this->mdmedicine->updateMedicine($up_data);
+		// redirect('admin/adminmedicine','refresh');
     }
 }
 

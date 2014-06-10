@@ -10,7 +10,9 @@ Class Mdmedicine extends CI_Model {
         $query = $this->db->get('thuoc');        
         return $query->result();             
     }    
-    
+    function insertMedicine($data){
+		$this->db->insert('thuoc',$data);
+	}
 }
 
 ?>

@@ -61,8 +61,8 @@
 <!-- add on pager plugin tablesorter -->
 <script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.pager.js');?>"></script>
     </head>
-    <body >
-        <section>		
+    <body style="background-color:#EBF3EC;padding-top:20px;">
+        <section >		
             <input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
 			<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />
 			<input type="radio" style="display:none;" id="books" value="3" name="tractor"  <?php if($tab == 2) echo "checked='checked'"; ?> />			
@@ -72,7 +72,7 @@
 				<label for="books" onclick="window.location.href=<?php echo '\''.$tab2.'\''; ?>" class='fontawesome-list-alt'>QUẢN LÍ THUỐC</label>
 
 			</nav>
-			<div class="row">
+			<div class="row" >
             <?php
             $this->load->view($module . '/' . $view_file);
             ?>

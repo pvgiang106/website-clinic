@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -62,15 +62,12 @@
             </div>
             <div class="col-lg-5">
                 <div class="row">
-                    <div class="title">
-                        <b>Text about sologan of service </b>
-                    </div>
                     <div class="row my-left">
                         <div class="col-lg-4">
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/plan.jpg" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>Quan ly benh nhan.</b>
+                            <b>Quản lý bệnh nhân</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -78,7 +75,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/update.jpg" alt="find" class="img-circle">
                         </div>                                  
                         <div class="col-lg-8 text">
-                            <b>Quan ly ho so kham benh.</b>
+                            <b>Quản lý hồ sơ khám bệnh</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -86,7 +83,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/share.jpg" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>Quan ly lich hen.</b>
+                            <b>Cài đặt lịch hẹn</b>
                         </div>
                     </div>
                     <div class="row my-left">
@@ -94,7 +91,7 @@
                             <img border="0" src="<?php echo base_url(); ?>/assets/userfile/img/login/find.png" alt="find" class="img-circle">
                         </div>
                         <div class="col-lg-8 text">
-                            <b>Tu van .</b>
+                            <b>Tư vấn chuyên khoa</b>
                         </div>
                     </div>
                 </div>

@@ -35,12 +35,13 @@ class Adminmedicine extends MX_Controller {
 				);
 		if(isset($_POST['tao_sang'])){ $add_data['sang'] = 1;}
 		if(isset($_POST['tao_trua'])){ $add_data['trua'] = 1;}
-		if(isset($_POST['trao_toi'])){ $add_data['toi'] = 1;}
+		if(isset($_POST['tao_toi'])){ $add_data['toi'] = 1;}
 		var_dump($add_data);
 		$this->mdmedicine->insertMedicine($add_data);
 		redirect('admin/adminmedicine','refresh');
     }
 	function verifyUpdateMedicine() {
+		$id_thuoc = $_POST['id_thuoc'];
 		$up_data = array(
 					"ten_thuoc" => $_POST['capnhat_tenthuoc'],
 					"don_vi_dung" => $_POST['capnhat_don_vi_dung']
@@ -48,10 +49,11 @@ class Adminmedicine extends MX_Controller {
 		if(isset($_POST['capnhat_sang'])){ $up_data['sang'] = 1;}
 		if(isset($_POST['capnhat_trua'])){ $up_data['trua'] = 1;}
 		if(isset($_POST['capnhat_toi'])){ $up_data['toi'] = 1;}
-		var_dump($up_data);
-		// $this->mdmedicine->updateMedicine($up_data);
-		// redirect('admin/adminmedicine','refresh');
+	//var_dump($_POST);
+		$this->mdmedicine->updateMedicine($id_thuoc,$up_data);
+		redirect('admin/adminmedicine','refresh');
     }
+
 }
 
 ?>

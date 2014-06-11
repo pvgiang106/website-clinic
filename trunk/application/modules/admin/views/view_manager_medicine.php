@@ -86,11 +86,11 @@
 </div>
 <div class="col-sm-5" id="update_medicine">
 	<h3>Cập nhật thuốc</h3>
-	<form class="form-horizontal" name="capnhat_thuoc" id="capnhat_thuoc" method="post" action="admin/verifyUpdateMedicine">
+	<form class="form-horizontal" name="capnhat_thuoc" id="capnhat_thuoc" method="post" action="adminmedicine/verifyUpdateMedicine">
 		<div class="form-group">
 			<label  class="col-sm-4 control-label" style="color:#000000;">Tên thuốc</label>
 			<div class="col-sm-7">
-				<input type="text" class="form-control" id="capnhat_tenthuoc" name="tao_tenthuoc" value="<?php  ?>" />
+				<input type="text" class="form-control" id="capnhat_tenthuoc" name="capnhat_tenthuoc" value="<?php  ?>" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -111,7 +111,6 @@
 			<input type="hidden" name="id_thuoc" id="id_thuoc" value="" />
 			<button type="submit" class="btn btn-primary">Cập nhật</button>
 			<button type="button" class="btn btn-info" onclick="addMedicine();" >Thêm mới</button>	
-			<button type="button" class="btn btn-danger" onclick="delMedicine();" >Xóa</button>
 		</div>
 	</form>
 </div>

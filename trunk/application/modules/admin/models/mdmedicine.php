@@ -13,6 +13,10 @@ Class Mdmedicine extends CI_Model {
     function insertMedicine($data){
 		$this->db->insert('thuoc',$data);
 	}
+	function updateMedicine($id_thuoc,$data){
+		$this->db->where('id_thuoc',$id_thuoc);
+		$this->db->update('thuoc',$data);
+	}
 }
 
 ?>

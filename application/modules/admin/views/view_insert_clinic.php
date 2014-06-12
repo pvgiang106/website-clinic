@@ -75,7 +75,7 @@
 		<input type="hidden" id="toadoX" name="toadoX" value="<?php ?>" >
 		<input type="hidden" id="toadoY" name="toadoY" value="<?php ?>" >
 		<button type="submit" class="btn btn-primary" >Lưu</button>
-		<button type="reset" class="btn btn-danger" >Hủy</button>
+		<button type="reset" class="btn btn-danger" onclick="window.location.href='./'">Hủy</button>
 	</div>
 	</div>
 	</div>

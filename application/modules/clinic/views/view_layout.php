@@ -2,6 +2,8 @@
 	$tab0 = base_url().'clinic';
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/faqs';
+	$json_allmedicine = json_encode($allMedicine);
+	$number_medicine = sizeof($allMedicine);
 	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
 	//var_dump($allCustomer);
 ?>
@@ -52,6 +54,22 @@
 			$('#div_create').show();
 			$("#div_detail").hide();			
 		};
+		$(document).ready(function(){
+			var html = "";
+			var allMedicine = <?php echo $json_allmedicine; ?>;
+			var size = <?php echo $number_medicine ; ?>;
+			$("#them_thuoc").click(function(){				
+				var id_thuoc = document.getElementById("thuoc").value;
+				var i = 0;
+				for(i;i<size;i++){
+					if(id_thuoc == allMedicine[i].id_thuoc){
+						html += "<p>"+allMedicine[i].ten_thuoc+"</p>";
+						document.getElementById('div_thuoc').innerHTML = html;
+						break;
+					}
+				}				
+			});
+		});
 	</script>
 
 <?php
@@ -181,8 +199,25 @@
 							<input type="text" class="form-control" id="chi_phi" name="chi_phi" value="<?php  ?>" />
 						</div>
 					</div>
+					<div class="form-group">
+						<label  class="col-sm-3 control-label btn btn-default" id="them_thuoc" style="text-align:center;color:#000000;">Thêm</label>
+						<div class="col-sm-7">
+							<select class="form-control" id="thuoc" name="thuoc" >
+								<?php foreach($allMedicine as $tmp) {?>
+								<option value="<?php echo $tmp->id_thuoc ; ?>"><?php echo $tmp->ten_thuoc;  ?></option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" >
+						<label  class="col-sm-3 control-label"style="color:#000000;">Toa thuốc</label>
+						<div class="col-sm-7" id="div_thuoc">
+							
+						</div>
+					</div>
 				</fieldset>
 					<div id="submitform" style="text-align:center">
+						<input type="hidden" name="arrId_thuoc" id="arrId_thuoc" value="" />
 						<input type="hidden" name="id_chitiet" id="id_chitiet" value="" />
 						<input type="hidden" name="id_lichkham" id="id_lichkham" value="" />
 						<input type="hidden" name="email" id="email" value="" />

@@ -6,12 +6,12 @@
 
         <thead>
             <tr class="bootstrap-header">
-                <td>Number</td>
-				<td>User Name</td>
+                <td>STT</td>
+				<td>Tên</td>
                 <td>Email</td>
-				<td>Phone</td>
-				<td>Address</td>
-                <td>Sex</td>
+				<td>Số ĐT</td>
+				<td>Địa chỉ</td>
+                <td>Giới tính</td>
             </tr>    
         </thead>
         <tbody>

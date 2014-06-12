@@ -6,13 +6,13 @@
     <table id="myTable" class="tablesorter">
         <thead>
             <tr class="bootstrap-header">
-                <td>Number</td>
-                <td>Clinic ID</td>
-                <td>Name</td>
-                <td>Phone</td>
-                <td>Address</td>
-                <td>Expire Day</td>
-                <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/insertclinic" class="btn btn-primary btn-create">Create</a></td>
+                <td>STT</td>
+                <td>Mã Phòng khám</td>
+                <td>Tên phòng khám</td>
+                <td>Số ĐT</td>
+                <td>Địa chỉ</td>
+                <td>Ngày hết hạn</td>
+                <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/insertclinic" class="btn btn-success btn-create">Tạo mới</a></td>
                                
             </tr>    
         </thead>
@@ -28,7 +28,7 @@
                     <td><?php echo $row->phone ?></td>
                     <td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice; ?></td>
                     <td><?php echo $row->expire_day ?></td>                                         
-                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updateClinic?id_phongkham=<?php echo $row->id_phongkham;?>" class="btn btn-success btn-edit">Edit</a></td>
+                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updateClinic?id_phongkham=<?php echo $row->id_phongkham;?>" class="btn btn-primary btn-edit">Sửa</a></td>
                     </td>
                 </tr>  
                 <?php

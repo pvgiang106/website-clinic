@@ -23,6 +23,26 @@
 		$( document ).ready(function() {
 			$("#add_medicine").show()
 			$("#update_medicine").hide();
+			$("#them_thuoc").submit(function(event){
+				var ten_thuoc = document.getElementById("tao_tenthuoc").value;
+				var donvidung = document.getElementById("tao_don_vi_dung").value;
+			if(ten_thuoc == "" || donvidung == ""){
+				alert("Cần nhập đủ thông tin");
+				event.preventDefault();
+			}else{
+				return true;
+			}
+			});
+			$("#capnhat_thuoc").submit(function(event){
+				var capnhat_ten_thuoc = document.getElementById("capnhat_tenthuoc").value;
+				var capnhat_donvidung = document.getElementById("capnhat_don_vi_dung").value;
+			if(capnhat_ten_thuoc == "" || capnhat_donvidung == ""){
+				alert("Thông tin sửa không chính xác");
+				event.preventDefault();
+			}else{
+				return true;
+			}
+			});
 		});
 		function addMedicine(){
 			$("#add_medicine").show();

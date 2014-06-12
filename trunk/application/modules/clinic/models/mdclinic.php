@@ -233,6 +233,11 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_faq',$id_faq);
 		$this->db->update('faq',$data);
 	}
+	// medicine page
+	function allMedicine(){
+		$query = $this->db->get('thuoc');
+		return $query->result();
+	}
 }
 
 ?>

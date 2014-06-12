@@ -1,7 +1,7 @@
 <?php
 	$info = $info_phongkham[0];
 	$info_user = $info_user_phongkham[0];
-	//var_dump($info);
+	//var_dump($info_user_phongkham);
 ?>
 <form class="form-horizontal" method="post" action="verifyUpdateclinic">
 	<div class="col-sm-6">
@@ -81,7 +81,7 @@
 		<input type="hidden" id="toadoY" name="toadoY" value="<?php ?>" >
 		<input type="hidden" id="id_phongkham" name="id_phongkham" value="<?php echo $info->id_phongkham; ?>" >
 		<button type="submit" class="btn btn-primary" >Lưu</button>
-		<button type="reset" class="btn btn-danger" >Hủy</button>
+		<button type="reset" class="btn btn-danger" onclick="window.location.href='./'">Hủy</button>
 	</div>
 	</div>
 	</div>

@@ -93,6 +93,7 @@ class Clinic extends MX_Controller {
 	    // $data['json_wait_appointment'] = json_encode($response);        
         // $data['waitingappoitment'] = $waitingappoitment;
 		/*-- End task confirm appoinment --*/
+		$data['allMedicine'] = $this->mdclinic->allMedicine();
 		$data['allCustomer'] = $this->mdclinic->getInfoCustomer();
         $data['module'] = 'clinic';
         $data['view_file'] = 'view_appointment';

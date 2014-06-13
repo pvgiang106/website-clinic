@@ -6,6 +6,8 @@
 	$tab2 = base_url().'clinic/faqs';
 	if(isset($_GET['stt'])){
 		$i = $_GET['stt'];
+	}else if(sizeof($detailprofile) != 0){
+		$i = 0;
 	}else{
 		$i = -1;
 	}
@@ -98,6 +100,11 @@
 						return true;
 					}
 				});
+				$("#btn_create").click(function(){
+					$("#chinhsua_chitiet").hide();
+					$("#taomoi_chitiet").show();
+					
+				});
 			});
 			function openedit(){
 				$("fieldset").removeAttr("disabled");
@@ -132,7 +139,7 @@
 									<td>STT</td>
 									<td>Ngày khám</td>
 									<td>Lí do khám</td>
-									<td style="text-align:center;"><button class="btn btn-success" data-toggle="modal" data-target="#myModal">Tạo mới</button></td>
+									<td ><button class="btn btn-success" id="btn_create">Tạo mới</button></td>
 								</tr>    
 							</thead>
 	
@@ -145,7 +152,7 @@
 										<td><?php echo $number ?></td>
 										<td><?php echo $row->ngay_kham ?></td>
 										<td><?php echo $row->li_do_kham ?></td>
-										<td><a href="?stt=<?php echo $number; ?>&email=<?php echo $email;?>&name=<?php echo $name;?>">Chi tiết</a></td>
+										<td ><a class="btn btn-primary" href="?stt=<?php echo $number; ?>&email=<?php echo $email;?>&name=<?php echo $name;?>">Chi tiết</a></td>
 									</tr>  
 									<?php
 									$number += 1;
@@ -169,7 +176,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6" id="chinhsua_chitiet">
 						<?php if($i != -1){ ?>
 						<h3>Chi tiết khám ngày <?php  echo $detailprofile[$i]->ngay_kham;?></h3>						
 						<form class="form-horizontal" method="post" action="updateData">
@@ -253,92 +260,83 @@
 							</div>
 						</form>
 						<?php } ?>
-						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h4 class="modal-title" id="myModalLabel">Tạo chi tiết khám</h4>
-									</div>
-									<div class="modal-body">
-										<form class="form-horizontal" action="insertData" method="post" id="frm_create">
-											<div class="form-group">
-												<label class="col-sm-3 control-label">Ngày khám</label>
-												<div class="col-sm-9">
-													<input type="date" class="form-control" id="ngay_kham" name="ngay_kham" />					
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="col-sm-3 control-label">Thời gian khám</label>
-												<div class="col-sm-9">
-													<select class="form-control" name="thoigiankham" id="thoigiankham">
-													</select>					
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Lí do khám</label>
-												<div class="col-sm-9">
-													<p class="form-control-static" id="lidokham"> </p>
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Triệu chứng</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="trieu_chung" name="trieu_chung"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Nhiệt độ</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="nhiet_do" name="nhiet_do"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Huyết áp</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="huyet_ap" name="huyet_ap"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Nhịp tim</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="mach" name="mach" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Chuẩn đoán</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="chuan_doan" name="chuan_doan"/>
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Lời khuyên</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="loi_khuyen" name="loi_khuyen" />
-												</div>
-											</div>
-											<div class="form-group">
-												<label  class="col-sm-3 control-label">Chi phí</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="chi_phi" name="chi_phi" />
-												</div>
-											</div>
-											<div style="text-align:center">
-												<input type="hidden" name="id_chitiet" id="id_chitiet" value="" />
-												<input type="hidden" name="id_lichkham" id="id_lichkham" value="" />
-												<input type="hidden" name="email" value="<?php echo $email;?>" />
-												<input type="hidden" name="name" value="<?php echo $name;?>" />
-												<button type="submit" class="btn btn-primary">Lưu</button>
-												<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>												
-											</div>
-										</form>
-									</div>
+					</div>
+					<div class="col-md-6" id="taomoi_chitiet" <?php if($i != -1) echo "style='display:none;'" ;?>>
+						<h3>Tạo chi tiết khám</h3>
+						<form class="form-horizontal" action="insertData" method="post" id="frm_create">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Ngày khám</label>
+								<div class="col-sm-9">
+									<input type="date" class="form-control" id="ngay_kham" name="ngay_kham" />					
 								</div>
 							</div>
-						</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Thời gian khám</label>
+								<div class="col-sm-9">
+									<select class="form-control" name="thoigiankham" id="thoigiankham">
+									</select>					
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Lí do khám</label>
+								<div class="col-sm-9">
+									<p class="form-control-static" id="lidokham"> </p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Triệu chứng</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="trieu_chung" name="trieu_chung"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Nhiệt độ</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="nhiet_do" name="nhiet_do"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Huyết áp</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="huyet_ap" name="huyet_ap"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Nhịp tim</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="mach" name="mach" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Chuẩn đoán</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="chuan_doan" name="chuan_doan"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Lời khuyên</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="loi_khuyen" name="loi_khuyen" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="col-sm-3 control-label">Chi phí</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="chi_phi" name="chi_phi" />
+								</div>
+							</div>
+							<div style="text-align:center">
+								<input type="hidden" name="id_chitiet" id="id_chitiet" value="" />
+								<input type="hidden" name="id_lichkham" id="id_lichkham" value="" />
+								<input type="hidden" name="email" value="<?php echo $email;?>" />
+								<input type="hidden" name="name" value="<?php echo $name;?>" />
+								<button type="submit" class="btn btn-primary">Lưu</button>
+								<button type="button" class="btn btn-danger" onclick="canceledit();">Hủy</button>												
+							</div>
+						</form>
 					</div>
 				</div>
-			</section>
+			</section>			
         </div>
 		
         <script type="text/javascript">

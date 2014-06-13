@@ -102,6 +102,18 @@ Class Mdclinic extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+	//find id_chitiet by id_lichkham
+	function getIdChitiet($id_lichkham){
+		$this->db->select('id_chitiet');
+		$this->db->from('chi_tiet_kham');
+		$this->db->where('id_lichkham',$id_lichkham);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	// insert to toa_thuoc
+	function insertToathuoc($data){
+		$this->db->insert('toa_thuoc',$data);
+	}
 	//check time available to create appointment
 	function checkEmptyTime($id_phongkham,$ngay_kham,$start_time,$end_time){
 		$this->db->from('lich_kham');

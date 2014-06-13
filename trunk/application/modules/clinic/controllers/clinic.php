@@ -278,6 +278,17 @@ class Clinic extends MX_Controller {
 			}else{
 				$this->mdclinic->insertMedicalprofile($data);
 			}
+			$str_thuoc = $_POST['arrId_thuoc'];
+			$arrId_thuoc = explode(';',$str_thuoc);
+			$id_chitiet = $this->mdclinic->getIdChitiet($_POST['id_lichkham']);
+			var_dump($arrId_thuoc);
+			for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
+				$data = array(
+							"id_chitiet" => $id_chitiet[0]->id_chitiet,
+							"id_thuoc" => $arrId_thuoc[$i]
+						);
+				$this->mdclinic->insertToathuoc($data);
+			}
 			redirect('/clinic?option=appointment','refresh');
 	}
 	function hentaikham(){

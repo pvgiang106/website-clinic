@@ -54,21 +54,41 @@
 			$('#div_create').show();
 			$("#div_detail").hide();			
 		};
+		function remove_thuoc(id,ten){
+				var tmp = "<label class='btn btn-danger' style='color:#000000;width:30px' onclick='remove_thuoc("+id+","+ten+")'>Xoá</label><p style='color:#000000;padding-left:100px;' >"+ten+"</p>";
+				html = html.replace(tmp,"");
+				document.getElementById('div_thuoc').innerHTML = html;
+			};
 		$(document).ready(function(){
 			var html = "";
+			var arrId_thuoc = "";
+			var current = "";	
+			var status_themthuoc = "";
 			var allMedicine = <?php echo $json_allmedicine; ?>;
 			var size = <?php echo $number_medicine ; ?>;
-			$("#them_thuoc").click(function(){				
+			$("#them_thuoc").click(function(){
+				if( document.getElementById('id_lichkham').value != current){
+					current =  document.getElementById('id_lichkham').value;
+					html = "";
+					arrId_thuoc = "";				
+				}
 				var id_thuoc = document.getElementById("thuoc").value;
 				var i = 0;
 				for(i;i<size;i++){
 					if(id_thuoc == allMedicine[i].id_thuoc){
-						html += "<p>"+allMedicine[i].ten_thuoc+"</p>";
-						document.getElementById('div_thuoc').innerHTML = html;
-						break;
+						if(html.search(allMedicine[i].ten_thuoc) == -1){
+							status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
+							document.getElementById('status_themthuoc').innerHTML = status_themthuoc;
+							arrId_thuoc+= allMedicine[i].id_thuoc+";"
+							html += "<label class='btn btn-danger' style='color:#000000;width:30px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+","+allMedicine[i].ten_thuoc+")'>Xoá</label><p style='color:#000000;padding-left:100px;' >"+allMedicine[i].ten_thuoc+"</p>";
+							document.getElementById('div_thuoc').innerHTML = html;
+							document.getElementById("arrId_thuoc").value = arrId_thuoc;
+							break;
+						}
 					}
 				}				
 			});
+			
 		});
 	</script>
 
@@ -200,20 +220,22 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label  class="col-sm-3 control-label btn btn-default" id="them_thuoc" style="text-align:center;color:#000000;">Thêm</label>
-						<div class="col-sm-7">
+						<div >
+							<label  class = "col-sm-3 control-label btn btn-default" style="color:#000000;" data-toggle="modal" data-target="#myModal">Toa thuốc</label>
+						</div>
+						<div class="col-sm-5">
 							<select class="form-control" id="thuoc" name="thuoc" >
 								<?php foreach($allMedicine as $tmp) {?>
 								<option value="<?php echo $tmp->id_thuoc ; ?>"><?php echo $tmp->ten_thuoc;  ?></option>
 								<?php } ?>
 							</select>
 						</div>
-					</div>
-					<div class="form-group" >
-						<label  class="col-sm-3 control-label"style="color:#000000;">Toa thuốc</label>
-						<div class="col-sm-7" id="div_thuoc">
-							
+						<div >
+							<label class = "col-sm-1 control-label btn btn-default" id="them_thuoc" style="color:#000000;">Thêm</label>
 						</div>
+						
+					</div>	
+					<div class="form-group" id="status_themthuoc">
 					</div>
 				</fieldset>
 					<div id="submitform" style="text-align:center">
@@ -364,7 +386,25 @@
 	</div>
 </section>
 
-	
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="myModalLabel">Toa thuốc</h4>
+	  </div>
+	  <div class="modal-body" id="div_thuoc">
+		
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		<button type="button" class="btn btn-primary">Lưu</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
 		
 	</body>
 </html>

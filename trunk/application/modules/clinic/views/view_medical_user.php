@@ -2,6 +2,7 @@
 	$tab0 = base_url().'clinic';
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/faqs';
+	$name = $this->session->userdata['logged_in']['name'];
 	//var_dump($info_user);
 
 ?>
@@ -39,6 +40,20 @@
 		<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.pager.js');?>"></script>
     </head>
     <body>
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="width:1170px;margin:auto;">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a style="color: #104AD3;" href='<?php echo base_url(); ?>'><?php echo $name ?></a></li>
+        <li class="dropdown">
+          <a  style="color: rgba(0,0,0,.4);" href="#" class="dropdown-toggle" data-toggle="dropdown">Setting <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href='<?php echo site_url("login/login/logout") ?>'>Logout</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+    </ul>
+ </div>
         <div class="row" >
             <section>
 				<input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
@@ -89,15 +104,11 @@
 						<form>
 						  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
 						  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
-						  <input type="text" class="pagedisplay"/>
+						  <input type="text" class="pagedisplay" style="text-align:center" />
 						  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
 						  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
-						  <select class="pagesize">
-							<option selected="selected"  value="10">10</option>
-							<option value="20">20</option>
-							<option value="30">30</option>
-							<option  value="40">40</option>
-						  </select>
+						  <input class="pagesize" value="10" type="hidden">
+						  </input>
 						</form>
 					</div>
 				</div>

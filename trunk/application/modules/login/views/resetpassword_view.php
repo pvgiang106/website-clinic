@@ -20,7 +20,7 @@ echo form_open('login/verifylogin/resetpass', $attribute);
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button type="submit" class="btn btn-primary">Reset</button>
-                <button type="button" class="btn btn-info">Cancel</button>
+                <button type="button" class="btn btn-info" onclick="window.location='../';">Cancel</button>
             </div>
         </div>
     </fieldset>

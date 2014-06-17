@@ -4,6 +4,7 @@
 	$tab2 = base_url().'clinic/faqs';
 	$json_allmedicine = json_encode($allMedicine);
 	$number_medicine = sizeof($allMedicine);
+	$name = $this->session->userdata['logged_in']['name'];
 	if(isset($_GET['option'])){ $view = $_GET['option'];}else{$view = 'appointment';};
 	//var_dump($allCustomer);
 ?>
@@ -55,7 +56,8 @@
 			$("#div_detail").hide();			
 		};
 		function remove_thuoc(id,ten){
-				var tmp = "<label class='btn btn-danger' style='color:#000000;width:30px' onclick='remove_thuoc("+id+","+ten+")'>Xoá</label><p style='color:#000000;padding-left:100px;' >"+ten+"</p>";
+				var tmp = "<label class=\"btn btn-danger\" style=\"color:#000000;width:30px\" onclick=\"remove_thuoc("+id+",&quot;"+ten+"&quot;)\">Xoá</label><p style=\"color:#000000;padding-left:100px;\">"+ten+"</p>";
+				var html = document.getElementById('div_thuoc').innerHTML;
 				html = html.replace(tmp,"");
 				document.getElementById('div_thuoc').innerHTML = html;
 			};
@@ -71,6 +73,8 @@
 					current =  document.getElementById('id_lichkham').value;
 					html = "";
 					arrId_thuoc = "";				
+				}else{
+					html = document.getElementById('div_thuoc').innerHTML;
 				}
 				var id_thuoc = document.getElementById("thuoc").value;
 				var i = 0;
@@ -80,7 +84,7 @@
 							status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
 							document.getElementById('status_themthuoc').innerHTML = status_themthuoc;
 							arrId_thuoc+= allMedicine[i].id_thuoc+";"
-							html += "<label class='btn btn-danger' style='color:#000000;width:30px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+","+allMedicine[i].ten_thuoc+")'>Xoá</label><p style='color:#000000;padding-left:100px;' >"+allMedicine[i].ten_thuoc+"</p>";
+							html += "<label class='btn btn-danger' style='color:#000000;width:30px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+",\""+allMedicine[i].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;' >"+allMedicine[i].ten_thuoc+"</p>";
 							document.getElementById('div_thuoc').innerHTML = html;
 							document.getElementById("arrId_thuoc").value = arrId_thuoc;
 							break;
@@ -88,6 +92,28 @@
 					}
 				}				
 			});
+		$( "#tao_appointment" ).submit(function(event) {
+			var ngay_kham = document.getElementById("tao_ngaykham").value;
+			var thoigiankham = document.getElementById("tao_thoigian").value;
+			var li_do = document.getElementById("tao_lido").value;
+			if(ngay_kham == "" || thoigiankham == "null" || li_do == ""){
+				alert("Cần điền đầy đủ thông tin");
+				event.preventDefault();
+			}else{
+				return true;
+			}
+		});
+		$( "#tk_appointment" ).submit(function(event) {
+			var ngay_kham = document.getElementById("tk_ngaykham").value;
+			var thoigiankham = document.getElementById("tk_thoigian").value;
+			var li_do = document.getElementById("tk_lido").value;
+			if(ngay_kham == "" || thoigiankham == "null" || li_do == ""){
+				alert("Cần điền đầy đủ thông tin");
+				event.preventDefault();
+			}else{
+				return true;
+			}
+		});
 			
 		});
 	</script>
@@ -111,6 +137,20 @@
 ?>
 </head>
     <body onload="init();" ><!-- Menu 2 -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a style="color: #104AD3;" href='<?php echo base_url(); ?>'><?php echo $name ?></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Setting <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href='<?php echo site_url("login/login/logout") ?>'>Logout</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+    </ul>
+ </div>
 <section>
 	<input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
 	<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      

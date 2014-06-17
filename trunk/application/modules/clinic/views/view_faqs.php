@@ -6,6 +6,7 @@
 	//var_dump($datraloi);
 	//var_dump($chuatraloi);
 	$size = sizeof($datraloi);
+	$name = $this->session->userdata['logged_in']['name'];
 ?>
 <!DOCTYPE html>
 <html >
@@ -49,6 +50,20 @@
 	</script>
 </head>
     <body ><!-- Menu 2 -->
+	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        <li><a style="color: #104AD3;" href='<?php echo base_url(); ?>'><?php echo $name ?></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Setting <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href='<?php echo site_url("login/login/logout") ?>'>Logout</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+    </ul>
+ </div>
 <section>
 	<input type="radio" style="display:none;" id="profile" value="1" name="tractor" <?php if($tab == 0) echo "checked='checked'"; ?> />    
 	<input type="radio" style="display:none;" id="settings" value="2" name="tractor"  <?php if($tab == 1) echo "checked='checked'"; ?> />      
@@ -67,10 +82,23 @@
 	//var_dump($view_file);
 	$this->load->view($module . '/' . $view_file);
 ?>
-
-</section>
-
-	
-		
+<div class="pager">
+			<form>
+			  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
+			  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
+			  <input type="text" class="pagedisplay" style="text-align:center" />
+			  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
+			  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
+			  <input class="pagesize" value="10" type="hidden">
+			  </input>
+			</form>
+		</div>
+</section>	
+	<script type="text/javascript">
+            $(document).ready(function() {
+                 $("table").tablesorter().tablesorterPager({container: $(".pager")});    
+            }); 
+        
+        </script>	
 	</body>
 </html>

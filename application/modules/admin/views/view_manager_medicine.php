@@ -39,19 +39,15 @@
             ?>
         </tbody>
     </table>
-	<div class="pager">
+<div class="pager">
 <form>
   <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
   <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
-  <input type="text" class="pagedisplay"/>
+  <input type="text" class="pagedisplay" style="text-align:center" />
   <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
   <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
-  <select class="pagesize">
-	<option selected="selected"  value="10">10</option>
-	<option value="20">20</option>
-	<option value="30">30</option>
-	<option  value="40">40</option>
-  </select>
+  <input class="pagesize" value="10" type="hidden">
+  </input>
 </form>
 </div>
 </div> 

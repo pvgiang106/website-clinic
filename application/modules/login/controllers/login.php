@@ -36,10 +36,12 @@ class Login extends MX_Controller {
                 echo $email;
                 echo $role;
                 echo $id_phongkham;
+				echo $name;
                 $user_info = array(
                     'email' => $email,
                     'role' => $role,
                     'id_phongkham' => $id_phongkham ,
+					'name' => $name
                 );
                 $this->session->set_userdata('logged_in', $user_info);
                 echo 'have cookie';

@@ -37,6 +37,17 @@
             ?>
         </tbody>
     </table>
+<div class="pager">
+<form>
+  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/first.png');?>" class="first"/>
+  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/prev.png');?>" class="prev"/>
+  <input type="text" class="pagedisplay" style="text-align:center" />
+  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/next.png');?>" class="next"/>
+  <img src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/icons/last.png');?>" class="last"/>
+  <input class="pagesize" value="10" type="hidden">
+  </input>
+</form>
+</div>
 </div> <!-- end div container-->
 
 

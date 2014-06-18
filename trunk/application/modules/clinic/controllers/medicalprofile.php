@@ -36,7 +36,7 @@ class Medicalprofile extends MX_Controller {
 		// get all appoitment in database
 		$chitietkham = $this->mdclinic->getprofile($email,$data['id_phongkham']);		
 		$data['detailprofile'] = $chitietkham;
-		
+		$data['allMedicine'] = $this->mdclinic->allMedicine();
 		$data['module'] = 'clinic';
 		$data['view_file'] = 'view_medical_profile';
 		echo Modules::run('clinic/layout/render',$data);
@@ -56,8 +56,20 @@ class Medicalprofile extends MX_Controller {
 					"mach" => $_POST['mach'],
 					"chi_phi" => $_POST['chi_phi']
 				);
-			$this->mdclinic->insertMedicalprofile($data);
-			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name'],'refresh');
+			
+			// $this->mdclinic->insertMedicalprofile($data);
+			// $str_thuoc = $_POST['arrId_thuoc'];
+			// $arrId_thuoc = explode(';',$str_thuoc);
+			// $id_chitiet = $this->mdclinic->getIdChitiet($_POST['id_lichkham']);
+			// for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
+				// $data = array(
+							// "id_chitiet" => $id_chitiet[0]->id_chitiet,
+							// "id_thuoc" => $arrId_thuoc[$i]
+						// );
+				// $this->mdclinic->insertToathuoc($data);
+			// }
+			echo $_POST['name'];
+			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name']);
 	}
 	function updateData(){
 		$data = array(
@@ -73,14 +85,15 @@ class Medicalprofile extends MX_Controller {
 					"mach" => $_POST['edit_mach'],
 					"chi_phi" => $_POST['edit_chi_phi']
 				);
-			var_dump($data);
-			$this->mdclinic->updateMedicalprofile($data);
-			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name'],'refresh');
+
+				$this->mdclinic->updateMedicalprofile($data);
+			
+			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name']);
 	}
 	function deleteData(){
 		$id_chitiet = $_GET['id_chitiet'];
 		$this->mdclinic->deleteMedicalprofile($id_chitiet);
-		redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_GET['email'].'&name='.$_GET['name'],'refresh');
+		redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_GET['email'].'&name='.$_GET['name']);
 	}
 	
 }

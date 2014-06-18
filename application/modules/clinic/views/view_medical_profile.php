@@ -34,7 +34,7 @@
 		$json_toathuoc = json_encode($arr_toathuoc);
 	}
 	// var_dump($arr_toathuoc);
-	// var_dump($str_idthuoc);
+	//var_dump($str_idthuoc);
 	//var_dump($json_alllichkham);
 ?>
 <!DOCTYPE html>
@@ -76,10 +76,13 @@
 				var html = document.getElementById('div_thuoc').innerHTML;
 				html = html.replace(tmp,"");
 				var arrId_thuoc = document.getElementById("arrId_thuoc").value;
+				var edit_arrId_thuoc = document.getElementById("edit_arrId_thuoc").value;
 				var str_remove = id+";";
-				arrId_thuoc = arrId_thuoc.replace(str_remove,"")
+				arrId_thuoc = arrId_thuoc.replace(str_remove,"");
+				edit_arrId_thuoc = edit_arrId_thuoc.replace(str_remove,"");
 				document.getElementById('div_thuoc').innerHTML = html;
 				document.getElementById("arrId_thuoc").value = arrId_thuoc;
+				document.getElementById("edit_arrId_thuoc").value = edit_arrId_thuoc;
 			};
 			
 			$(document).ready(function(){
@@ -93,27 +96,46 @@
 				if(viewdetail != -1){
 				var number_thuoc_detail = <?php if($i != -1) {echo $number_thuoc_detail;} else { echo 'null';} ?>;
 				var arr_toathuoc = <?php if($i != -1){ echo $json_toathuoc ;} else { echo 'null';} ?>;
-				var str_idthuoc = <?php if($i != -1) {echo $str_idthuoc ;} else { echo 'null';} ?>;
+				var str_idthuoc = <?php if($i != -1) {echo '\''.$str_idthuoc.'\'' ;} else { echo 'null';} ?>;
 				for(j = 0;j<number_thuoc_detail;j++){
 					html +=  "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+arr_toathuoc[j].id_thuoc+",\""+arr_toathuoc[j].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+arr_toathuoc[j].ten_thuoc+"</p>";
 				}
-				document.getElementById("arrId_thuoc").value = str_idthuoc;
+				document.getElementById("edit_arrId_thuoc").value = str_idthuoc;
 				document.getElementById('div_thuoc').innerHTML = html;
 				html = "";
 				}
 				$("#tao_them_thuoc").click(function(){
 					var id_thuoc = document.getElementById("tao_thuoc").value;
-					
+					html = document.getElementById('div_thuoc').innerHTML;
 					var i = 0;
 					for(i;i<size;i++){
 						if(id_thuoc == allMedicine[i].id_thuoc){
 							if(html.search(allMedicine[i].ten_thuoc) == -1){
 								status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
-								document.getElementById('tao_status_themthuoc').innerHTML = status_themthuoc;
+								document.getElementById('status_themthuoc').innerHTML = status_themthuoc;
 								arrId_thuoc+= allMedicine[i].id_thuoc+";"
 								html += "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+",\""+allMedicine[i].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+allMedicine[i].ten_thuoc+"</p>";
 								document.getElementById('div_thuoc').innerHTML = html;
 								document.getElementById("arrId_thuoc").value = arrId_thuoc;
+								break;
+							}
+						}
+					}				
+				});
+				$("#them_thuoc").click(function(){
+					var id_thuoc = document.getElementById("thuoc").value;
+					html = document.getElementById('div_thuoc').innerHTML;
+					arrId_thuoc = document.getElementById("edit_arrId_thuoc").value;
+					var i = 0;
+					for(i;i<size;i++){
+						if(id_thuoc == allMedicine[i].id_thuoc){
+							if(html.search(allMedicine[i].ten_thuoc) == -1){
+								status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
+								document.getElementById('status_themthuoc').innerHTML = status_themthuoc;
+								arrId_thuoc+= allMedicine[i].id_thuoc+";"
+								html += "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+",\""+allMedicine[i].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+allMedicine[i].ten_thuoc+"</p>";
+								document.getElementById('div_thuoc').innerHTML = html;
+								document.getElementById("edit_arrId_thuoc").value = arrId_thuoc;
 								break;
 							}
 						}
@@ -125,16 +147,16 @@
 					var ngay_kham = document.getElementById("ngay_kham").value;
 					var all_lichkham = <?php echo $json_alllichkham;?>;
 					var i = 0;
-					var html = "<option value='null'>Chọn thời gian khám</option>";
+					var html_ngaykham = "<option value='null'>Chọn thời gian khám</option>";
 					for(i;i<size;i++){
 						if(all_lichkham[i].ngay_kham == ngay_kham){
-							html+="<option value='"+all_lichkham[i].thoigian_batdau+"-"+all_lichkham[i].thoigian_ketthuc+"'>"+all_lichkham[i].thoigian_batdau+" - "+all_lichkham[i].thoigian_ketthuc+"</option>";
+							html_ngaykham+="<option value='"+all_lichkham[i].thoigian_batdau+"-"+all_lichkham[i].thoigian_ketthuc+"'>"+all_lichkham[i].thoigian_batdau+" - "+all_lichkham[i].thoigian_ketthuc+"</option>";
 						}
 					}
-					if(html=="<option value='null'>Chọn thời gian khám</option>"){
-						html = "<option value='null'>Không có ca khám nào</option>"
+					if(html_ngaykham=="<option value='null'>Chọn thời gian khám</option>"){
+						html_ngaykham = "<option value='null'>Không có ca khám nào</option>"
 					}
-					document.getElementById('thoigiankham').innerHTML=html;
+					document.getElementById('thoigiankham').innerHTML=html_ngaykham;
 				});
 				$( "#thoigiankham" ).change(function() {//chon thoi gian kham in #thoigiankham -> id
 					var size = <?php echo $sizeall_lickham; ?>;
@@ -142,7 +164,6 @@
 					var thoigiankham = document.getElementById("thoigiankham").value
 					var all_lichkham = <?php echo $json_alllichkham;?>;
 					var i = 0;
-					var html = "";
 					for(i;i<size;i++){
 						if(all_lichkham[i].ngay_kham == ngay_kham && all_lichkham[i].thoigian_batdau == thoigiankham.substr(0,8) ){
 							$("#id_lichkham").val(all_lichkham[i].id_lichkham);
@@ -172,6 +193,8 @@
 					$("#chinhsua_chitiet").hide();
 					$("#taomoi_chitiet").show();
 					document.getElementById('div_thuoc').innerHTML = "";
+					document.getElementById("arrId_thuoc").value = "";
+					html = "";
 				});
 			});
 			function openedit(){
@@ -351,6 +374,7 @@
 							</div>
 						
 							<div id="submitform" style="text-align:center">
+								<input type="hidden" name="edit_arrId_thuoc" id="edit_arrId_thuoc" value="" />
 								<input type="hidden" name="edit_id_chitiet" id="edit_id_chitiet" value="<?php echo $detailprofile[$i]->id_chitiet; ?>" />
 								<input type="hidden" name="edit_id_lichkham" id="edit_id_lichkham" value="<?php echo $detailprofile[$i]->id_lichkham; ?>" />
 								<input type="hidden" name="email" value="<?php echo $email;?>" />

@@ -57,18 +57,17 @@ class Medicalprofile extends MX_Controller {
 					"chi_phi" => $_POST['chi_phi']
 				);
 			
-			// $this->mdclinic->insertMedicalprofile($data);
-			// $str_thuoc = $_POST['arrId_thuoc'];
-			// $arrId_thuoc = explode(';',$str_thuoc);
-			// $id_chitiet = $this->mdclinic->getIdChitiet($_POST['id_lichkham']);
-			// for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
-				// $data = array(
-							// "id_chitiet" => $id_chitiet[0]->id_chitiet,
-							// "id_thuoc" => $arrId_thuoc[$i]
-						// );
-				// $this->mdclinic->insertToathuoc($data);
-			// }
-			echo $_POST['name'];
+			$this->mdclinic->insertMedicalprofile($data);
+			$str_thuoc = $_POST['arrId_thuoc'];
+			$arrId_thuoc = explode(';',$str_thuoc);
+			$id_chitiet = $this->mdclinic->getIdChitiet($_POST['id_lichkham']);
+			for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
+				$data = array(
+							"id_chitiet" => $id_chitiet[0]->id_chitiet,
+							"id_thuoc" => $arrId_thuoc[$i]
+						);
+				$this->mdclinic->insertToathuoc($data);
+			}
 			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name']);
 	}
 	function updateData(){
@@ -87,7 +86,18 @@ class Medicalprofile extends MX_Controller {
 				);
 
 				$this->mdclinic->updateMedicalprofile($data);
-			
+				$this->mdclinic->deleteToathuoc($_POST['edit_id_chitiet']);
+				$str_thuoc = $_POST['edit_arrId_thuoc'];
+				$arrId_thuoc = explode(';',$str_thuoc);
+				$id_chitiet = $this->mdclinic->getIdChitiet($_POST['edit_id_lichkham']);
+				for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
+					$data = array(
+								"id_chitiet" => $id_chitiet[0]->id_chitiet,
+								"id_thuoc" => $arrId_thuoc[$i]
+							);
+					$this->mdclinic->insertToathuoc($data);
+				}
+				
 			redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_POST['email'].'&name='.$_POST['name']);
 	}
 	function deleteData(){

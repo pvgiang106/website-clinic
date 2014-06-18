@@ -198,6 +198,10 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_chitiet',$id_chitiet);
 		$this->db->delete('toa_thuoc');
 	}
+	function deleteToathuoc($id_chitiet){
+		$this->db->where('id_chitiet',$id_chitiet);
+		$this->db->delete('toa_thuoc');
+	}
 	function getToathuoc($id_chitiet){
 		$this->db->where('id_chitiet',$id_chitiet);
 		$query = $this->db->get('toa_thuoc');

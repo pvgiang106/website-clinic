@@ -69,30 +69,7 @@ class Clinic extends MX_Controller {
 		$data['last_hour'] = $last_hour;
 		$data['json_availabletime'] = json_encode($response);
 		$data['availabletime'] = $availabletime;
-		/*-- End task appoinment --*/
-		
-		/*-- Task setuptime */
-      		
-		/*-- End task setuptime --*/
-		
-		/*-- Task confirm appointment --*/
-		// $waitingappoitment = $this->mdclinic->getlichkham($data['id_phongkham'],0);
-		// $response = array();
-		// foreach($waitingappoitment as $row) {
-			// $temp = array();
-			// $temp['id'] = $row->id_lichkham;
-			// $ngay_kham = $row->ngay_kham;
-			// $start_time = $row->thoigian_batdau;
-			// $end_time= $row->thoigian_ketthuc;
-			// $temp['start_date'] = $ngay_kham.' '.$start_time;
-			// $temp['end_date'] = $ngay_kham.' '.$end_time;			
-			// $temp['reason'] = $row->li_do_kham; 
-			// $temp['text'] = $row->email;
-		 // array_push($response,$temp);
-		// }
-	    // $data['json_wait_appointment'] = json_encode($response);        
-        // $data['waitingappoitment'] = $waitingappoitment;
-		/*-- End task confirm appoinment --*/
+
 		$data['allMedicine'] = $this->mdclinic->allMedicine();
 		$data['allCustomer'] = $this->mdclinic->getInfoCustomer();
         $data['module'] = 'clinic';
@@ -281,7 +258,6 @@ class Clinic extends MX_Controller {
 			$str_thuoc = $_POST['arrId_thuoc'];
 			$arrId_thuoc = explode(';',$str_thuoc);
 			$id_chitiet = $this->mdclinic->getIdChitiet($_POST['id_lichkham']);
-			var_dump($arrId_thuoc);
 			for($i=0;$i<sizeof($arrId_thuoc)-1;$i++){
 				$data = array(
 							"id_chitiet" => $id_chitiet[0]->id_chitiet,

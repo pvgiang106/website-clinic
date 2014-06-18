@@ -14,8 +14,28 @@
 	$email = $_GET['email'];
 	$name = $_GET['name'];
 	$json_alllichkham = json_encode($all_lichkham);
-	$name = $this->session->userdata['logged_in']['name'];
-//var_dump($json_alllichkham);
+	$name_pk = $this->session->userdata['logged_in']['name'];
+	$json_allmedicine = json_encode($allMedicine);
+	$number_medicine = sizeof($allMedicine);
+	if($i != -1){
+		$arr_toathuoc = array(
+			
+		);
+		$str_idthuoc = "";
+		$toa_thuoc = $this->mdclinic->getToathuoc($detailprofile[$i]->id_chitiet);
+
+		foreach($toa_thuoc as $row){
+			$str_idthuoc = $str_idthuoc.$row->id_thuoc.";";
+			$temp['id_thuoc'] = $row->id_thuoc;
+			$temp['ten_thuoc'] = $this->mdclinic->getTenthuoc($row->id_thuoc)[0]->ten_thuoc;
+			 array_push($arr_toathuoc,$temp);
+		}
+		$number_thuoc_detail = sizeof($toa_thuoc);
+		$json_toathuoc = json_encode($arr_toathuoc);
+	}
+	// var_dump($arr_toathuoc);
+	// var_dump($str_idthuoc);
+	//var_dump($json_alllichkham);
 ?>
 <!DOCTYPE html>
 <html>
@@ -51,7 +71,54 @@
 		<!-- add on pager plugin tablesorter -->
 		<script type="text/javascript" src="<?php echo base_url('/assets/systemfile/plugin/tablesorter/js/jquery.tablesorter.pager.js');?>"></script>
 		<script>
+			function remove_thuoc(id,ten){
+				var tmp = "<label class=\"btn btn-danger\" style=\"color:#000000;width:60px\" onclick=\"remove_thuoc("+id+",&quot;"+ten+"&quot;)\">Xoá</label><p style=\"color:#000000;padding-left:100px;line-height:25px;\">"+ten+"</p>";
+				var html = document.getElementById('div_thuoc').innerHTML;
+				html = html.replace(tmp,"");
+				var arrId_thuoc = document.getElementById("arrId_thuoc").value;
+				var str_remove = id+";";
+				arrId_thuoc = arrId_thuoc.replace(str_remove,"")
+				document.getElementById('div_thuoc').innerHTML = html;
+				document.getElementById("arrId_thuoc").value = arrId_thuoc;
+			};
+			
 			$(document).ready(function(){
+				var html = "";
+				var arrId_thuoc = "";
+
+				var status_themthuoc = "";
+				var allMedicine = <?php echo $json_allmedicine; ?>;
+				var size = <?php echo $number_medicine ; ?>;
+				var viewdetail = <?php echo $i; ?>;				
+				if(viewdetail != -1){
+				var number_thuoc_detail = <?php if($i != -1) {echo $number_thuoc_detail;} else { echo 'null';} ?>;
+				var arr_toathuoc = <?php if($i != -1){ echo $json_toathuoc ;} else { echo 'null';} ?>;
+				var str_idthuoc = <?php if($i != -1) {echo $str_idthuoc ;} else { echo 'null';} ?>;
+				for(j = 0;j<number_thuoc_detail;j++){
+					html +=  "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+arr_toathuoc[j].id_thuoc+",\""+arr_toathuoc[j].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+arr_toathuoc[j].ten_thuoc+"</p>";
+				}
+				document.getElementById("arrId_thuoc").value = str_idthuoc;
+				document.getElementById('div_thuoc').innerHTML = html;
+				html = "";
+				}
+				$("#tao_them_thuoc").click(function(){
+					var id_thuoc = document.getElementById("tao_thuoc").value;
+					
+					var i = 0;
+					for(i;i<size;i++){
+						if(id_thuoc == allMedicine[i].id_thuoc){
+							if(html.search(allMedicine[i].ten_thuoc) == -1){
+								status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
+								document.getElementById('tao_status_themthuoc').innerHTML = status_themthuoc;
+								arrId_thuoc+= allMedicine[i].id_thuoc+";"
+								html += "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+",\""+allMedicine[i].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+allMedicine[i].ten_thuoc+"</p>";
+								document.getElementById('div_thuoc').innerHTML = html;
+								document.getElementById("arrId_thuoc").value = arrId_thuoc;
+								break;
+							}
+						}
+					}				
+				});
 				$("#submitform").hide();//hide submit form of edit view
 				$( "#ngay_kham" ).change(function() {//chon ngay kham->set thoi gian kham vao #thoigiankham
 					var size = <?php echo $sizeall_lickham; ?>;
@@ -104,7 +171,7 @@
 				$("#btn_create").click(function(){
 					$("#chinhsua_chitiet").hide();
 					$("#taomoi_chitiet").show();
-					
+					document.getElementById('div_thuoc').innerHTML = "";
 				});
 			});
 			function openedit(){
@@ -121,7 +188,7 @@
     <body>
 	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="width:1170px;margin:auto;">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a style="color: #104AD3;" href='<?php echo base_url(); ?>'><?php echo $name ?></a></li>
+				<li><a style="color: #104AD3;" href='<?php echo base_url(); ?>'><?php echo $name_pk ?></a></li>
 				<li class="dropdown">
 				  <a style="color: rgba(0,0,0,.4);" href="#" class="dropdown-toggle" data-toggle="dropdown">Setting <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
@@ -262,7 +329,27 @@
 									<input type="text" class="form-control" id="edit_chi_phi" name="edit_chi_phi" value="<?php echo $detailprofile[$i]->chi_phi ?>" />
 								</div>
 							</div>
-						</fieldset>
+							</fieldset>
+							<div class="form-group">
+								<div >
+									<label  class = "col-sm-3 control-label btn btn-default" style="color:#000000;text-align:center" data-toggle="modal" data-target="#myModal">Toa thuốc</label>
+								</div>
+								<div class="col-sm-5">
+									<select class="form-control" id="thuoc" name="thuoc" >
+										<?php foreach($allMedicine as $tmp) {?>
+										<option value="<?php echo $tmp->id_thuoc ; ?>"><?php echo $tmp->ten_thuoc;  ?></option>
+										<?php } ?>
+									</select>
+								</div>
+						<fieldset disabled>
+								<div >
+									<label class = "col-sm-2 control-label btn btn-default" id="them_thuoc" style="color:#000000;text-align:center; width:50%;">Thêm</label>
+								</div>
+						</fieldset>		
+							</div>	
+							<div class="form-group" id="status_themthuoc">
+							</div>
+						
 							<div id="submitform" style="text-align:center">
 								<input type="hidden" name="edit_id_chitiet" id="edit_id_chitiet" value="<?php echo $detailprofile[$i]->id_chitiet; ?>" />
 								<input type="hidden" name="edit_id_lichkham" id="edit_id_lichkham" value="<?php echo $detailprofile[$i]->id_lichkham; ?>" />
@@ -338,7 +425,26 @@
 									<input type="text" class="form-control" id="chi_phi" name="chi_phi" />
 								</div>
 							</div>
+							<div class="form-group">
+								<div >
+									<label  class = "col-sm-3 control-label btn btn-default" style="color:#000000;" data-toggle="modal" data-target="#myModal">Toa thuốc</label>
+								</div>
+								<div class="col-sm-5">
+									<select class="form-control" id="tao_thuoc" name="tao_thuoc" >
+										<?php foreach($allMedicine as $tmp) {?>
+										<option value="<?php echo $tmp->id_thuoc ; ?>"><?php echo $tmp->ten_thuoc;  ?></option>
+										<?php } ?>
+									</select>
+								</div>
+								<div >
+									<label class = "col-sm-2 control-label btn btn-default" id="tao_them_thuoc" style="color:#000000;text-align:center">Thêm</label>
+								</div>
+								
+							</div>	
+							<div class="form-group" id="tao_status_themthuoc">
+							</div>
 							<div style="text-align:center">
+								<input type="hidden" name="arrId_thuoc" id="arrId_thuoc" value="" />
 								<input type="hidden" name="id_chitiet" id="id_chitiet" value="" />
 								<input type="hidden" name="id_lichkham" id="id_lichkham" value="" />
 								<input type="hidden" name="email" value="<?php echo $email;?>" />
@@ -351,7 +457,22 @@
 				</div>
 			</section>			
         </div>
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title" id="myModalLabel">Toa thuốc</h4>
+	  </div>
+	  <div class="modal-body" id="div_thuoc">
 		
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+	  </div>
+	</div>
+  </div>
+</div>
         <script type="text/javascript">
             $(document).ready(function() {
                  $("table").tablesorter().tablesorterPager({container: $(".pager")});    

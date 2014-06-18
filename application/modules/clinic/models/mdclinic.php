@@ -180,7 +180,7 @@ Class Mdclinic extends CI_Model {
 		$this->db->where('id_lichkham',$id_lichkham);
 		$query = $this->db->get();
 		if($query->num_rows() != 0){
-			return true;
+			return $query->result();
 		}else{
 			return false;
 		}
@@ -195,6 +195,18 @@ Class Mdclinic extends CI_Model {
 	function deleteMedicalprofile($id_chitiet){
 		$this->db->where('id_chitiet',$id_chitiet);
 		$this->db->delete('chi_tiet_kham');
+		$this->db->where('id_chitiet',$id_chitiet);
+		$this->db->delete('toa_thuoc');
+	}
+	function getToathuoc($id_chitiet){
+		$this->db->where('id_chitiet',$id_chitiet);
+		$query = $this->db->get('toa_thuoc');
+		return $query->result();
+	}
+	function getTenthuoc($id_thuoc){
+		$this->db->where('id_thuoc',$id_thuoc);
+		$query = $this->db->get('thuoc');
+		return $query->result();
 	}
 	//Get available time
 	function getAvailableTime($id_phongkham){

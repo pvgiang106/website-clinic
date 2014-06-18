@@ -3,6 +3,7 @@
 	$tab1 = base_url().'clinic/medicalprofile';
 	$tab2 = base_url().'clinic/faqs';
 	$name = $this->session->userdata['logged_in']['name'];
+	
 	//var_dump($info_user);
 
 ?>

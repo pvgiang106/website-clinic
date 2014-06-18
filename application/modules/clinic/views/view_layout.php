@@ -59,6 +59,10 @@
 				var tmp = "<label class=\"btn btn-danger\" style=\"color:#000000;width:30px\" onclick=\"remove_thuoc("+id+",&quot;"+ten+"&quot;)\">Xoá</label><p style=\"color:#000000;padding-left:100px;\">"+ten+"</p>";
 				var html = document.getElementById('div_thuoc').innerHTML;
 				html = html.replace(tmp,"");
+				var arrId_thuoc = document.getElementById("arrId_thuoc").value;
+				var str_remove = id+";";
+				arrId_thuoc = arrId_thuoc.replace(str_remove,"")
+				 document.getElementById("arrId_thuoc").value = arrId_thuoc;
 				document.getElementById('div_thuoc').innerHTML = html;
 			};
 		$(document).ready(function(){
@@ -91,6 +95,14 @@
 						}
 					}
 				}				
+			});
+			$("#view_toathuoc").click(function(){
+				if( document.getElementById('id_lichkham').value != current){
+					current =  document.getElementById('id_lichkham').value;
+
+					document.getElementById('div_thuoc').innerHTML = "";
+					document.getElementById("arrId_thuoc").value = "";
+				}
 			});
 		$( "#tao_appointment" ).submit(function(event) {
 			var ngay_kham = document.getElementById("tao_ngaykham").value;
@@ -261,7 +273,7 @@
 					</div>
 					<div class="form-group">
 						<div >
-							<label  class = "col-sm-3 control-label btn btn-default" style="color:#000000;" data-toggle="modal" data-target="#myModal">Toa thuốc</label>
+							<label  class = "col-sm-3 control-label btn btn-default" style="color:#000000;" data-toggle="modal" data-target="#myModal" id="view_toathuoc">Toa thuốc</label>
 						</div>
 						<div class="col-sm-5">
 							<select class="form-control" id="thuoc" name="thuoc" >
@@ -439,7 +451,6 @@
 	  </div>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-		<button type="button" class="btn btn-primary">Lưu</button>
 	  </div>
 	</div>
   </div>

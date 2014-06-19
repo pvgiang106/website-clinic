@@ -32,6 +32,8 @@
 						</div>
 						<div id="submitform" style="text-align:center;padding-bottom:10px;">
 							<input type="hidden" name="email" value="<?php echo $row->email;?>" />
+							<input type="hidden" name="tieu_de" value="<?php echo $row->tieu_de;?>" />
+							<input type="hidden" name="tieu_de" value="<?php echo $row->tieu_de;?>" />
 							<input type="hidden" name="id_faq" value="<?php echo $row->id_faq;?>" />
 							<input type="hidden" name="question" value="<?php echo $row->question;?>" />
 							<button type="submit" class="btn btn-primary">Lưu</button>

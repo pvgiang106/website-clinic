@@ -79,6 +79,7 @@
 					arrId_thuoc = "";				
 				}else{
 					html = document.getElementById('div_thuoc').innerHTML;
+					arrId_thuoc = document.getElementById("arrId_thuoc").value ;
 				}
 				var id_thuoc = document.getElementById("thuoc").value;
 				var i = 0;

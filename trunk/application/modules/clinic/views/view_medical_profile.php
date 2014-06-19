@@ -107,12 +107,13 @@
 				$("#tao_them_thuoc").click(function(){
 					var id_thuoc = document.getElementById("tao_thuoc").value;
 					html = document.getElementById('div_thuoc').innerHTML;
+					arrId_thuoc = document.getElementById("arrId_thuoc").value;
 					var i = 0;
 					for(i;i<size;i++){
 						if(id_thuoc == allMedicine[i].id_thuoc){
 							if(html.search(allMedicine[i].ten_thuoc) == -1){
 								status_themthuoc = "<p>Đã thêm "+allMedicine[i].ten_thuoc+" vào toa thuốc </p>";
-								document.getElementById('status_themthuoc').innerHTML = status_themthuoc;
+								document.getElementById('tao_status_themthuoc').innerHTML = status_themthuoc;
 								arrId_thuoc+= allMedicine[i].id_thuoc+";"
 								html += "<label class='btn btn-danger' style='color:#000000;width:60px' onclick='remove_thuoc("+allMedicine[i].id_thuoc+",\""+allMedicine[i].ten_thuoc+"\")'>Xoá</label><p style='color:#000000;padding-left:100px;line-height:25px;' >"+allMedicine[i].ten_thuoc+"</p>";
 								document.getElementById('div_thuoc').innerHTML = html;
@@ -195,6 +196,7 @@
 					document.getElementById('div_thuoc').innerHTML = "";
 					document.getElementById("arrId_thuoc").value = "";
 					html = "";
+					$("fieldset").removeAttr("disabled");
 				});
 			});
 			function openedit(){
@@ -383,6 +385,8 @@
 								<button type="button" class="btn btn-danger" onclick="canceledit();">Hủy</button>												
 							</div>
 						</form>
+						<?php } else {?>
+							<input type="hidden" name="edit_arrId_thuoc" id="edit_arrId_thuoc" value="" />
 						<?php } ?>
 					</div>
 					<div class="col-md-6" id="taomoi_chitiet" <?php if($i != -1) echo "style='display:none;'" ;?>>
@@ -488,9 +492,11 @@
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h4 class="modal-title" id="myModalLabel">Toa thuốc</h4>
 	  </div>
+	  <fieldset disabled>
 	  <div class="modal-body" id="div_thuoc">
 		
 	  </div>
+	  </fieldset>
 	  <div class="modal-footer">
 		<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 	  </div>

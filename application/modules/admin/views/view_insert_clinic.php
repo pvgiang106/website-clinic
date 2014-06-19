@@ -50,6 +50,18 @@
 					<input type="date" class="form-control" id="expire_day" name="expire_day" value="<?php  ?>" />
 				</div>
 			</div>
+			<div class="form-group">
+				<label  class="col-sm-4 control-label" style="color:#000000;">Kinh độ</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="toadoY" name="toadoY" value="<?php  ?>" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label  class="col-sm-4 control-label" style="color:#000000;">Vĩ độ</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="toadoX" name="toadoX" value="<?php  ?>" />
+				</div>
+			</div>
 		</fieldset>
 	</div>
 	<div class="col-sm-6">
@@ -72,8 +84,6 @@
 	</div>
 	<div class="col-sm-11" style="padding-top:20px;padding-left:40px;letter-spacing:20px;">
 		<input type="hidden" id="register_day" name="register_day" value="<?php echo date('Y-m-d'); ?>" >
-		<input type="hidden" id="toadoX" name="toadoX" value="<?php ?>" >
-		<input type="hidden" id="toadoY" name="toadoY" value="<?php ?>" >
 		<button type="submit" class="btn btn-primary" >Lưu</button>
 		<button type="reset" class="btn btn-danger" onclick="window.location.href='./'">Hủy</button>
 	</div>

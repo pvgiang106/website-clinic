@@ -32,11 +32,12 @@ class Faqs extends MX_Controller {
 		$question = $_POST['question'];
 		$answer = $_POST['answer'];
 		$id_faq = $_POST['id_faq'];
+		$tieu_de = $_POST['tieu_de'];
 		$data = array(
 					"answer" => $answer
 				);
 		$this->mdclinic->updateFaq($id_faq,$data);
-		$noidung = 'Câu hỏi : '.$question.' đã có câu trả lời';
+		$noidung = 'Câu hỏi chủ đề : '.$tieu_de.' đã có câu trả lời';
 		$this->mdclinic->insertThongbao($email,$noidung);
 		redirect('/clinic/faqs?option=chuatraloi','refresh');
 	}

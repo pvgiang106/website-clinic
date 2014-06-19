@@ -84,8 +84,8 @@ class Adminclinic extends MX_Controller {
 					"feature" => $_POST['feature'],
 					"website" => $_POST['website'],
 					"expire_day" => $_POST['expire_day'],
-					"toadoX" => $_POST['toadoX'],
-					"toadoY" => $_POST['toadoY']
+					"toadoX" => (float)$_POST['toadoX'],
+					"toadoY" => (float)$_POST['toadoY']
 				);
 		$this->mdclinic->updateClinic($_POST['id_phongkham'],$pk_data);
 		$us_data = array(

@@ -204,7 +204,7 @@
 				var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date;
 				if(dateEvent<strToday){
 					continue;
-				}else if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+				}else if(all_lichkham[i].text.substr(22) == all_lichkham[i].cur_regis){
 					continue;
 				}else{
 					var end_date = new Date(all_lichkham[i].end_date);										
@@ -253,7 +253,7 @@
 				var dateEvent = yearEvent+'-'+monthEvent+'-'+temp_date;
 				if(dateEvent<strToday){
 					continue;
-				}else if(all_lichkham[i].text == all_lichkham[i].cur_regis){
+				}else if(all_lichkham[i].text.substr(22) == all_lichkham[i].cur_regis){
 					continue;
 				}else{
 					var start_date = new Date(all_lichkham[i].start_date);

@@ -105,6 +105,11 @@ class Medicalprofile extends MX_Controller {
 		$this->mdclinic->deleteMedicalprofile($id_chitiet);
 		redirect('/clinic/medicalprofile/medicaluserprofile?email='.$_GET['email'].'&name='.$_GET['name']);
 	}
+	function deleteUser(){
+		$email = $_GET['email'];
+		$this->mdclinic->deluser($email);
+		redirect('clinic/medicalprofile','refresh');
+	}
 	
 }
 

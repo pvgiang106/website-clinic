@@ -75,9 +75,12 @@ Class Mdclinic extends CI_Model {
 		foreach($email_arr as $row){
 			$this->db->from('user_customer');
 			$this->db->where('email',$row->email);
+			$this->db->where('status',1);
 			$query = $this->db->get();
-			$temp = $query->result();
-			array_push($result,$temp[0]);
+			if($query->num_rows() != 0){
+				$temp = $query->result();
+				array_push($result,$temp[0]);
+			}
 		}
 		return $result;
 	}
@@ -265,6 +268,16 @@ Class Mdclinic extends CI_Model {
 	function allMedicine(){
 		$query = $this->db->get('thuoc');
 		return $query->result();
+	}
+	function deluser($email){
+		$data = array(
+					'status' => 0
+				);
+		$this->db->where('email',$email);
+		$this->db->update('user_customer',$data);
+		$data['li_do_huy'] = "Tài khoản đã bị xóa";
+		$this->db->where('email',$email);
+		$this->db->update('lich_kham',$data);
 	}
 }
 

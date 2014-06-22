@@ -32,6 +32,10 @@ class Adminclinic extends MX_Controller {
         $this->mdclinic->expireclinic($id_phongkham);
         redirect('admin/Adminclinic');
     }
+	function unexpireclinic($id_phongkham) {
+        $this->mdclinic->unblockclinic($id_phongkham);
+        redirect('admin/Adminclinic');
+    }
 
     function insertclinic() {
         $data['module'] = 'admin';

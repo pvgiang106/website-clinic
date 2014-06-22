@@ -33,6 +33,7 @@
 		$number_thuoc_detail = sizeof($toa_thuoc);
 		$json_toathuoc = json_encode($arr_toathuoc);
 	}
+	//var_dump($detailprofile)
 	// var_dump($arr_toathuoc);
 	//var_dump($str_idthuoc);
 	//var_dump($json_alllichkham);
@@ -105,6 +106,7 @@
 				html = "";
 				}
 				$("#tao_them_thuoc").click(function(){
+					$("fieldset").removeAttr("disabled");
 					var id_thuoc = document.getElementById("tao_thuoc").value;
 					html = document.getElementById('div_thuoc').innerHTML;
 					arrId_thuoc = document.getElementById("arrId_thuoc").value;
@@ -308,7 +310,7 @@
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Lí do khám</label>
 								<div class="col-sm-9">
-									<p class="form-control-static"><?php echo $detailprofile[$i]->li_do_kham ?></p>
+									<textarea rows="3" class="form-control-static" ><?php echo $detailprofile[$i]->li_do_kham ?></textarea>
 								</div>
 							</div>
 						<fieldset disabled >
@@ -339,13 +341,13 @@
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Chuẩn đoán</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="edit_chuan_doan" name="edit_chuan_doan" value="<?php echo $detailprofile[$i]->chuan_doan?>" />
+									<textarea rows="3" class="form-control" id="edit_chuan_doan" name="edit_chuan_doan" value="<?php echo $detailprofile[$i]->chuan_doan?>" /><?php echo $detailprofile[$i]->chuan_doan?></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Lời khuyên</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="edit_loi_khuyen" name="edit_loi_khuyen" value="<?php echo $detailprofile[$i]->loi_khuyen ?>" />
+									<textarea rows="3" class="form-control" id="edit_loi_khuyen" name="edit_loi_khuyen" value="<?php echo $detailprofile[$i]->loi_khuyen ?>" /><?php echo $detailprofile[$i]->loi_khuyen ?></textarea>
 								</div>
 							</div>
 							<div class="form-group">
@@ -408,7 +410,7 @@
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Lí do khám</label>
 								<div class="col-sm-9">
-									<p class="form-control-static" id="lidokham"> </p>
+									<textarea rows="3" class="form-control" id="lidokham" disabled > </textarea>
 								</div>
 							</div>
 							<div class="form-group">
@@ -438,13 +440,13 @@
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Chuẩn đoán</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="chuan_doan" name="chuan_doan"/>
+									<textarea rows="3" type="text" class="form-control" id="chuan_doan" name="chuan_doan"/></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label  class="col-sm-3 control-label">Lời khuyên</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="loi_khuyen" name="loi_khuyen" />
+									<textarea rows="3" type="text" class="form-control" id="loi_khuyen" name="loi_khuyen" /></textarea>
 								</div>
 							</div>
 							<div class="form-group">

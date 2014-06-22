@@ -257,13 +257,13 @@
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Chuẩn đoán</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="chuan_doan" name="chuan_doan" value="<?php ?>" />
+							<textarea class="form-control" rows="3" id="chuan_doan" name="chuan_doan" value="<?php ?>" /></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Lời khuyên</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="loi_khuyen" name="loi_khuyen" value="<?php  ?>" />
+							<textarea rows="3" class="form-control" id="loi_khuyen" name="loi_khuyen" value="<?php  ?>" /></textarea>
 						</div>
 					</div>
 					<div class="form-group">
@@ -305,7 +305,7 @@
 				<h3>Chi tiết cuộc hẹn</h3>
 				<form class="form-horizontal" name="ct_appointment" id="ct_appointment" method="post" action="clinic/deleteData">
 					<div class="form-group">
-						<label  class="col-sm-3 control-label" style="color:#000000;">Bệnh nhân</label>
+						<label  class="col-sm-3 control-label" style="color:#000000;"><a id="link_user" href="">Bệnh nhân</a></label>
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="benhnhan" name="benhnhan" value="<?php  ?>" disabled/>
 						</div>
@@ -331,7 +331,7 @@
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Lí do khám</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="ct_lido" name="ct_lido" value="<?php ?>" disabled/>
+							<textarea rows="3" type="text" class="form-control" id="ct_lido" name="ct_lido" value="<?php ?>" disabled/></textarea>
 						</div>
 					</div>
 					<div class="form-group" id="frm_gr_huy">
@@ -345,7 +345,7 @@
 						<input type="hidden" name="ct_ngaykham" id="ct_ngaykham" value="" />
 						<input type="hidden" name="ct_thoigian" id="ct_thoigian" value="" />
 						<input type="hidden" name="ct_email" id="ct_email" value="" />
-						<button type="button" class="btn btn-primary" onclick="show_div_create();" >Tạo cuộc hẹn</button>
+						<button type="button" class="btn btn-primary" onclick="show_div_create();" >Thêm mới</button>
 						<button type="submit" class="btn btn-danger" id="del_appointment">Hủy</button>
 					</div>
 				</form>
@@ -367,7 +367,7 @@
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Lí do</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="tk_lido" name="tk_lido" value="<?php ?>" />
+							<textarea rows="3" type="text" class="form-control" id="tk_lido" name="tk_lido" value="<?php ?>" /></textarea>
 						</div>
 					</div>
 					<div style="text-align:right">
@@ -387,12 +387,13 @@
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div class="tab-pane active" id="create">
-				<h3>Hẹn lịch khám</h3>
-				<form class="form-horizontal" name="tao_appointment" id="tao_appointment" method="post" action="clinic/taocuochen">
+				<h3>Chi tiết cuộc hẹn</h3>
+				<form class="form-horizontal" name="tao_appointment" id="tao_appointment" method="get" action="clinic/taocuochen">
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Bệnh nhân</label>
 						<div class="col-sm-7">
 							<select class="form-control" id="tao_benhnhan" name="tao_benhnhan" >
+								<option value="noname">Chọn bệnh nhân</option>
 								<?php foreach($allCustomer as $tmp) {?>
 								<option value="<?php echo $tmp->email; ?>"><?php echo $tmp->mid_name;echo ' '; echo $tmp->name  ?></option>
 								<?php } ?>
@@ -403,6 +404,7 @@
 						<label  class="col-sm-3 control-label" style="color:#000000;">Email</label>
 						<div class="col-sm-7">
 							<select class="form-control" id="tao_email" name="tao_email" >
+								<option value="noname">Chọn Email</option>
 								<?php foreach($allCustomer as $tmp) { ?>
 								<option value="<?php echo $tmp->email; ?>"><?php echo $tmp->email; ?></option>
 								<?php } ?>
@@ -426,7 +428,7 @@
 					<div class="form-group">
 						<label  class="col-sm-3 control-label" style="color:#000000;">Lí do</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="tao_lido" name="tao_lido" value="<?php ?>" />
+							<textarea rows="3" type="text" class="form-control" id="tao_lido" name="tao_lido" value="<?php ?>" ></textarea>
 						</div>
 					</div>
 					<div style="text-align:right">

@@ -17,7 +17,7 @@ html {
 section {
   background: #FFFFFF;
   width: 1170px;
-  height: 900px;;
+  height: 950px;;
   margin: auto;
   box-shadow: 0 0 6px rgba(0,0,0,.4);
 }
@@ -138,6 +138,6 @@ label:before {
   transform: scale(1);
   transition-delay: .5s; 
 }
-a {color: rgba(0,0,0,.4)}
+/*a {color: rgba(0,0,0,.4)}*/
 a:hover {color: rgba(0,0,0,.2)}
 .col-md-6 label{color:#000000;}

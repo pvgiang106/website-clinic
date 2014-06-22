@@ -12,6 +12,7 @@
 				<td>Số ĐT</td>
 				<td>Địa chỉ</td>
                 <td>Giới tính</td>
+				<td>Xóa</td>
             </tr>    
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
 					<td><?php echo $row->phone ?></td>
 					<td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice ?></td> 
 					<td><?php echo $row->sex ?></td>
+					<td><a href="<?php echo base_url()."admin/deluser?email=".$row->email; ?>" class="btn btn-danger">Xóa</a></td>
                 </tr>  
                 <?php
                 $number += 1;

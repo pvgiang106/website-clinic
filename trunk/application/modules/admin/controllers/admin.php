@@ -27,6 +27,11 @@ class Admin extends MX_Controller {
         $data['view_file'] = 'view_manager_user';
         echo Modules::run('admin/layout/render',$data);
     }
+	function deluser(){
+		$email = $_GET['email'];
+		$this->mduser->deluser($email);
+		redirect('admin','refresh');
+	}
 }
 
 ?>

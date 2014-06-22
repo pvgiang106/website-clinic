@@ -78,6 +78,7 @@ class Clinic extends MX_Controller {
     }
 	function insertData(){
 		//get time
+		//var_dump($_GET);
 		$day_start_string = substr( $_GET['start_date'], 4, 17 );
 		$day_end_string = substr( $_GET['end_date'], 4, 17 );
 
@@ -352,6 +353,7 @@ class Clinic extends MX_Controller {
 		$this->mdclinic->insertAppointment($data);;
 		redirect('/clinic','refresh');
 	}
+	
 }
 
 ?>

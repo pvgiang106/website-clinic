@@ -28,7 +28,7 @@
                     <td><?php echo $row->phone ?></td>
                     <td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice; ?></td>
                     <td><?php echo $row->expire_day ?></td>                                         
-                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updateClinic?id_phongkham=<?php echo $row->id_phongkham;?>" class="btn btn-primary btn-edit">Sửa</a></td>
+                    <td><a href="<?php echo base_url(); ?>index.php/admin/adminclinic/updateClinic?id_phongkham=<?php echo $row->id_phongkham;?>" class="btn btn-primary btn-edit">Sửa</a>  <?php if($row->status == 1) { ?><a href="<?php echo base_url()."admin/adminclinic/expireclinic/".$row->id_phongkham; ?>" class="btn btn-primary btn-danger">Khóa</a> <?php } else { ?><a href="<?php echo base_url()."admin/adminclinic/unexpireclinic/".$row->id_phongkham; ?>" class="btn btn-primary btn-primary">Mở</a> <?php } ?></td>
                     </td>
                 </tr>  
                 <?php

@@ -78,6 +78,7 @@
 									<td>Số điện thoại</td>
 									<td>Địa chỉ</td>
 									<td>Giới tính</td>
+									<td>Chi tiết</td>
 								</tr>    
 							</thead>
 							<tbody>
@@ -85,14 +86,14 @@
 								$number = 0;
 								foreach ($info_user as $row) {
 									?>
-									<tr>
+									<tr  onclick="window.location='medicalprofile/medicaluserprofile?email=<?php echo $row->email ?>&name=<?php echo $row->mid_name; echo ' '; echo $row->name; ?>'">
 										<td><?php echo $number ?></td>
 										<td><?php echo $row->mid_name; echo ' '; echo $row->name; ?></td>
 										<td><?php echo $row->email ?></td>
 										<td><?php echo $row->phone ?></td>
 										<td><?php echo $row->address; echo ', '; echo $row->district; echo ', '; echo $row->provice ?></td> 
 										<td><?php echo $row->sex ?></td>
-										<td ><a class="btn btn-primary" href="medicalprofile/medicaluserprofile?email=<?php echo $row->email ?>&name=<?php echo $row->mid_name; echo ' '; echo $row->name; ?>" >Xem</a></td>
+										<td ><a class="btn btn-primary" href="medicalprofile/medicaluserprofile?email=<?php echo $row->email ?>&name=<?php echo $row->mid_name; echo ' '; echo $row->name; ?>" >Xem</a>  <a href="<?php echo base_url()."clinic/medicalprofile/deleteUser?email=".$row->email ?>" class="btn btn-danger">Xóa</a> </td>
 									</tr>  
 									<?php
 									$number += 1;

@@ -155,6 +155,7 @@
 				document.getElementById("ct_thoigian").value = start_hours+':'+start_time+' - '+end_hours+':'+end_time;
 				document.getElementById("ct_lido").value = lido;
 				document.getElementById("ct_email").value = email;
+				document.getElementById("link_user").href = "clinic/medicalprofile/medicaluserprofile?email="+email+"&name="+benhnhan;
 				//frm hen lich tai kham
 				document.getElementById("tk_id_lichkham").value = id;
 				document.getElementById("tk_email").value = email;

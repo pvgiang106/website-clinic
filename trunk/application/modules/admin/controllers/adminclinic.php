@@ -55,7 +55,7 @@ class Adminclinic extends MX_Controller {
         echo Modules::run('admin/layout/render', $data);
     }
     
-    function verifyUpdateclinic() {
+    function verifyUpdatePartner() {
 		$data = array(
 					"firstName" => $_POST['firstName'],
 					"lastName" => $_POST['lastName'],
@@ -65,7 +65,7 @@ class Adminclinic extends MX_Controller {
 					"address" => $_POST['street'],		
 					"image" => $_POST['image'],
 					"birthday" => $_POST['birthday'],
-					"role" => $_POST['role']
+					"role" => 0
 				);
 		$this->mdpartner->updatePartner($_POST['id_phongkham'],$pk_data);
 

@@ -22,12 +22,15 @@ class Login extends MX_Controller {
         //$check = $this->session->userdata('logged_in');
         if (isset($this->session->userdata['logged_in']['email'])) {
             $session_data = $this->session->userdata('logged_in');
-            if ($session_data['role'] == 1) {
+            if($session_data['role'] == 0) {
+                // redirect to partner page              
+                redirect('/partner', 'refresh');
+            } else if ($session_data['role'] == 1) {
                 // redirect to admin page
                 redirect('/admin', 'refresh');
-            } else {
-                // redirect to user page              
-                redirect('/clinic', 'refresh');
+            } else if($session_data['role'] == 2) {
+                // redirect to customer page              
+                redirect('/customer', 'refresh');
             }
         } else {
             $cookie_name = 'remember';
@@ -35,17 +38,18 @@ class Login extends MX_Controller {
                 parse_str($_COOKIE[$cookie_name]);
                 echo $email;
                 echo $role;
-                echo $id_phongkham;
-				echo $name;
+                echo $userID;
+				echo $firstName;
+				echo $lastName
                 $user_info = array(
                     'email' => $email,
                     'role' => $role,
-                    'id_phongkham' => $id_phongkham ,
-					'name' => $name
+                    'userID' => $id_phongkham ,
+					'firstName' => $firstName,
+					'lastName' => $lastName
                 );
                 $this->session->set_userdata('logged_in', $user_info);
-                echo 'have cookie';
-                //redirect('/login/index/', 'refresh');
+                redirect('/login/index/', 'refresh');
             } else {
                 $this->load->helper(array('form'));
                 $this->load->helper('third_library');
@@ -53,27 +57,9 @@ class Login extends MX_Controller {
                 $data['module'] = 'login';
                 $data['view_file'] = 'login_view';
                 echo Modules::run('login/layout/render', $data);
-                //echo 'no cookie';
             }
         }
     }
-
-//    function mylogin() {
-//        if ($this->session->userdata('logged_in')) {
-//            $session_data = $this->session->userdata('logged_in');
-//            if($session_data['role'] == 1){
-//                // redirect to admin page
-//                
-//            } else {
-//                // redirect to user page
-//                $userID = $session_data['userID'];
-//                redirect('/home/index/' . $userID, 'refresh');
-//            }            
-//        } else {
-//            //If no session, redirect to login page            
-//            redirect('login', 'refresh');
-//        }
-//    }
 
     function logout() {
 	

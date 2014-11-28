@@ -3,25 +3,34 @@
 Class User extends CI_Model {
 
     function login($email, $password) {
-        $this->db->select('id_phongkham,email, name, password, role');
-        $this->db->from('user_phongkham');
+        $this->db->from('customer');
         $this->db->where('email', $email);
         $this->db->where('password',  md5($password));
-		 $this->db->where('status', 1);
+		$this->db->where('inactive', 0);
         $this->db->limit(1);
 
         $query = $this->db->get();
 
         if ($query->num_rows() == 1) {
             return $query->result();
-        } else {
-            return false;
         }
+		$this->db->from('partner');
+        $this->db->where('email', $email);
+        $this->db->where('password',  md5($password));
+		$this->db->where('inactive', 0);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 1) {
+            return $query->result();
+        }
+		
+        return false;        
     }
     
     function checkemail($email) {
-        $this->db->select('email,id_phongkham');
-        $this->db->from('user_phongkham');
+        $this->db->select('email');
+        $this->db->from('customer');
         $this->db->where('email',$email);
         $this->db->limit(1);
         
@@ -29,25 +38,39 @@ Class User extends CI_Model {
         
         if($query->num_rows() == 1){
             return $query->result();
-        } else {
-            return FALSE;
         }
+		$this->db->select('email');
+        $this->db->from('partner');
+        $this->db->where('email',$email);
+        $this->db->limit(1);
+        
+        $query = $this->db->get();
+        
+        if($query->num_rows() == 1){
+            return $query->result();
+        }
+        return false;
+    }    
+    
+    function insert_customer($data){
+        $this->db->insert('customer',$data);
     }
-    
-    
-    
-    function inserttouser($data){
-        $this->db->insert('user_phongkham',$data);
+	function insert_partner($data){
+        $this->db->insert('partner',$data);
     }
     // insert data into profile
     function inserttoprofile($dataprofile){
         $this->db->insert('profile',$dataprofile);
-    }
-    
+    }    
     // change pass for user
-    function changepass($id,$pass){
-        $this->db->where('id_phongkham',$id);
-        $this->db->update('user_phongkham',array('password'=>  md5($pass)));
+    function changepass($id,$pass,$userType){
+		if($userType == 'customer'){
+			$this->db->where('customerID',$id);
+			$this->db->update('customer',array('password'=>  md5($pass)));
+		}else if($userType == 'partner'){
+			$this->db->where('partnerID',$id);
+			$this->db->update('partner',array('password'=>  md5($pass)));		
+		}        
     }
     
     

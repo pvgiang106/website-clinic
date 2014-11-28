@@ -11,7 +11,6 @@ class VerifyLogin extends MX_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('user', '', TRUE);
-        $this->load->library('form_validation');
         $this->load->helper('third_library');
     }
 
@@ -19,39 +18,22 @@ class VerifyLogin extends MX_Controller {
      * function run when controller login is active without param
      */
     function index() {
-        //This method will have the credentials validation
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('email', 'Email', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
         
-        $autologin = ($this->input->post('remember') == 'remember') ? 1 : 0;
-        
-        if ($this->form_validation->run() == FALSE) {
-            //Field validation failed.  User redirected to login page     
-            $data['error'] = '';
+        if (!isset($_POST['email'])) {
+            //User redirected to login page     
             $data['module'] = 'login';
             $data['view_file'] = 'login_view';
             echo Modules::run('login/layout/render', $data);
-            //redirect('/login/index', 'refresh');
         } else {
-            //echo $this->input->post('password');
-            if ($this->check_database($this->input->post('password')) == TRUE) {
-
-                if($autologin == 1){
-                    $cookie_name = 'remember';
-                    // time cookie will be die
-                    $cookie_time = 3600*24*30;
-                    //$session_data = $this->session->userdata('logged_in');
-                    $session_data = $this->session->userdata('logged_in');
-                    setcookie('ci-session', 'email='."", time() - 3600);	// Unset cookie of user
-                    setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'].'&id_phongkham='.$session_data['id_phongkham'].'&name='.$session_data['name'],time() + $cookie_time);
-                    echo 'remember';
-                    //redirect('/login/index/'.$session_data['userID'], 'refresh');
-                }  else {
-                    echo 'not remember ';
-                    //redirect('/login/index/'.$session_data['userID'], 'refresh');
-                }             
+            if ($this->check_database($_POST['email'],$_POST['password']) == TRUE) {
+				$cookie_name = 'remember';
+				// time cookie will be die
+				$cookie_time = 3600*24*30;
+				//$session_data = $this->session->userdata('logged_in');
+				$session_data = $this->session->userdata('logged_in');
+				setcookie('ci-session', 'email='."", time() - 3600);	// Unset cookie of user
+				setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'].'&id_user='.$session_data['id_user'].'&firstName='.$session_data['firstName'].'&lastName='.$session_data['lastName'],time() + $cookie_time);
+            
                 redirect('/login/index', 'refresh');
             } else {
                 //$this->form_validation->set_message('Invalid username or password');
@@ -69,27 +51,31 @@ class VerifyLogin extends MX_Controller {
      * @return boolean : return true if email and password is correct
      *                      else return false
      */
-    function check_database($password) {
-        //Field validation succeeded.  Validate against database
-        $email = $this->input->post('email');
-
+    function check_database($email, $password) {
         //query the database
         $result = $this->user->login($email, $password);
 
         if ($result) {
             $sess_array = array();
             foreach ($result as $row) {
+				if(!isset($row->role)){
+					$role = 2;
+					$id_user = role->customerID;
+				}else{
+					$role = $row->role;
+					$userID = $row->partnerID;
+				}				
                 $sess_array = array(
                     'email' => $row->email,
-                    'role' => $row->role,
-                    'id_phongkham' => $row->id_phongkham,
-					'name' => $row->name
+                    'role' => $role,
+                    'userID' => $userID,
+					'firstName' => $row->firstName,
+					'lastName' => $row->lastName
                 );
                 $this->session->set_userdata('logged_in', $sess_array);
             }
             return TRUE;
         } else {
-            $this->form_validation->set_message('check_database', 'Invalid username or password');
             return FALSE;
         }
     }
@@ -99,68 +85,55 @@ class VerifyLogin extends MX_Controller {
      * set rule for data input
      */
     function register() {
-
-        $this->form_validation->set_rules('firstname', 'First name', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('lastname', 'Last name', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[6]|matches[repassword]|xss_clean');
-        $this->form_validation->set_rules('repassword', 'Re-Password', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('sex', 'Sex', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('day', '', 'trim|required|numeric');
-        $this->form_validation->set_rules('month', '', 'trim|required|numeric');
-        $this->form_validation->set_rules('year', '', 'trim|required|numeric');
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
-
-        $this->form_validation->set_message('numeric', 'Invalid number.');
-
-        if ($this->form_validation->run() == FALSE) {
+        if (!isset($_POST['email']) {
             $data['error'] = '';
             $data['module'] = 'login';
             $data['view_file'] = 'register_view';
             echo Modules::run('login/layout/render', $data);
         } else {
-            if ($this->check_email($this->input->post('email')) == TRUE) {
-                $datauser = array(
-                    'username' => $this->input->post('firstname') . ' ' . $this->input->post('lastname'),
-                    'password' => md5($this->input->post('password')),
+            if ($this->check_email(isset($_POST['email']) == TRUE) {
+                $data_user = array(
+                    'firstName' => $_POST['firstName'],
+					'firstName' => $_POST['lastName'],
+                    'password' => md5($_POST['password']),
                     'email' => $this->input->post('email'),
                 );
-                $message = 'Bạn đã đăng kí thành công tài khoản trên website Dulichbui !';
+                $message = 'Welcome website voder!';
                 $subject = 'Registation Success !';
-                $test = $this->sendmail($this->input->post('email'), $message, $subject);
-                if ($test == TRUE) {
-                    $this->user->inserttouser($datauser);
-
-                    echo $datauser['email'] . ' ' . $this->input->post('password');
-                    $result = $this->user->login($datauser['email'], $this->input->post('password'));
-
-                    //$birthday = date_create($this->input->post('year') . '-' . $this->input->post('month') . '-' . $this->input->post('day'));
-
+                $sendMail = $this->sendmail($this->input->post('email'), $message, $subject);
+                if ($sendMail) {
+					if($_POST['userType'] == 'customer'){
+						$this->user->insert_customer($data_user);
+					}else{
+						$this->user->insert_partner($data_user);
+					}
+				//auto login after register
+                    $result = $this->user->login($data_user['email'], $_POST['password']);
                     if ($result) {
                         $sess_array = array();
                         foreach ($result as $row) {
+							if(!isset($row->role)){
+								$role = 2;
+								$userID = $row->customerID;
+							}else{
+								$role = $row->role;
+								$userID = $row->partnerID
+							}
                             $sess_array = array(
-                                'userID' => $row->userID,
-                                'username' => $row->username,
-                                'avatar' => $row->avatar,
-                                'role' => $row->role
+                                'userID' => $userID,
+                                'firstName' => $row->firstName,
+								'lastName' => $row->lastName,
+                                'email' => $row->email,
+                                'role' => role
                             );
 
                             $this->session->set_userdata('logged_in', $sess_array);
-                            $profile = array(
-                                'userID' => $row->userID,
-                                'fullName' => $this->input->post('firstname') . ' ' . $this->input->post('lastname')
-                            );
-                            $this->user->inserttoprofile($profile);
                         }
                         redirect('/login/index', 'refresh');
                     } else {
-
-                        //$this->form_validation->set_message('check_database', 'Invalid username or password');
-                        echo 'vao day 1';
                         return false;
                     }
                 } else {
-                    echo 'vao day 2';
                     return false;
                 }
             } else {
@@ -182,7 +155,6 @@ class VerifyLogin extends MX_Controller {
         $result = $this->user->checkemail($email);
 
         if ($result) {
-            $this->form_validation->set_message('check_email', 'Invalid email !!!');
             return FALSE;
         } else {
             return TRUE;
@@ -227,40 +199,42 @@ class VerifyLogin extends MX_Controller {
     }
 
     function resetpass() {
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
-
-        if ($this->form_validation->run() == FALSE) {
+        if (!isset($_POST['email'])) {
             $data['message'] = '';
             $data['module'] = 'login';
             $data['view_file'] = 'resetpassword_view';
             echo Modules::run('login/layout/render', $data);
         } else {
-
-            if ($this->check_email($this->input->post('email')) == FALSE) {
+            if ($this->check_email($_POST['email']) == FALSE) {
                 $this->load->helper('url');
-                $result = $this->user->checkemail($this->input->post('email'));
+                $result = $this->user->checkemail($_POST['email']);
                 $user = $result[0];
+				if(!isset($user->role){
+					$userType = 'customer';
+					$userId = $user->customerID;
+				}else{
+					$userType = 'business';
+					$userId = $user->businessID;
+				}
                 $this->load->helper('string');
                 $password = random_string('alnum', 6);
-                $this->user->changepass($user->userID, $password);
+                
                 $message = ('You have requested the new password, Here is you new password:' . $password);
                 //echo $password;
                 $subject = 'Reset Password .';
-                if ($this->sendmail($this->input->post('email'), $message, $subject) == TRUE) {
-                                
+				$sendMail = $this->sendmail($_POST['email'], $message, $subject);
+                if ($sendMail == TRUE) {
+					$this->user->changepass($userId, $password, $userType);				
                     $data['module'] = 'login';
                     $data['view_file'] = 'view_sendmail_success';
                     echo Modules::run('login/layout/render', $data);
-                  //  redirect('/login', 'refresh');
                 } else {
-                    //$this->form_validation->set_message('valid_email', 'Invalid email !!!');
                     $data['message'] = 'Invalid email !!!';
                     $data['module'] = 'login';
                     $data['view_file'] = 'resetpassword_view';
                     echo Modules::run('login/layout/render', $data);
                 }
             } else {
-                //$this->form_validation->set_message('email', 'Invalid email !!!');
                 $data['message'] = 'Invalid email !!!';
                 $data['module'] = 'login';
                 $data['view_file'] = 'resetpassword_view';

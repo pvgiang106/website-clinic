@@ -21,10 +21,16 @@ Class Mdcustomer extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
-
+	
 	function updateCustomer($customerID,$data){
 		$this->db->where('customerID',$customerID);
 		$this->db->update('phongkham',$data);
+	}
+	function getListTransactionCustomer($customerID){
+		$this->db->from('transaction');
+		$this->db->where('customerID',$customerID);
+		$query = $this->db->get();
+		return $query->result();
 	}
 }
 

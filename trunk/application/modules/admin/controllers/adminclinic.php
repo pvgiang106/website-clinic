@@ -13,14 +13,12 @@ class Adminclinic extends MX_Controller {
 		if(!isset($this->session->userdata['logged_in']['email'])){
 			redirect('/login', 'refresh');
 		}
-        $this->load->model('mdclinic', '', TRUE);
-        $this->load->library("pagination");
-        $this->load->library('form_validation');
+        $this->load->model('mdpartner', '', TRUE);
         $this->load->helper('third_library');
     }
 
     function index() {
-        $result = $this->mdclinic->listclinic();
+        $result = $this->mdpartner->listclinic();
         $this->session->set_userdata('tab', 1);
         $data['result'] = $result;
         $data['module'] = 'admin';
@@ -28,74 +26,49 @@ class Adminclinic extends MX_Controller {
         echo Modules::run('admin/layout/render', $data);
     }
 
-    function expireclinic($id_phongkham) {
-        $this->mdclinic->expireclinic($id_phongkham);
-        redirect('admin/Adminclinic');
-    }
-	function unexpireclinic($id_phongkham) {
-        $this->mdclinic->unblockclinic($id_phongkham);
-        redirect('admin/Adminclinic');
-    }
-
-    function insertclinic() {
+    function insertPartner) {
         $data['module'] = 'admin';
-        $data['view_file'] = 'view_insert_clinic';
+        $data['view_file'] = 'view_insert_partner';
         echo Modules::run('admin/layout/render', $data);
     }
-	function verifyInsertclinic(){
-		$pk_data = array(
-					"name" => $_POST['name'],
+	function verifyInsertPartner(){
+		$data = array(
+					"firstName" => $_POST['firstName'],
+					"lastName" => $_POST['lastName'],
+					"email" => $_POST['email'],
+					"password" => md5($_POST['password']),
 					"phone" => $_POST['phone'],
-					"address" => $_POST['street'],
-					"district" => $_POST['district'],
-					"provice" => $_POST['provice'],
-					"feature" => $_POST['feature'],
-					"website" => $_POST['website'],
-					"register_day" => $_POST['register_day'],
-					"expire_day" => $_POST['expire_day'],
-					"toadoX" => $_POST['toadoX'],
-					"toadoY" => $_POST['toadoY']
+					"address" => $_POST['street'],		
+					"image" => $_POST['image'],
+					"birthday" => $_POST['birthday'],
+					"role" => $_POST['role']
 				);
-		$this->mdclinic->insertclinic($pk_data);
-		$new_id = $this->mdclinic->getClinicId($pk_data['phone']);
-		$us_data = array(
-						"id_phongkham" => $new_id[0]->id_phongkham,
-						"email" => $_POST['email'],
-						"name" => $_POST['name'],
-						"password" => md5($_POST['password']),
-						"role" => 0
-					);	
-		$this->mdclinic->insertUserClinic($us_data);
+		$this->mdpartner->insertPartner($data);
 		redirect('admin/Adminclinic','refresh');
 	}
 
-    function updateClinic() {   
-		$id_phongkham = $_GET['id_phongkham'];
-		$data['info_phongkham'] = $this->mdclinic->getInfoClinic($id_phongkham);
-		$data['info_user_phongkham'] = $this->mdclinic->getInfoUserClinic($id_phongkham);
+    function updatePartner() {   
+		$partnerID = $_GET['partnerID'];
+		$data['info_partner'] = $this->mdpartner->getInfoPartner($partnerID);
         $data['module'] = 'admin';
-        $data['view_file'] = 'view_update_clinic';
+        $data['view_file'] = 'view_update_partner';
         echo Modules::run('admin/layout/render', $data);
     }
     
     function verifyUpdateclinic() {
-		$pk_data = array(
-					"name" => $_POST['name'],
+		$data = array(
+					"firstName" => $_POST['firstName'],
+					"lastName" => $_POST['lastName'],
+					"email" => $_POST['email'],
+					"password" => md5($_POST['password']),
 					"phone" => $_POST['phone'],
-					"address" => $_POST['street'],
-					"district" => $_POST['district'],
-					"provice" => $_POST['provice'],
-					"feature" => $_POST['feature'],
-					"website" => $_POST['website'],
-					"expire_day" => $_POST['expire_day'],
-					"toadoX" => (float)$_POST['toadoX'],
-					"toadoY" => (float)$_POST['toadoY']
+					"address" => $_POST['street'],		
+					"image" => $_POST['image'],
+					"birthday" => $_POST['birthday'],
+					"role" => $_POST['role']
 				);
-		$this->mdclinic->updateClinic($_POST['id_phongkham'],$pk_data);
-		$us_data = array(
-						"email" => $_POST['email']
-					);
-		$this->mdclinic->updateUserClinic($_POST['id_phongkham'],$us_data);
+		$this->mdpartner->updatePartner($_POST['id_phongkham'],$pk_data);
+
         redirect('admin/Adminclinic');
     }
 }

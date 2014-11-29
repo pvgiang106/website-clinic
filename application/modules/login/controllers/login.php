@@ -24,13 +24,13 @@ class Login extends MX_Controller {
             $session_data = $this->session->userdata('logged_in');
             if($session_data['role'] == 0) {
                 // redirect to partner page              
-                redirect('/partner', 'refresh');
+                redirect(base_url().'partner', 'refresh');
             } else if ($session_data['role'] == 1) {
                 // redirect to admin page
-                redirect('/admin', 'refresh');
+                redirect(base_url().'admin', 'refresh');
             } else if($session_data['role'] == 2) {
                 // redirect to customer page              
-                redirect('/customer', 'refresh');
+                redirect(base_url().'customer', 'refresh');
             }
         } else {
             $cookie_name = 'remember';
@@ -40,16 +40,16 @@ class Login extends MX_Controller {
                 echo $role;
                 echo $userID;
 				echo $firstName;
-				echo $lastName
+				echo $lastName;
                 $user_info = array(
                     'email' => $email,
                     'role' => $role,
-                    'userID' => $id_phongkham ,
+                    'userID' => $userID ,
 					'firstName' => $firstName,
 					'lastName' => $lastName
                 );
                 $this->session->set_userdata('logged_in', $user_info);
-                redirect('/login/index/', 'refresh');
+                redirect(base_url().'login', 'refresh');
             } else {
                 $this->load->helper(array('form'));
                 $this->load->helper('third_library');
@@ -68,7 +68,7 @@ class Login extends MX_Controller {
         setcookie($cookiename, 'userID='."".'role='."", time() - 3600);
         //delete_cookie();
         
-        redirect('/login/index');
+        redirect(base_url().'login/index');
     }
     
     function resetpassword(){
@@ -76,6 +76,21 @@ class Login extends MX_Controller {
         $data['message'] = '';
         $data['module'] = 'login';
         $data['view_file'] = 'resetpassword_view';
+        echo Modules::run('login/layout/render', $data);
+    }
+    
+    function forgotpass(){
+        $this->load->helper(array('form'));
+        $data['message'] = '';
+        $data['module'] = 'login';
+        $data['view_file'] = 'forgot_view';
+        echo Modules::run('login/layout/render', $data);
+    }
+    function signup(){
+        $this->load->helper(array('form'));
+        $data['message'] = '';
+        $data['module'] = 'login';
+        $data['view_file'] = 'registion_view';
         echo Modules::run('login/layout/render', $data);
     }
 }

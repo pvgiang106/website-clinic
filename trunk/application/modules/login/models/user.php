@@ -29,7 +29,6 @@ Class User extends CI_Model {
     }
     
     function checkemail($email) {
-        $this->db->select('email');
         $this->db->from('customer');
         $this->db->where('email',$email);
         $this->db->limit(1);
@@ -65,11 +64,13 @@ Class User extends CI_Model {
     // change pass for user
     function changepass($id,$pass,$userType){
 		if($userType == 'customer'){
-			$this->db->where('customerID',$id);
-			$this->db->update('customer',array('password'=>  md5($pass)));
+            $newPass = md5($pass);
+			$this->db->where('customerID',$id);            
+			$this->db->update('customer',array('password'=>  $newPass));
 		}else if($userType == 'partner'){
+            $newPass = md5($pass);
 			$this->db->where('partnerID',$id);
-			$this->db->update('partner',array('password'=>  md5($pass)));		
+			$this->db->update('partner',array('password'=>  $newPass));		
 		}        
     }
     

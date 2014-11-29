@@ -1,53 +1,43 @@
-<style type="text/css">
-    p{
-        color: #E13300;
-    }
-</style>
-
 <?php
-$attribute = array('class' => 'form-horizontal', 'id' => 'login');
-echo form_open('login/verifylogin', $attribute);
+
 ?>
-<h3>Đăng nhập</h3>
-<form class="form-horizontal" role="form">
-    <fieldset> 
-        <div class="form-group col-lg-12">
-            <p><?php echo $error; ?></p>                        
-        </div>
-        <div class="form-group">
-            <label for="email" class="col-lg-2 control-label">Email</label>
-            <div class="col-lg-7">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                <p><?php echo form_error('email'); ?></p> 
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-lg-2 control-label">Mật khẩu</label>
-            <div class="col-lg-7">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                <p><?php echo form_error('password'); ?></p> 
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" id="remember" name="remember" value="remember"> Ghi nhớ
-                    </label>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" id="header">
+            <img src="<?php echo base_url() ?>assets/img_logo_2x.png" />
+            <p>Login to get Start!</p>
+        </div>    
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="mid-contain">
+            <form class="form-inline" role="form" action="<?php echo base_url().'login/verifylogin' ?>" method="post">
+            <div class="error_message" style="margin-top: 19px;color:red"><?php if(isset($error))echo $error; ?></div>
+            <div class="row" id="first-row">
+                <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon"><img src="<?php echo base_url() ?>assets/icon_email.png"/></div>
+                      <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" class="btn btn-primary">Đăng nhập</button>
-                <button type="button" class="btn btn-info">Hủy bỏ</button>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <a href="<?php base_url(); ?>login/resetpassword">Quên mật khẩu</a><br/>
-            </div>
-        </div>
-    </fieldset>
-</form>
-
+            <div class="row">
+                <div class="form-group">
+                    <div class="input-group">
+                     <div class="input-group-addon"><img src="<?php echo base_url() ?>assets/icon_password.png"/></div>
+                    <input type="password" class="form-control" name="password" placeholder="Password" required />
+                    </div>
+                </div>
+            </div>  
+            <div class="row" id="last-row">
+                <button type="submit" class="btn btn-info" id="btn-login-form">Log In</button>
+            </div>          
+            </form>
+        </div>            
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="bottom">
+            <p><a href="<?php echo base_url().'login/signup' ?>">Register!</a></p>
+            <p><a href="<?php echo base_url().'login/forgotpass' ?>">Forgotten password!</a></p>            
+        </div>    
+    </div>
+</div>

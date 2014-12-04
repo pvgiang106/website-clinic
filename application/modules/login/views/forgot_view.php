@@ -15,6 +15,10 @@
         <div class="col-md-12" id="mid-contain">
             <form class="form-inline" role="form" action="<?php echo base_url().'login/verifylogin/resetpass' ?>" method="post">
             <div class="row" id="first-row">
+				<?php if(isset($error)){
+                    echo "<p style='color:red'>".$error."</p>";
+                }
+                ?>
                 <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-addon"><img src="<?php echo base_url() ?>assets/icon_email.png"/></div>

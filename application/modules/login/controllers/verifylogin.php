@@ -33,7 +33,7 @@ class VerifyLogin extends MX_Controller {
 				//$session_data = $this->session->userdata('logged_in');
 				$session_data = $this->session->userdata('logged_in');
 				setcookie('ci-session', 'email='."", time() - 3600);	// Unset cookie of user
-				setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'].'&id_user='.$session_data['id_user'].'&firstName='.$session_data['firstName'].'&lastName='.$session_data['lastName'],time() + $cookie_time);
+				setcookie($cookie_name, 'email='.$session_data['email'].'&role='.$session_data['role'].'&userID='.$session_data['userID'].'&firstName='.$session_data['firstName'].'&lastName='.$session_data['lastName'],time() + $cookie_time);
             
                 redirect(base_url().'login/index', 'refresh');
             } else {                 
@@ -155,7 +155,6 @@ class VerifyLogin extends MX_Controller {
      */
     function check_email($email) {
         $result = $this->user->checkemail($email);
-
         if ($result) {
             return FALSE;
         } else {
@@ -170,20 +169,23 @@ class VerifyLogin extends MX_Controller {
     function sendmail($email, $message, $subject) {
         /**
          * config email
-         * send from email anhsangtrongdem.1991@gmail.com
+         * send from oderappsun@appsun.com.au
          */
         $config = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => '465',
-            'smtp_user' => 'pvgiang106@gmail.com',
-            'smtp_pass' => '@STARdust2810*'//Nhớ đánh đúng user và pass nhé
+            'smtp_host' => 'mail.appsun.com.au',
+            'smtp_port' => '25',
+            'smtp_user' => 'voderappsun@appsun.com.au',
+            'smtp_pass' => '*vOder123',//Nhớ đánh đúng user và pass nhé
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
         );
         // load library email in codeIgniter
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
         // create email
-        $this->email->from('pvgiang106@gmail.com', 'vOder Backend');
+        $this->email->from('voderappsun@appsun.com.au', 'vOder Backend');
         $this->email->to($email);
         $this->email->subject($subject);
         $this->email->message($message);
@@ -203,42 +205,42 @@ class VerifyLogin extends MX_Controller {
     function resetpass() {
         if (!isset($_POST['email'])) {
             $data['module'] = 'login';
-            $data['view_file'] = 'resetpass_view';
+            $data['view_file'] = 'forgot_view';
             echo Modules::run('login/layout/render', $data);
         } else {
             if ($this->check_email($_POST['email']) == FALSE) {
                 $this->load->helper('url');
                 $result = $this->user->checkemail($_POST['email']);
                 $user = $result[0];
-				if(!isset($user->role)){
+				if($user->role == 2){
 					$userType = 'customer';
 					$userId = $user->customerID;
 				}else{
-					$userType = 'business';
-					$userId = $user->businessID;
+					$userType = 'partner';
+					$userId = $user->partnerID;
 				}
                 $this->load->helper('string');
                 $password = random_string('alnum', 6);
                 
-                $message = ('You have requested the new password, Here is you new password:' . $password);
+                $message = ('You have requested the new password, Here is you new password : ' . $password);
                 //echo $password;
                 $subject = 'Reset Password .';
 				$sendMail = $this->sendmail($_POST['email'], $message, $subject);
                 if ($sendMail) {
 					$this->user->changepass($userId, $password, $userType);				
                     $data['module'] = 'login';
-                    $data['view_file'] = 'view_sendmail_success';
+                    $data['view_file'] = 'login_view';
                     echo Modules::run('login/layout/render', $data);
                 } else {
                     $data['error'] = 'Send mail fail, Please try again';
                     $data['module'] = 'login';
-                    $data['view_file'] = 'resetpass_view';
+                    $data['view_file'] = 'forgot_view';
                     echo Modules::run('login/layout/render', $data);
                 }
             } else {
                 $data['error'] = 'Email not registed';
                 $data['module'] = 'login';
-                $data['view_file'] = 'resetpass_view';
+                $data['view_file'] = 'forgot_view';
                 echo Modules::run('login/layout/render', $data);
             }
         }

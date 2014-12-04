@@ -29,6 +29,7 @@ Class User extends CI_Model {
     }
     
     function checkemail($email) {
+		$result = false;
         $this->db->from('customer');
         $this->db->where('email',$email);
         $this->db->limit(1);
@@ -36,9 +37,9 @@ Class User extends CI_Model {
         $query = $this->db->get();
         
         if($query->num_rows() == 1){
-            return $query->result();
+            $result = $query->result();
+			$result[0]->role = 2;
         }
-		$this->db->select('email');
         $this->db->from('partner');
         $this->db->where('email',$email);
         $this->db->limit(1);
@@ -46,9 +47,9 @@ Class User extends CI_Model {
         $query = $this->db->get();
         
         if($query->num_rows() == 1){
-            return $query->result();
+			$result = $query->result();
         }
-        return false;
+        return $result;
     }    
     
     function insert_customer($data){

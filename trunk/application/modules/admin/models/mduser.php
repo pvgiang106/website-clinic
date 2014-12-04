@@ -1,28 +1,56 @@
 <?php
 
 Class Mduser extends CI_Model {
-    
-    public function record_count() {
-        return $this->db->count_all("user");
+
+    function login($email, $password) {
+        $this->db->from('customer');
+        $this->db->where('email', $email);
+        $this->db->where('password',  md5($password));
+		$this->db->where('inactive', 0);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 1) {
+            return $query->result();
+        }
+		$this->db->from('partner');
+        $this->db->where('email', $email);
+        $this->db->where('password',  md5($password));
+		$this->db->where('inactive', 0);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 1) {
+            return $query->result();
+        }
+		
+        return false;        
     }
     
-    function listuser(){
-		$this->db->from('user_customer');
-		$this->db->where('status',1);
-        $query = $this->db->get();        
-        return $query->result();             
+    function checkemail($email) {
+        $this->db->from('customer');
+        $this->db->where('email',$email);
+        $this->db->limit(1);
+        
+        $query = $this->db->get();
+        
+        if($query->num_rows() == 1){
+            return $query->result();
+        }
+		$this->db->select('email');
+        $this->db->from('partner');
+        $this->db->where('email',$email);
+        $this->db->limit(1);
+        
+        $query = $this->db->get();
+        
+        if($query->num_rows() == 1){
+            return $query->result();
+        }
+        return false;
     }    
-    	
-	function deluser($email){
-		$data=array(
-					'status' => 0
-				);
-		$this->db->where('email',$email);
-		$this->db->update('user_customer',$data);
-		$this->db->where('email',$email);
-		$this->db->update('lich_kham',$data);
-	}
-
+  
 }
 
 ?>

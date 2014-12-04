@@ -1,3 +1,6 @@
+<?php 
+//    var_dump()
+?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12" id="header">

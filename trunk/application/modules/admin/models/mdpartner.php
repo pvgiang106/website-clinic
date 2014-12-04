@@ -1,14 +1,16 @@
 <?php
 
-Class Mdclinic extends CI_Model {
+Class Mdpartner extends CI_Model {
     
     public function record_count() {
         return $this->db->count_all("partner");
     }
     
     function listPartner(){
-        $query = $this->db->get('partner');        
-        return $query->result();             
+        $this->db->from('partner');
+        $this->db->where('inactive',0);
+		$query = $this->db->get();       
+        return $query->result();            
     }    
     
     function insertPartner($data){		
@@ -18,6 +20,7 @@ Class Mdclinic extends CI_Model {
 	function getInfoPartner($partnerID){
 		$this->db->from('partner');
 		$this->db->where('partnerID',$partnerID);
+        $this->db->where('inactive',0);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -25,6 +28,7 @@ Class Mdclinic extends CI_Model {
 		$this->db->select('partnerID');
 		$this->db->from('partner');
 		$this->db->where('email',$email);
+        $this->db->where('inactive',0);
 		$query = $this->db->get();
 		return $query->result();
 	}
